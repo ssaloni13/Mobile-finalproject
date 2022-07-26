@@ -1,4 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        // Check that you have the following line (if not, add it):
+        'https://maven.google.com/web/index.html'  // Google's Maven repository
+
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:4.3.13'
+
+    }
+}
+
 plugins {
     id 'com.android.application' version '7.2.0' apply false
     id 'com.android.library' version '7.2.0' apply false
@@ -6,4 +18,10 @@ plugins {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+allprojects {
+    repositories {
+        'https://maven.google.com/web/index.html'  // Google's Maven repository
+    }
 }
