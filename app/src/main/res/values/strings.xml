@@ -9,4 +9,10 @@
     <string name="select_who_you_are">Select who you are</string>
     <string name="host">HOST</string>
     <string name="user">USER</string>
+    <string name="enter_your_full_name">Enter your Full Name</string>
+    <string name="enter_your_age">Enter your Age</string>
+    <string name="register">Register</string>
+    <string name="enter_your_host_name">Enter your Host Name</string>
+    <string name="register_as_a_host">Register as a Host</string>
+    <string name="enter_your_neu_email_address">Enter your NEU Email Address</string>
 </resources>

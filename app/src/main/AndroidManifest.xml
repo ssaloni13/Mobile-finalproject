@@ -14,10 +14,16 @@
         android:theme="@style/Theme.Mobilefinalproject"
         tools:targetApi="31">
         <activity
-            android:name=".AskingHostOrUserActivity"
+            android:name=".login_registration.RegisterHostActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".login_registration.RegisterUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login_registration.AskingHostOrUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login_registration.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AskingHostOrUserActivity">
+    tools:context=".login_registration.AskingHostOrUserActivity">
 
     <TextView
         android:id="@+id/textViewChooseHostOrUser"
@@ -23,13 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:textSize="25sp"
+        android:textColor="#ffffff"
         app:layout_constraintVertical_weight="1"
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="50dp"
         android:text="@string/host"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="#d41b2b"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/textViewChooseHostOrUser"
@@ -46,6 +47,7 @@
         android:layout_marginTop="15dp"
         android:text="@string/user"
         android:backgroundTint="#d41b2b"
+        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_host" />
