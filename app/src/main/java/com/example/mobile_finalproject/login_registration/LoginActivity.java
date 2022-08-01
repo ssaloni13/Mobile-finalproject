@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -100,15 +101,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                // If user is logged in, redirect user / host to the events main page
 
-                // TODO : Check the user type of the current user, and redirects him accordingly to the events main page
+                // Checking whether the email of the user / host has been verified or not
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                // TODO -> If the user is a normal user, redirect him to UserEventsMainActivity
-                // TODO -> Else, redirect him to HostEventsMainActivity
+                if (Objects.requireNonNull(user).isEmailVerified()) {
+                    // Redirect the user to the events main activity
+                    // If user is logged in, redirect user / host to the events main page
 
-                Log.i("UID of logged in user: ",
-                        Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()); // This displays the user id in logcat
+                    // TODO : Check the user type of the current user, and redirects him accordingly to the events main page
+
+                    // TODO -> If the user is a normal user, redirect him to UserEventsMainActivity
+                    // TODO -> Else, redirect him to HostEventsMainActivity
+
+                    Log.i("UID of logged in user: ",
+                            Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()); // This displays the user id in logcat
+                } else {
+                    // Verify the email of the user
+                    user.sendEmailVerification();
+                    Toast.makeText(this,
+                            "Check your Email to Verify your Account", Toast.LENGTH_SHORT).show();
+                }
 
                 progressBar.setVisibility(View.GONE);
             } else {
