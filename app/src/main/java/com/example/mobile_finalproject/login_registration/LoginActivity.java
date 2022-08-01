@@ -118,7 +118,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     // Verify the email of the user
                     user.sendEmailVerification();
-                    // TODO - Debug - Firebase not sending the email for verification
                     Toast.makeText(this,
                             "Check your Email to Verify your Account", Toast.LENGTH_LONG).show();
                 }
