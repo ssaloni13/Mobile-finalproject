@@ -25,14 +25,14 @@ public class AskingHostOrUserActivity extends AppCompatActivity {
     }
 
     private void openHostActivity() {
-        // TODO Open Host activity and send user type: HOST
         Intent intent = new Intent(this, RegisterHostActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     private void openUserActivity() {
-        // TODO Open User activity and send user type: USER
         Intent intent = new Intent(this, RegisterUserActivity.class);
         startActivity(intent);
+        this.finish();
     }
 }

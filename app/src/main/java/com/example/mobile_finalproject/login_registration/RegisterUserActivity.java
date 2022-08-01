@@ -2,6 +2,8 @@ package com.example.mobile_finalproject.login_registration;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.mobile_finalproject.Events.UserEventsMainActivity;
 import com.example.mobile_finalproject.Models.User;
 import com.example.mobile_finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,10 +51,8 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.register_user_button:
-                registerUser();
-                break;
+        if (v.getId() == R.id.register_user_button) {
+            registerUser();
         }
     }
 
@@ -115,11 +118,13 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
                     if (task.isSuccessful()) {
                         // User has been registered successfully
+
+                        // Creating new user as per the User Model Class
                         User user = new User(fullName, age, email, typeOfUser);
 
                                 // Gives us the ID of the registered user
                         FirebaseDatabase.getInstance().getReference("Users")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                                 .setValue(user).addOnCompleteListener(task1 -> {
                                     // To check if data has been inserted into database or not
                                     if (task1.isSuccessful()) {
@@ -129,8 +134,9 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
                                                 Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
 
-                                        // TODO Redirect the user to the main events page
-
+                                        // Redirects the user to the main events page for normal users
+                                        startActivity(new Intent(RegisterUserActivity.this,
+                                                UserEventsMainActivity.class));
 
                                     } else {
                                         Toast.makeText(RegisterUserActivity.this,

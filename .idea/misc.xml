@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_host_events_main.xml" value="0.1671195652173913" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_register_host.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_user_events_main.xml" value="0.1671195652173913" />
       </map>
     </option>
   </component>
