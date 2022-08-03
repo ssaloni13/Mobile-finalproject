@@ -104,23 +104,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // Checking whether the email of the user / host has been verified or not
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                if (Objects.requireNonNull(user).isEmailVerified()) {
-                    // Redirect the user to the events main activity
-                    // If user is logged in, redirect user / host to the events main page
-
-                    // TODO : Check the user type of the current user, and redirects him accordingly to the events main page
-
-                    // TODO -> If the user is a normal user, redirect him to UserEventsMainActivity
-                    // TODO -> Else, redirect him to HostEventsMainActivity
-
-                    Log.i("UID of logged in user: ",
-                            Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()); // This displays the user id in logcat
-                } else {
+                if (!(Objects.requireNonNull(user).isEmailVerified())) {
+                    // If email is not verified, send the verification link to the user
                     // Verify the email of the user
                     user.sendEmailVerification();
                     Toast.makeText(this,
                             "Check your Email to Verify your Account", Toast.LENGTH_LONG).show();
                 }
+
+                // Redirect the user to the events main activity
+                // If user is logged in, redirect user / host to the events main page
+
+                // TODO : Check the user type of the current user, and redirects him accordingly to the events main page
+
+                // TODO -> If the user is a normal user, redirect him to UserEventsMainActivity
+                // TODO -> Else, redirect him to HostEventsMainActivity
+
+                Log.i("UID of logged in user: ",
+                        Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()); // This displays the user id in logcat
 
                 progressBar.setVisibility(View.GONE);
             } else {
