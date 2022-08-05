@@ -3,6 +3,7 @@ package com.example.mobile_finalproject.login_registration;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,13 +15,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobile_finalproject.Events.HostEventsMainActivity;
+import com.example.mobile_finalproject.Events.UserEventsMainActivity;
 import com.example.mobile_finalproject.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -54,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth = FirebaseAuth.getInstance();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -109,21 +117,65 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // Verify the email of the user
                     user.sendEmailVerification();
                     Toast.makeText(this,
-                            "Check your Email to Verify your Account", Toast.LENGTH_LONG).show();
+                            "Check your Email to Verify your Account",
+                            Toast.LENGTH_LONG).show();
                 }
 
-                // Redirect the user to the events main activity
-                // If user is logged in, redirect user / host to the events main page
+                // Databases References of Users & Hosts
+                DatabaseReference dRefUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+                DatabaseReference dRefHosts = FirebaseDatabase.getInstance().getReference().child("Hosts");
 
-                // TODO : Check the user type of the current user, and redirects him accordingly to the events main page
+                // Checking the user type of the current user,
+                // and redirects him accordingly to the events main page
 
-                // TODO -> If the user is a normal user, redirect him to UserEventsMainActivity
-                // TODO -> Else, redirect him to HostEventsMainActivity
+                dRefUsers.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
-                Log.i("UID of logged in user: ",
-                        Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()); // This displays the user id in logcat
+                        List<String> listOfUsersEmail = new ArrayList<>();
+
+                        for (DataSnapshot snapshot: datasnapshot.getChildren()) {
+                            String tempEmail = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
+                            listOfUsersEmail.add(tempEmail);
+                        }
+
+                        // If the current User is a Normal user, redirect to UserEventsMainActivity
+                        if (listOfUsersEmail.contains(user.getEmail())) {
+                            startActivity(new Intent(LoginActivity.this, UserEventsMainActivity.class));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.w("Error: ", "loadPost:onCancelled", error.toException());
+                    }
+                });
+
+                dRefHosts.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+
+                        List<String> listOfHostsEmail = new ArrayList<>();
+
+                        for (DataSnapshot snapshot: datasnapshot.getChildren()) {
+                            String tempEmail = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
+                            listOfHostsEmail.add(tempEmail);
+                        }
+
+                        // If the current User is a Host user, redirect to HostEventsMainActivity
+                        if (listOfHostsEmail.contains(user.getEmail())) {
+                            startActivity(new Intent(LoginActivity.this, HostEventsMainActivity.class));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.w("Error: ", "loadPost:onCancelled", error.toException());
+                    }
+                });
 
                 progressBar.setVisibility(View.GONE);
+                this.finish();
             } else {
                 Toast.makeText(LoginActivity.this,
                         "Failed to Login! Please check your Credentials",
