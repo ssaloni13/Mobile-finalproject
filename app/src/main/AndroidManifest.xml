@@ -12,30 +12,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mobilefinalproject"
+        android:configChanges="orientation|screenSize"
+        android:screenOrientation="portrait"
+        tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
             android:name=".login_registration.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Events.HostEventsMainActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Events.UserEventsMainActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".login_registration.RegisterHostActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".login_registration.RegisterUserActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".login_registration.AskingHostOrUserActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".login_registration.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
