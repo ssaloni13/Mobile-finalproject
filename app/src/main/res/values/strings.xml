@@ -16,4 +16,6 @@
     <string name="register_as_a_host">Register as a Host</string>
     <string name="enter_your_neu_email_address">Enter your NEU Email Address</string>
     <string name="reset_password">Reset Password</string>
+    <string name="NUvent">string</string>
+    <string name="NUvent2">NUvent</string>
 </resources>
