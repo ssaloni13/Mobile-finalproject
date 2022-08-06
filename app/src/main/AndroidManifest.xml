@@ -17,6 +17,9 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
+            android:name=".AddEventActivity"
+            android:exported="false" />
+        <activity
             android:name=".login_registration.ForgotPasswordActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
@@ -43,6 +46,12 @@
         <activity
             android:name=".login_registration.LoginActivity"
             android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".HostProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HostMainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
