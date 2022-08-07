@@ -1,4 +1,4 @@
-package com.example.mobile_finalproject;
+package com.example.mobile_finalproject.Models;
 
 public class ExampleItem {
     private int imageResource;

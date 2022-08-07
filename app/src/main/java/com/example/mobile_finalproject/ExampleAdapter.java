@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobile_finalproject.Models.ExampleItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +22,14 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
 
     class ExampleViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView textView1;
-        TextView textView2;
+        TextView textViewEventName;
+        TextView textViewEventDescription;
 
         ExampleViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_view);
-            textView1 = itemView.findViewById(R.id.text_view1);
-            textView2 = itemView.findViewById(R.id.text_view2);
+            textViewEventName = itemView.findViewById(R.id.text_view_event_name);
+            textViewEventDescription = itemView.findViewById(R.id.text_view_event_desc);
         }
     }
 
@@ -50,8 +52,8 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         ExampleItem currentItem = exampleList.get(position);
 
         holder.imageView.setImageResource(currentItem.getImageResource());
-        holder.textView1.setText(currentItem.getName());
-        holder.textView2.setText(currentItem.getDescription());
+        holder.textViewEventName.setText(currentItem.getName());
+        holder.textViewEventDescription.setText(currentItem.getDescription());
     }
 
     @Override

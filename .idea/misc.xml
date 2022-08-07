@@ -3,6 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_add_event.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_host_events_main.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_host_profile.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_main.xml" value="0.2375" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_host.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_user.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_user_events_main.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activityhostmain.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/example_item.xml" value="0.25" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.35280797101449274" />
@@ -17,25 +29,16 @@
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_user_events_main.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2335" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_add_event.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_host_events_main.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_host_profile.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_main.xml" value="0.2375" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_host.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_user.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_user_events_main.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activityhostmain.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/example_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_host_events_main.xml" value="0.1671195652173913" />
+        <entry key="app/src/main/res/layout/activity_host_profile.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_register_host.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_user_events_main.xml" value="0.1671195652173913" />
+        <entry key="app/src/main/res/layout/activityhostmain.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/example_item.xml" value="0.2554347826086957" />
       </map>
     </option>
   </component>

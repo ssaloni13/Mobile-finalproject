@@ -18,7 +18,7 @@
             android:padding="2dp" />
 
         <TextView
-            android:id="@+id/text_view1"
+            android:id="@+id/text_view_event_name"
             android:layout_width="244dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -31,10 +31,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text_view2"
+            android:id="@+id/text_view_event_desc"
             android:layout_width="246dp"
             android:layout_height="82dp"
-            android:layout_below="@+id/text_view1"
+            android:layout_below="@+id/text_view_event_name"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/image_view"
