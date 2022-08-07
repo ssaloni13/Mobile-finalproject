@@ -22,7 +22,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private Button resetPasswordButton;
     private ProgressBar progressBar;
 
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progress_bar);
 
-        auth = FirebaseAuth.getInstance();
+        this.auth = FirebaseAuth.getInstance();
     }
 
     // Helper method to Reset the password
@@ -58,7 +58,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+        this.auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 // If the reset email has been sent
                 Toast.makeText(ForgotPasswordActivity.this,
