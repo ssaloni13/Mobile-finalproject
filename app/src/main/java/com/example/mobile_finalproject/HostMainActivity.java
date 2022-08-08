@@ -54,8 +54,8 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
             this.fillExampleList();
         }
 
-        ImageView profileview = findViewById(R.id.profile);
-        profileview.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = findViewById(R.id.profile);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent  = new Intent(HostMainActivity.this, HostProfileActivity.class);
@@ -65,8 +65,8 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab1 = findViewById(R.id.add_event);
+        fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.out.println(hostemail + "111111111111111111111111111111");
