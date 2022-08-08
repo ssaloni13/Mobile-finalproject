@@ -25,16 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //This code snippet creates a splash screen effect for 5 seconds
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
-                MainActivity.this.startActivity(mainIntent);
-                MainActivity.this.finish();
-            }
-        }, 5000);
-
         //startActivity(new Intent(this, AskingHostOrUserActivity.class));
         /*Intent intent  = new Intent(MainActivity.this, HostMainActivity.class);
         //intent.putExtra("userID", intentUsername);
