@@ -41,5 +41,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         //startActivity(new Intent(this, LoginActivity.class));*/
         //this.finish();
+
+        //This code snippet creates a splash screen effect for 2 seconds
+        new Handler().postDelayed(() -> {
+            final Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
+            MainActivity.this.startActivity(mainIntent);
+            MainActivity.this.finish();
+        }, 2000);
     }
 }

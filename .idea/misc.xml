@@ -3,18 +3,33 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< Updated upstream
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_add_event.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
+=======
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/drawable/search_background.xml" value="0.1025" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_add_event.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_event_full_view.xml" value="0.25" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_host_events_main.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_host_profile.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_login.xml" value="0.25" />
+<<<<<<< Updated upstream
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_main.xml" value="0.2375" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_host.xml" value="0.25" />
+=======
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_host.xml" value="0.2037037037037037" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_user_events_main.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activityhostmain.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/example_item.xml" value="0.25" />
+<<<<<<< Updated upstream
+=======
+        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/menu/example_menu.xml" value="0.25" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.35280797101449274" />
@@ -31,12 +46,29 @@
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2335" />
         <entry key="app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
+<<<<<<< Updated upstream
         <entry key="app/src/main/res/layout/activity_host_events_main.xml" value="0.1671195652173913" />
+=======
+<<<<<<< Updated upstream
+=======
+        <entry key="app/src/main/res/layout/activity_host_events_main.xml" value="0.1671195652173913" />
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+        <entry key="app/src/main/res/layout/activity_host_events_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_host_profile.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26132246376811596" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/activity_register_host.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
+<<<<<<< Updated upstream
         <entry key="app/src/main/res/layout/activity_user_events_main.xml" value="0.1671195652173913" />
+=======
+<<<<<<< Updated upstream
+=======
+        <entry key="app/src/main/res/layout/activity_user_events_main.xml" value="0.1671195652173913" />
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+        <entry key="app/src/main/res/layout/activity_user_events_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activityhostmain.xml" value="0.25" />
         <entry key="app/src/main/res/layout/example_item.xml" value="0.2554347826086957" />
       </map>

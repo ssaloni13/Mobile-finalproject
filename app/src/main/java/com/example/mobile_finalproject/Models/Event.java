@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Event {
 
-    private String eventName, eventAddress, eventDescription, hostEmailId;
+    private String eventName, eventAddress, eventDescription, hostEmailId, eventId;
     private int minAgelimit, maxAgelimit;
     private int eventTicketCost, eventUsersMaxCapacity;
     private Date eventStartDate, eventEndDate;
@@ -16,6 +16,7 @@ public class Event {
 
     public Event(String hostEmailId, String eventName, String eventAddress, String eventDescription, Date eventStartDate, Date eventEndDate,
     int evenTicketCost, int eventUsersMaxCapacity, int minAgelimit, int maxAgelimit) {
+        this.eventId = UUID.randomUUID().toString();
         this.hostEmailId = hostEmailId;
         this.eventName = eventName;
         this.eventAddress = eventAddress;
@@ -27,6 +28,10 @@ public class Event {
         this.minAgelimit = minAgelimit;
         this.maxAgelimit = maxAgelimit;
     }
+
+    public String getEventId(){ return  eventId;}
+
+    public void setEventId(String eventId){ this.eventId = eventId; }
 
     public String getHostEmailId(){ return  hostEmailId;}
 
