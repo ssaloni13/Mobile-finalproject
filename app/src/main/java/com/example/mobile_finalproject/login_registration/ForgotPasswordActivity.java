@@ -2,7 +2,10 @@ package com.example.mobile_finalproject.login_registration;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -10,10 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.mobile_finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -24,10 +29,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    ConstraintLayout constraintLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+
 
         editTextEmail = findViewById(R.id.email);
 
@@ -37,6 +45,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
 
         this.auth = FirebaseAuth.getInstance();
+
+        //
+        constraintLayout = findViewById(R.id.constraint);
     }
 
     // Helper method to Reset the password
@@ -67,6 +78,24 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             } else {
                 // TODO - Create a Snack bar that says "This email does not exist in the system, Register"
                 //Toast.makeText(ForgotPasswordActivity.this, "Error! Try Again.", Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(constraintLayout, "", Snackbar.LENGTH_INDEFINITE);
+                View custom = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
+                snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+                Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+                snackbarLayout.setPadding(0,200,0,0);
+
+
+                (custom.findViewById(R.id.registerText)).setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), AskingHostOrUserActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                snackbarLayout.addView(custom, 0);
+                snackbar.show();
             }
             progressBar.setVisibility(View.GONE);
         });
