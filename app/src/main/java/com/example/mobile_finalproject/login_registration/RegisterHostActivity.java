@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mobile_finalproject.Events.HostEventsMainActivity;
+import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.Models.Host;
 import com.example.mobile_finalproject.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -127,9 +128,12 @@ public class RegisterHostActivity extends AppCompatActivity {
                                                 Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
 
+
                                         // Redirects the Host to the main events page for hosts
-                                        startActivity(new Intent(RegisterHostActivity.this,
-                                                HostEventsMainActivity.class));
+                                        Intent intent = new Intent(RegisterHostActivity.this,
+                                                HostMainActivity.class);
+                                        intent.putExtra("hostemail", email);
+                                        startActivity(intent);
 
                                     } else {
                                         Toast.makeText(RegisterHostActivity.this,
