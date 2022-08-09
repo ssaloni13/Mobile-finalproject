@@ -121,8 +121,8 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
             }
         });
 
-        exampleList.add(new ExampleItem(R.drawable.ic_launcher_foreground, "One", "Ten", "rao"));
-        exampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Two", "Eleven", "rao1"));
+        //exampleList.add(new ExampleItem(R.drawable.ic_launcher_foreground, "One", "Ten", "rao"));
+        //exampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Two", "Eleven", "rao1"));
 
         System.out.println("size" + exampleList.size());
 

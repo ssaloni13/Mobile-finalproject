@@ -17,7 +17,7 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
-            android:name=".HostProfileandAddEventsActivity"
+            android:name=".EditEventActivity"
             android:exported="false" />
         <activity
             android:name=".GenericUserHostProfileActivity"
