@@ -76,8 +76,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         "Check your Email to Reset the Password", Toast.LENGTH_LONG).show();
                 this.finish();
             } else {
-                // TODO - Create a Snack bar that says "This email does not exist in the system, Register"
-                //Toast.makeText(ForgotPasswordActivity.this, "Error! Try Again.", Toast.LENGTH_LONG).show();
                 Snackbar snackbar = Snackbar.make(constraintLayout, "", Snackbar.LENGTH_INDEFINITE);
                 View custom = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
                 snackbar.getView().setBackgroundColor(Color.TRANSPARENT);

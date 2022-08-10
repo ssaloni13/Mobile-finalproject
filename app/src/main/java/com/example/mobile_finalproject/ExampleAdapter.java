@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 
 import android.widget.TextView;
@@ -13,14 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobile_finalproject.Models.ExampleItem;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobile_finalproject.Models.ExampleItem;
 import com.example.mobile_finalproject.Events.EventsListSelectItem;
 
 import java.util.ArrayList;
@@ -40,7 +34,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
 
         ExampleViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.image_view);
+            imageView = itemView.findViewById(R.id.image_view_event_small_img);
             textViewEventName = itemView.findViewById(R.id.text_view_event_name);
             textViewEventDescription = itemView.findViewById(R.id.text_view_event_desc);
             eventsListLayout = itemView.findViewById((R.id.EventsListCardLayoutMain));

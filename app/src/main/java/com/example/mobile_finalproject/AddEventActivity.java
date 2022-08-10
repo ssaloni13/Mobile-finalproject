@@ -4,28 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mobile_finalproject.Events.HostEventsMainActivity;
 import com.example.mobile_finalproject.Models.Event;
-import com.example.mobile_finalproject.Models.Host;
-import com.example.mobile_finalproject.login_registration.RegisterHostActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-
-import java.util.ArrayList;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class AddEventActivity extends AppCompatActivity {
 
@@ -44,7 +30,7 @@ public class AddEventActivity extends AppCompatActivity {
             System.out.println(hostemail + "fffffffffffffffffffffffffffffff");
         }
 
-        Button b = findViewById(R.id.registerbutton);
+        Button b = findViewById(R.id.add_event_button);
         b.setOnClickListener(v -> {
             registerNewEvent(hostemail);
             // Redirects the Host to the main events page for hosts
