@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewUserProfileImage"
         android:layout_width="412dp"
         android:layout_height="105dp"
         android:layout_marginTop="313dp"
@@ -18,4 +18,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/small_logo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

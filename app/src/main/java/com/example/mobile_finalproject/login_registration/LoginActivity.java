@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.mobile_finalproject.Events.HostEventsMainActivity;
 import com.example.mobile_finalproject.Events.UserEventsMainActivity;
 import com.example.mobile_finalproject.Models.SessionManagement;
+import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -209,7 +210,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (listOfHostsEmail.contains(user.getEmail())) {
                     sessionManagement.saveSession(user);
                     sessionManagement.setUserLoggedIn(1);
-                    startActivity(new Intent(LoginActivity.this, HostEventsMainActivity.class));
+                    Intent intent = new Intent(LoginActivity.this, HostMainActivity.class);
+                    intent.putExtra("hostemail", user.getEmail());
+                    startActivity(intent);
                     finish();
                 }
             }
