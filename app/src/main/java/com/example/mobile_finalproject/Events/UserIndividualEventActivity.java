@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class UserEventsMainActivity extends AppCompatActivity {
+public class UserIndividualEventActivity extends AppCompatActivity {
 
     private Button logoutButton;
     public ArrayList<String> registeredEvents;
@@ -30,7 +30,7 @@ public class UserEventsMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_events_main);
+        setContentView(R.layout.activity_user_individual_event_layout);
 
         logoutButton = findViewById(R.id.button_logout);
         logoutButton.setOnClickListener(v -> logout());
@@ -77,7 +77,7 @@ public class UserEventsMainActivity extends AppCompatActivity {
 
     // Helper method to remove the session and log out the user
     private void logout() {
-        SessionManagement sessionManagement = new SessionManagement(UserEventsMainActivity.this);
+        SessionManagement sessionManagement = new SessionManagement(UserIndividualEventActivity.this);
         sessionManagement.removeSession();
 
         moveToLoginActivity();
@@ -85,7 +85,7 @@ public class UserEventsMainActivity extends AppCompatActivity {
 
     // Once the session is removed, move the user to login activity
     private void moveToLoginActivity() {
-        Intent intent = new Intent(UserEventsMainActivity.this, MainActivity.class);
+        Intent intent = new Intent(UserIndividualEventActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

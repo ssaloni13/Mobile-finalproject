@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.example.mobile_finalproject.R;
 import com.google.firebase.database.DataSnapshot;
@@ -58,15 +56,12 @@ public class UserEventsListActivity extends AppCompatActivity {
             }
         });
 
-        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-                    if (position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(UserEventsListActivity.this, UserEventsMainActivity.class);
-                        startActivity(intent);
+        adapter.setOnItemClickListener(position -> {
+                if (position != RecyclerView.NO_POSITION) {
+                    Intent intent = new Intent(UserEventsListActivity.this, UserIndividualEventActivity.class);
+                    startActivity(intent);
 
-                    }
                 }
-        });
+            });
     }
 }

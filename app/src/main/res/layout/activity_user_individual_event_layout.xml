@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Events.UserEventsMainActivity">
+    tools:context=".Events.UserIndividualEventActivity">
 
     <Button
         android:id="@+id/button_logout"
@@ -15,6 +15,8 @@
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="31dp"
         android:text="User Logout"
+        android:textColor="#ffffff"
+        android:backgroundTint="#d41b2b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonUserEventsReg"
@@ -27,6 +29,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         android:text="Your Events"
+        android:textColor="#ffffff"
+        android:backgroundTint="#d41b2b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_logout"
         app:layout_constraintHorizontal_bias="0.01"
@@ -42,6 +46,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="121dp"
         android:text="Register Here!"
+        android:textColor="#ffffff"
+        android:backgroundTint="#d41b2b"
         app:layout_constraintBottom_toTopOf="@+id/button_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

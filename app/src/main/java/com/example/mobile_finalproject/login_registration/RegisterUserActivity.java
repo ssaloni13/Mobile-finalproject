@@ -1,6 +1,5 @@
 package com.example.mobile_finalproject.login_registration;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,12 +11,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.mobile_finalproject.Events.UserEventsMainActivity;
+import com.example.mobile_finalproject.Events.UserIndividualEventActivity;
 import com.example.mobile_finalproject.Models.User;
 import com.example.mobile_finalproject.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -136,7 +132,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
                                         // Redirects the user to the main events page for normal users
                                         startActivity(new Intent(RegisterUserActivity.this,
-                                                UserEventsMainActivity.class));
+                                                UserIndividualEventActivity.class));
 
                                     } else {
                                         Toast.makeText(RegisterUserActivity.this,
