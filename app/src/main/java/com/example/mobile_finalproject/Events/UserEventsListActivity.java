@@ -48,6 +48,8 @@ public class UserEventsListActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String eName = snapshot.child("eventName").getValue().toString();
                     items.add(eName);
+
+                    //Image from db
                 }
                 adapter.notifyDataSetChanged();
             }
