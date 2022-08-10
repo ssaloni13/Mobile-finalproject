@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.mobile_finalproject.Events.UserEventsListActivity;
-import com.example.mobile_finalproject.Events.UserEventsMainActivity;
+import com.example.mobile_finalproject.Events.UserIndividualEventActivity;
 import com.example.mobile_finalproject.Models.User;
 import com.example.mobile_finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
