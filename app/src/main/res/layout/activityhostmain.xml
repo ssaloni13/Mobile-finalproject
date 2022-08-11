@@ -58,8 +58,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
-        android:textColor="#ffffff"
-        android:backgroundTint="#d41b2b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/plus" />
@@ -70,8 +68,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:textColor="#ffffff"
-        android:backgroundTint="#d41b2b"
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/add_event"
         app:layout_constraintEnd_toEndOf="parent"

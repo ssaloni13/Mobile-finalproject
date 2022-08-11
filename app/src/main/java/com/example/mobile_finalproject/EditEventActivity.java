@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +20,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 public class EditEventActivity extends AppCompatActivity {
 
     String eventId, hostEmailId;
+    private StorageReference mStorageStickerReference1;
+    private ImageView imageview;
     private EditText editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
 
     @Override
@@ -43,6 +53,7 @@ public class EditEventActivity extends AppCompatActivity {
         editTextEnd = findViewById(R.id.event_end1);
         editTextCap = findViewById(R.id.event_capacity1);
         editTextCost = findViewById(R.id.event_cost1);
+        imageview = findViewById(R.id.imageView_event_poster);
 
 
         FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -59,7 +70,9 @@ public class EditEventActivity extends AppCompatActivity {
                         String description = userValue.child("eventDescription").getValue().toString();
                         String eventId = userValue.child("eventId").getValue().toString();
 
-                        System.out.println(name + " " + description + " " + eventId);
+                        System.out.println(userValue);
+                        System.out.println(userValue.child("eventStartDate").getValue().toString());
+
 
                         hostEmailId = userValue.child("hostEmailId").getValue().toString();
 
@@ -68,10 +81,25 @@ public class EditEventActivity extends AppCompatActivity {
                         editTextDes.setText(userValue.child("eventDescription").getValue().toString());
                         editTextMax.setText(userValue.child("maxAgelimit").getValue().toString());
                         editTextMin.setText(userValue.child("minAgelimit").getValue().toString());
-                        editTextStart.setText("12");
-                        editTextEnd.setText("13");
+                        editTextStart.setText(userValue.child("eventStartDate").getValue().toString());
+                        editTextEnd.setText(userValue.child("eventEndDate").getValue().toString());
                         editTextCap.setText(userValue.child("eventUsersMaxCapacity").getValue().toString());
                         editTextCost.setText(userValue.child("eventTicketCost").getValue().toString());
+
+                        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
+                        if(mStorageStickerReference1==null){ continue;}
+                        File localFileSticker1 = null;
+                        try {
+                            localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        File finalLocalFileSticker = localFileSticker1;
+                        mStorageStickerReference1.getFile(localFileSticker1)
+                                .addOnSuccessListener(taskSnapshot -> {
+                                    Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                                    imageview.setImageBitmap(bitmap1);
+                                });
 
                     }
                 }
@@ -129,7 +157,7 @@ public class EditEventActivity extends AppCompatActivity {
                         System.out.println("rao1" + userValue);
                         String hostemail = userValue.child("hostEmailId").getValue().toString();
 
-                        Event event = new Event(hostemail, event_Name, event_Address, event_description, null, null, event_cost, event_cap, event_max, event_min);
+                        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_max, event_min);
                         event.setEventId(eventId);
 
                         myRefFireBase.child("Events").child(userValue.getKey()).setValue(event);
