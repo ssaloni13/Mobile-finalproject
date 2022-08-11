@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mobile_finalproject.Models.ExampleItem;
@@ -18,13 +21,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class EventFullViewActivity extends AppCompatActivity {
 
     String eventId;
+    private StorageReference mStorageStickerReference1;
     private TextView editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,7 @@ public class EventFullViewActivity extends AppCompatActivity {
         editTextEnd = findViewById(R.id.event_end1);
         editTextCap = findViewById(R.id.event_capacity1);
         editTextCost = findViewById(R.id.event_cost1);
+        imageView = findViewById(R.id.imageView2);
 
 
         FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,10 +79,25 @@ public class EventFullViewActivity extends AppCompatActivity {
                         editTextDes.setText(userValue.child("eventDescription").getValue().toString());
                         editTextMax.setText(userValue.child("maxAgelimit").getValue().toString());
                         editTextMin.setText(userValue.child("minAgelimit").getValue().toString());
-                        editTextStart.setText("12");
-                        editTextEnd.setText("13");
+                        editTextStart.setText(userValue.child("eventStartDate").getValue().toString());
+                        editTextEnd.setText(userValue.child("eventEndDate").getValue().toString());
                         editTextCap.setText(userValue.child("eventUsersMaxCapacity").getValue().toString());
                         editTextCost.setText(userValue.child("eventTicketCost").getValue().toString());
+
+                        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
+                        if(mStorageStickerReference1==null){ continue;}
+                        File localFileSticker1 = null;
+                        try {
+                            localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        File finalLocalFileSticker = localFileSticker1;
+                        mStorageStickerReference1.getFile(localFileSticker1)
+                                .addOnSuccessListener(taskSnapshot -> {
+                                    Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                                    imageView.setImageBitmap(bitmap1);
+                                });
 
                     }
                 }

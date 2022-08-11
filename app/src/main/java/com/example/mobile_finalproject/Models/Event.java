@@ -8,13 +8,13 @@ public class Event {
     private String eventName, eventAddress, eventDescription, hostEmailId, eventId;
     private int minAgelimit, maxAgelimit;
     private int eventTicketCost, eventUsersMaxCapacity;
-    private Date eventStartDate, eventEndDate;
+    private String eventStartDate, eventEndDate;
     // TODO - How to store EventStartTime
 
     public Event() {
     }
 
-    public Event(String hostEmailId, String eventName, String eventAddress, String eventDescription, Date eventStartDate, Date eventEndDate,
+    public Event(String hostEmailId, String eventName, String eventAddress, String eventDescription, String eventStartDate, String eventEndDate,
     int evenTicketCost, int eventUsersMaxCapacity, int minAgelimit, int maxAgelimit) {
         this.eventId = UUID.randomUUID().toString();
         this.hostEmailId = hostEmailId;
@@ -69,17 +69,17 @@ public class Event {
 
     public void setMaxAgelimit(int maxAgelimit) { this.maxAgelimit = maxAgelimit; }
 
-    public Date getEventStartDate() {
+    public String getEventStartDate() {
         return eventStartDate;
     }
 
-    public void setEventStartDate(Date eventStartDate) { this.eventStartDate = eventStartDate; }
+    public void setEventStartDate(String eventStartDate) { this.eventStartDate = eventStartDate; }
 
-    public Date getEventEndDate() {
+    public String getEventEndDate() {
         return eventEndDate;
     }
 
-    public void setEventEndDate(Date eventEndDate) {
+    public void setEventEndDate(String eventEndDate) {
         this.eventEndDate = eventEndDate;
     }
 
