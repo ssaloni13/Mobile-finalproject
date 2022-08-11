@@ -15,15 +15,15 @@
 
         <ImageView
             android:id="@+id/image_view_event_small_img"
-            android:layout_width="116dp"
+            android:layout_width="133dp"
             android:layout_height="match_parent"
-            android:padding="2dp"
             android:adjustViewBounds="true"
+            android:padding="2dp"
             android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/text_view_event_name"
-            android:layout_width="244dp"
+            android:layout_width="234dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="34dp"
@@ -36,8 +36,8 @@
 
         <TextView
             android:id="@+id/text_view_event_desc"
-            android:layout_width="246dp"
-            android:layout_height="82dp"
+            android:layout_width="240dp"
+            android:layout_height="84dp"
             android:layout_below="@+id/text_view_event_name"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"

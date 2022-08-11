@@ -1,5 +1,7 @@
 package com.example.mobile_finalproject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,11 @@ import com.example.mobile_finalproject.Models.ExampleItem;
 import androidx.cardview.widget.CardView;
 
 import com.example.mobile_finalproject.Events.EventsListSelectItem;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +31,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     private List<ExampleItem> exampleList;
     private List<ExampleItem> exampleListFull;
     private EventsListSelectItem eventsListSelectItem;
+    private StorageReference mStorageStickerReference1;
 
     class ExampleViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -60,7 +67,29 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         ExampleItem currentItem = exampleList.get(position);
 
-        holder.imageView.setImageResource(currentItem.getImageResource());
+        //holder.imageView.setImageResource(currentItem.getImageResource());
+        //holder.imageView.setImageBitmap(currentItem.getBitmap());
+
+
+        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + currentItem.getEventId());
+        if(mStorageStickerReference1==null){
+            holder.imageView.setImageResource(currentItem.getImageResource());
+        }
+        else {
+            File localFileSticker1 = null;
+            try {
+                localFileSticker1 = File.createTempFile("sticker1", "jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            File finalLocalFileSticker = localFileSticker1;
+            mStorageStickerReference1.getFile(localFileSticker1)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                        holder.imageView.setImageBitmap(bitmap1);
+                    });
+        }
+
         holder.textViewEventName.setText(currentItem.getName());
         holder.textViewEventDescription.setText(currentItem.getDescription());
 

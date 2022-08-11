@@ -124,10 +124,14 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
                                 .addOnSuccessListener(taskSnapshot -> {
                                     Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
                                     //v.setImageBitmap(bitmap1);
+                                    System.out.println("000000000" + bitmap1);
                                 });
 
 
+                        Bitmap bitmap1 = null;
+                        System.out.println("000000000" + bitmap1);
                         exampleList.add(new ExampleItem(
+                                bitmap1,
                                 R.drawable.ic_launcher_background,
                                 name, description, eventId));
                     }

@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/textView_upload_image_text"
         android:layout_width="160dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:text="Upload Poster"
         app:layout_constraintBottom_toTopOf="@+id/event_name"
