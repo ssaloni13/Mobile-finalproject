@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.mobile_finalproject.Events.UserEventsMainActivity;
+import com.example.mobile_finalproject.Events.UserEventsListActivity;
+import com.example.mobile_finalproject.Events.UserIndividualEventActivity;
 import com.example.mobile_finalproject.Models.User;
 import com.example.mobile_finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -136,7 +137,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
 
                                         // Redirects the user to the main events page for normal users
                                         startActivity(new Intent(RegisterUserActivity.this,
-                                                UserEventsMainActivity.class));
+                                                UserEventsListActivity.class));
 
                                     } else {
                                         Toast.makeText(RegisterUserActivity.this,

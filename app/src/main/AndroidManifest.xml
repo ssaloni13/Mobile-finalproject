@@ -23,26 +23,15 @@
             android:name=".UploadImageActivity"
             android:exported="false" />
         <activity
-            android:name=".EditEventActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GenericUserHostProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddEventActivity"
-            android:exported="false" />
-        <activity
             android:name=".login_registration.ForgotPasswordActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".EventFullViewActivity"
-            android:exported="false" />
         <activity
             android:name=".Events.HostEventsMainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Events.UserEventsMainActivity"
+            android:name=".Events.UserIndividualEventActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -62,11 +51,27 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HostProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".HostMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddEventActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditEventActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EventFullViewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HostProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

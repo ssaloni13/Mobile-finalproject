@@ -53,7 +53,7 @@ public class EditEventActivity extends AppCompatActivity {
         editTextEnd = findViewById(R.id.event_end1);
         editTextCap = findViewById(R.id.event_capacity1);
         editTextCost = findViewById(R.id.event_cost1);
-        imageview = findViewById(R.id.imageView2);
+        imageview = findViewById(R.id.imageView_event_poster);
 
 
         FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {

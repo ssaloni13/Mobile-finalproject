@@ -31,7 +31,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.mobile_finalproject.Events.HostEventsMainActivity;
 import com.example.mobile_finalproject.Models.Event;
 import com.example.mobile_finalproject.Models.Host;
 import com.example.mobile_finalproject.login_registration.RegisterHostActivity;
@@ -41,7 +40,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,14 +84,14 @@ public class AddEventActivity extends AppCompatActivity {
             System.out.println(hostemail + "fffffffffffffffffffffffffffffff");
         }
 
-        Button b = findViewById(R.id.registerbutton);
+        Button b = findViewById(R.id.add_event_button);
         b.setOnClickListener(v -> {
             registerNewEvent(hostemail);
         });
 
 
-        v = findViewById(R.id.imageView2);
-        Button b1 = findViewById(R.id.uploadimage);
+        v = findViewById(R.id.imageView_event_poster);
+        Button b1 = findViewById(R.id.textView_upload_image_text);
         b1.setOnClickListener(v -> {
             checkAndRequestPermissions(AddEventActivity.this);
             chooseImage(AddEventActivity.this);

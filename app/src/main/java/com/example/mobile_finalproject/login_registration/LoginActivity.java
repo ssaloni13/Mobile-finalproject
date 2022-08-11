@@ -15,8 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mobile_finalproject.Events.HostEventsMainActivity;
-import com.example.mobile_finalproject.Events.UserEventsMainActivity;
+import com.example.mobile_finalproject.Events.UserIndividualEventActivity;
 import com.example.mobile_finalproject.Models.SessionManagement;
 import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.R;
@@ -184,7 +183,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (listOfUsersEmail.contains(user.getEmail())) {
                     sessionManagement.saveSession(user);
                     sessionManagement.setUserLoggedIn(1);
-                    startActivity(new Intent(LoginActivity.this, UserEventsMainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, UserIndividualEventActivity.class));
                     finish();
                 }
             }
