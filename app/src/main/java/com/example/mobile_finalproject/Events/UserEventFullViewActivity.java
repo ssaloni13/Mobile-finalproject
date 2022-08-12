@@ -2,6 +2,8 @@ package com.example.mobile_finalproject.Events;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,10 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mobile_finalproject.ExampleAdapter;
+import com.example.mobile_finalproject.Models.Event;
+import com.example.mobile_finalproject.Models.ExampleItem;
 import com.example.mobile_finalproject.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -22,11 +29,13 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class UserEventFullViewActivity extends AppCompatActivity {
 
-    String eventId;
+    String eventId, usermail;
     private StorageReference mStorageStickerReference1;
     private TextView editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
     private ImageView imageView;
@@ -39,8 +48,11 @@ public class UserEventFullViewActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             eventId = extras.getString("eventId");
+            usermail = extras.getString("usermail");
             System.out.println(eventId + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         }
+
+        Button button1 = findViewById(R.id.registered_users);
 
         editTextEventName = findViewById(R.id.event_name1);
         editTextAddress = findViewById(R.id.event_address1);
@@ -79,6 +91,17 @@ public class UserEventFullViewActivity extends AppCompatActivity {
                         editTextEnd.setText(userValue.child("eventEndDate").getValue().toString());
                         editTextCap.setText(userValue.child("eventUsersMaxCapacity").getValue().toString());
                         editTextCost.setText(userValue.child("eventTicketCost").getValue().toString());
+
+                        ArrayList<String> events = (ArrayList<String>) userValue.child("registeredusers").getValue();
+
+                        if(events != null) {
+                            System.out.println(events);
+                            if (events.contains(usermail)) {
+                                button1.setText("UNREGISTER");
+                            } else {
+                                button1.setText("REGISTER");
+                            }
+                        }
 
                         mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
                         if(mStorageStickerReference1==null){ continue;}
@@ -123,13 +146,104 @@ public class UserEventFullViewActivity extends AppCompatActivity {
 
 
         //For register
-        Button button1 = findViewById(R.id.registered_users);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Intent intent  = new Intent(UserEventFullViewActivity.this, RegisteredUserOfEventActivity.class);
                 //intent.putExtra("eventId", eventId);
                 //startActivity(intent);
+
+                // Connect to the firebase.
+                FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
+                DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
+
+
+                 myRefFireBase.child("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        // Iterate over all the users(key) in the child users in the db
+                        for (DataSnapshot userValue : snapshot.getChildren()) {
+
+                            if(userValue.getValue() != null && userValue.child("eventId").getValue().toString().equals(eventId)) {
+                                System.out.println("rao1" + userValue);
+                                String name = userValue.child("eventName").getValue().toString();
+                                String description = userValue.child("eventDescription").getValue().toString();
+                                String eventId = userValue.child("eventId").getValue().toString();
+
+                                ArrayList<String> ar1 = (ArrayList<String>) userValue.child("registeredusers").getValue();
+
+                                if (ar1!=null && ar1.contains(usermail)) {
+                                    ar1.remove(usermail);
+                                    button1.setText("REGISTER");
+                                    Toast.makeText(UserEventFullViewActivity.this, "Unregistered successfully.",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if(ar1==null){
+                                        ar1 = new ArrayList<>();
+                                    }
+                                    ar1.add(usermail);
+                                    button1.setText("UNREGISTER");
+                                    Toast.makeText(UserEventFullViewActivity.this, "Registered successfully.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+
+                                myRefFireBase.child("Events").child(userValue.getKey()).child("registeredusers").setValue(ar1);
+
+                                System.out.println(name + " " + description + " " + eventId);
+
+                                // Avoid adding the logged in user to the friends list
+                                //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+                                //System.out.println("rao1" + name[0] + " ---- " + uid);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+                myRefFireBase.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        // Iterate over all the users(key) in the child users in the db
+                        for (DataSnapshot userValue : snapshot.getChildren()) {
+
+                            if(userValue.getValue() != null && userValue.child("email").getValue().toString().equals(usermail)) {
+
+                                ArrayList<String> a1 = (ArrayList<String>) userValue.child("registeredevents").getValue();
+
+
+                                    if (a1!=null && a1.contains(eventId)) {
+                                        a1.remove(eventId);
+                                    } else {
+                                        if(a1==null){
+                                            a1 = new ArrayList<>();
+                                        }
+                                        a1.add(eventId);
+                                    }
+
+                                    myRefFireBase.child("Users").child(userValue.getKey()).child("registeredevents").setValue(a1);
+                                // Avoid adding the logged in user to the friends list
+                                //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+                                //System.out.println("rao1" + name[0] + " ---- " + uid);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
             }
         });
 

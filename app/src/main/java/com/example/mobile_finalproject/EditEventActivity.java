@@ -157,7 +157,7 @@ public class EditEventActivity extends AppCompatActivity {
                         System.out.println("rao1" + userValue);
                         String hostemail = userValue.child("hostEmailId").getValue().toString();
 
-                        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_max, event_min);
+                        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max);
                         event.setEventId(eventId);
 
                         myRefFireBase.child("Events").child(userValue.getKey()).setValue(event);

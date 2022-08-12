@@ -1,8 +1,11 @@
 package com.example.mobile_finalproject.Models;
 
+import java.util.ArrayList;
+
 public class User {
 
     public String fullName, age, email, typeOfUser;
+    public ArrayList<String> registeredevents;
 
     public User() {
 
@@ -13,7 +16,12 @@ public class User {
         this.age = age;
         this.email = email;
         this.typeOfUser = typeOfUser;
+        this.registeredevents = new ArrayList<>();
     }
+
+    public ArrayList<String> getRegisteredevents(){ return this.registeredevents; }
+
+    public void setRegisteredevents(ArrayList<String> registeredevents) { this.registeredevents = registeredevents; }
 
     public String getFullName() {
         return fullName;

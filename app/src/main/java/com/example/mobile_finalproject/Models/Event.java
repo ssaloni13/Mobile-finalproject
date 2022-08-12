@@ -12,7 +12,7 @@ public class Event {
     private int eventTicketCost, eventUsersMaxCapacity;
     private String eventStartDate, eventEndDate;
     // TODO - How to store EventStartTime
-    private HashMap<String, String> registeredusers;
+    private ArrayList<String> registeredusers;
 
     public Event() {
     }
@@ -30,7 +30,7 @@ public class Event {
         this.eventUsersMaxCapacity = eventUsersMaxCapacity;
         this.minAgelimit = minAgelimit;
         this.maxAgelimit = maxAgelimit;
-        this.registeredusers = new HashMap<>();
+        this.registeredusers = new ArrayList<>();
     }
 
     public String getEventId(){ return  eventId;}
@@ -87,7 +87,7 @@ public class Event {
         this.eventEndDate = eventEndDate;
     }
 
-    public HashMap<String, String> getRegisteredusers() { return  this.registeredusers;}
+    public ArrayList<String> getRegisteredusers() { return  this.registeredusers;}
 
-    public void  setRegisteredusers(HashMap<String, String> h) { this.registeredusers = registeredusers;}
+    public void  setRegisteredusers(ArrayList<String> h) { this.registeredusers = registeredusers;}
 }
