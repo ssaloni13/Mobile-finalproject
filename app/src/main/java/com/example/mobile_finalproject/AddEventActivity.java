@@ -9,20 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-<<<<<<< Updated upstream
-=======
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
->>>>>>> Stashed changes
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
-<<<<<<< Updated upstream
-=======
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
->>>>>>> Stashed changes
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,10 +28,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-<<<<<<< Updated upstream
-=======
 import android.os.Build;
->>>>>>> Stashed changes
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Patterns;
@@ -89,7 +82,6 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-<<<<<<< Updated upstream
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -99,7 +91,6 @@ public class AddEventActivity extends AppCompatActivity {
             System.out.println(hostemail + "fffffffffffffffffffffffffffffff");
         }
 
-=======
         //Notification check code
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("My notification", "My notification", NotificationManager.IMPORTANCE_DEFAULT);
@@ -108,16 +99,6 @@ public class AddEventActivity extends AppCompatActivity {
 
         }
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            hostemail = extras.getString("hostemail");
-            System.out.println(hostemail + "fffffffffffffffffffffffffffffff");
-        }
-
->>>>>>> Stashed changes
         Button b = findViewById(R.id.add_event_button);
         b.setOnClickListener(v -> {
             registerNewEvent(hostemail);
