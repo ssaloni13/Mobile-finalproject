@@ -20,6 +20,12 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
+            android:name=".UserEventFullViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisteredUserOfEventActivity"
             android:exported="false" />
         <activity
@@ -71,6 +77,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".HostProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Events.UserEventsListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Events.UserEventFullViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

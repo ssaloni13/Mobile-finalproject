@@ -1,5 +1,6 @@
 package com.example.mobile_finalproject.Events;
 
+/*
 import android.content.Context;
 import android.content.Intent;
 import android.provider.CalendarContract;
@@ -18,6 +19,7 @@ import com.example.mobile_finalproject.R;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+
 
     private LayoutInflater layoutInflater;
     private List<String> data;
@@ -72,3 +74,4 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }
     }
 }
+*/

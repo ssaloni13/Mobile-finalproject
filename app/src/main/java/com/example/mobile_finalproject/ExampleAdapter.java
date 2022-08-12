@@ -48,7 +48,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         }
     }
 
-    ExampleAdapter(List<ExampleItem> exampleList, EventsListSelectItem eventsListSelectItem) {
+    public ExampleAdapter(List<ExampleItem> exampleList, EventsListSelectItem eventsListSelectItem) {
         this.exampleList = exampleList;
         this.eventsListSelectItem = eventsListSelectItem;
         exampleListFull = new ArrayList<>(exampleList);

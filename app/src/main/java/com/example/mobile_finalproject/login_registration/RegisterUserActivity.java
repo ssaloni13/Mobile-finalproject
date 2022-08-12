@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.mobile_finalproject.Events.UserEventsListActivity;
 import com.example.mobile_finalproject.Events.UserIndividualEventActivity;
+import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.Models.User;
 import com.example.mobile_finalproject.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -135,9 +136,11 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
                                                 Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
 
-                                        // Redirects the user to the main events page for normal users
-                                        startActivity(new Intent(RegisterUserActivity.this,
-                                                UserEventsListActivity.class));
+                                        // Redirects the Host to the main events page for hosts
+                                        Intent intent = new Intent(RegisterUserActivity.this,
+                                                UserEventsListActivity.class);
+                                        intent.putExtra("useremail", email);
+                                        startActivity(intent);
 
                                     } else {
                                         Toast.makeText(RegisterUserActivity.this,
