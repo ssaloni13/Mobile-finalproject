@@ -120,5 +120,16 @@ public class EventFullViewActivity extends AppCompatActivity {
             }
         });
 
+
+        Button button1 = findViewById(R.id.registered_users);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(EventFullViewActivity.this, RegisteredUserOfEventActivity.class);
+                intent.putExtra("eventId", eventId);
+                startActivity(intent);
+            }
+        });
+
     }
 }

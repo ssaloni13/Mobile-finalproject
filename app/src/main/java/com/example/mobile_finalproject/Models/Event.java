@@ -1,6 +1,8 @@
 package com.example.mobile_finalproject.Models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Event {
@@ -10,6 +12,7 @@ public class Event {
     private int eventTicketCost, eventUsersMaxCapacity;
     private String eventStartDate, eventEndDate;
     // TODO - How to store EventStartTime
+    private HashMap<String, String> registeredusers;
 
     public Event() {
     }
@@ -27,6 +30,7 @@ public class Event {
         this.eventUsersMaxCapacity = eventUsersMaxCapacity;
         this.minAgelimit = minAgelimit;
         this.maxAgelimit = maxAgelimit;
+        this.registeredusers = new HashMap<>();
     }
 
     public String getEventId(){ return  eventId;}
@@ -83,5 +87,7 @@ public class Event {
         this.eventEndDate = eventEndDate;
     }
 
+    public HashMap<String, String> getRegisteredusers() { return  this.registeredusers;}
 
+    public void  setRegisteredusers(HashMap<String, String> h) { this.registeredusers = registeredusers;}
 }
