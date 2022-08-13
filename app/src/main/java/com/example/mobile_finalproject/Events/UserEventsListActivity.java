@@ -83,7 +83,7 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
 
         // FAB 1 - Events
-        FloatingActionButton fab1 = findViewById(R.id.fab_action1);
+        FloatingActionButton fab1 = findViewById(R.id.add_event);
         fab1.setOnClickListener(v -> {
             Intent intent  = new Intent(UserEventsListActivity.this, UserIndividualEventActivity.class);
             intent.putExtra("useremail", useremail);
@@ -91,7 +91,7 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         });
 
         // FAB 2 - Settings
-        FloatingActionButton fab2 = findViewById(R.id.fab_action2);
+        FloatingActionButton fab2 = findViewById(R.id.profile);
         fab2.setOnClickListener(v -> {
             Intent intent  = new Intent(UserEventsListActivity.this, UserProfileActivity.class);
             intent.putExtra("useremail", useremail);
