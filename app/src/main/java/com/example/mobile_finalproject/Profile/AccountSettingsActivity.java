@@ -6,9 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.mobile_finalproject.AddEventActivity;
-import com.example.mobile_finalproject.Events.UserEventsListActivity;
-import com.example.mobile_finalproject.Events.UserIndividualEventActivity;
 import com.example.mobile_finalproject.Profile.AccountSettings.DeactivateAccountActivity;
 import com.example.mobile_finalproject.Profile.AccountSettings.UpdateNameActivity;
 import com.example.mobile_finalproject.Profile.AccountSettings.UpdatePasswordActivity;
@@ -50,18 +47,16 @@ import java.util.List;
 
 public class AccountSettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView userProfileImage;
-    private TextView updateProfilePictureText, userNameValue, emailValue, passwordValue, closeAccountText;
+    private TextView userNameValue, emailValue, passwordValue, closeAccountText;
     // Arrows to redirect to next activity
     private TextView arrow1_name, arrow2_password, arrow3_closeAccount;
 
     private FirebaseUser user;
-    private FirebaseAuth mAuth;
     private Uri filePath;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
     FirebaseStorage storage;
     StorageReference storageReference;
-    ImageView user_profile_image1;
+    ImageView user_profile_image;
     String emailforimage;
     private StorageReference mStorageStickerReference1;
 
@@ -72,16 +67,12 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_account_settings);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mAuth = FirebaseAuth.getInstance();
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        userProfileImage = findViewById(R.id.user_profile_image);
-        updateProfilePictureText = findViewById(R.id.textView_Update_picture);
-        updateProfilePictureText.setOnClickListener(this);
-
         userNameValue = findViewById(R.id.textView_User_Name_Value);
+        userNameValue.setText(user.getDisplayName());
         userNameValue.setOnClickListener(this);
         arrow1_name = findViewById(R.id.arrow1_name);
         arrow1_name.setOnClickListener(this);
@@ -99,21 +90,25 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
         arrow3_closeAccount.setOnClickListener(this);
 
 
-        user_profile_image1 = findViewById(R.id.user_profile_image);
+        user_profile_image = findViewById(R.id.user_profile_image);
         displayNameEmail();
 
-        Button b = findViewById(R.id.textView_Update_picture);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button b = findViewById(R.id.button_Update_picture);
+        b.setOnClickListener(v -> {
 
-                System.out.println("raoooooooooooooooooooooooooooooooooooooooooooo");
-                checkAndRequestPermissions(AccountSettingsActivity.this);
-                chooseImage(AccountSettingsActivity.this);
-                System.out.println("lll" + filePath);
-                uploadImage();
-            }
+            System.out.println("raoooooooooooooooooooooooooooooooooooooooooooo");
+            checkAndRequestPermissions(AccountSettingsActivity.this);
+            chooseImage(AccountSettingsActivity.this);
+            System.out.println("lll" + filePath);
+            uploadImage();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        userNameValue.setText(user.getDisplayName());
     }
 
     // Helper method to display the name and email of the logged in user
@@ -147,7 +142,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
             mStorageStickerReference1.getFile(localFileSticker1)
                     .addOnSuccessListener(taskSnapshot -> {
                         Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
-                        user_profile_image1.setImageBitmap(bitmap1);
+                        user_profile_image.setImageBitmap(bitmap1);
                     });
         }
     }
@@ -156,12 +151,6 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-            // Updating user's profile picture
-            case R.id.textView_Update_picture:
-                // TODO - Re-implement the camera and gallery feature to update profile image
-
-                break;
 
             // Updating User Name
             case R.id.arrow1_name:
@@ -312,7 +301,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        user_profile_image1.setImageBitmap(selectedImage);
+                        user_profile_image.setImageBitmap(selectedImage);
                     }
                     break;
                 case 1:
@@ -325,7 +314,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
                                 cursor.moveToFirst();
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
-                                user_profile_image1.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                user_profile_image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
                             }
                         }

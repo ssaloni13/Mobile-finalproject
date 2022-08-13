@@ -41,6 +41,7 @@
         <entry key="app/src/main/res/layout/activity_edit_event.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_event_full_view.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_generic_profile.xml" value="0.2971014492753623" />
         <entry key="app/src/main/res/layout/activity_generic_user_host_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_host_events_main.xml" value="0.1671195652173913" />
         <entry key="app/src/main/res/layout/activity_host_profile.xml" value="0.2554347826086957" />

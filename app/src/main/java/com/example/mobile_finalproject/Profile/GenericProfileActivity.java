@@ -13,6 +13,8 @@ import com.example.mobile_finalproject.MainActivity;
 import com.example.mobile_finalproject.Models.ExampleItem;
 import com.example.mobile_finalproject.Models.SessionManagement;
 import com.example.mobile_finalproject.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class GenericProfileActivity extends AppCompatActivity {
     private TextView textViewUserName;
     private ImageView userProfileImage;
     private Button buttonAccountSettings, buttonManageEvents, buttonLogout;
+    private FirebaseUser user;
 
     ExampleAdapter adapter;
     List<ExampleItem> exampleList;
@@ -30,7 +33,11 @@ public class GenericProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generic_profile);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         textViewUserName = findViewById(R.id.textView_User_Name);
+        textViewUserName.setText(user.getDisplayName());
+
         userProfileImage = findViewById(R.id.user_profile_image);
 
         //Intent intent  = new Intent(HostProfileActivity.this, HostMainActivity.class);
@@ -44,6 +51,13 @@ public class GenericProfileActivity extends AppCompatActivity {
 
         buttonLogout = findViewById(R.id.button_logout);
         buttonLogout.setOnClickListener(v -> logout());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        textViewUserName.setText(user.getDisplayName());
     }
 
     // Helper method to open account setting activity
