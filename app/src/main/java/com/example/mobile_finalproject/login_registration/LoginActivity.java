@@ -174,10 +174,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
                 List<String> listOfUsersEmail = new ArrayList<>();
+                List<String> age = new ArrayList<>();
 
                 for (DataSnapshot snapshot: datasnapshot.getChildren()) {
                     String tempEmail = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
+                    String age1 = Objects.requireNonNull(snapshot.child("age").getValue()).toString();
                     listOfUsersEmail.add(tempEmail);
+                    age.add(age1);
                 }
 
                 // If the current User is a Normal user, redirect to UserEventsMainActivity
@@ -186,6 +189,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     sessionManagement.setUserLoggedIn(1);
                     Intent intent = new Intent(LoginActivity.this, UserEventsListActivity.class);
                     intent.putExtra("useremail", user.getEmail());
+                    intent.putExtra("userage", age.get(listOfUsersEmail.indexOf(user.getEmail())));
                     startActivity(intent);
                     finish();
                 }

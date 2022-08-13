@@ -1,11 +1,13 @@
 package com.example.mobile_finalproject.Events;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.mobile_finalproject.ExampleAdapter;
@@ -16,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
@@ -31,26 +35,45 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class UserEventsListActivity extends AppCompatActivity implements EventsListSelectItem {
 
+    String months[] = {"January", "February", "March", "April",
+            "May", "June", "July", "August", "September",
+            "October", "November", "December"};
+
+    int currentDay;
+    int currentMonth;
+    int currentYear;
     ExampleAdapter adapter;
     List<ExampleItem> exampleList;
     String useremail;
+    int userage;
     FirebaseDatabase fireBasedatabase;
     DatabaseReference myRefFireBase;
     RecyclerView recyclerViewFriendsList;
     private StorageReference mStorageStickerReference1;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_events_list);
 
+
+        Calendar cal = Calendar.getInstance();
+        currentDay = cal.get(Calendar.DATE);
+        currentMonth = cal.get(Calendar.MONTH) + 1;
+        currentYear = cal.get(Calendar.YEAR);
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             useremail = extras.getString("useremail");
+            userage = Integer.parseInt(extras.getString("userage"));
             System.out.println(useremail + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             exampleList = new ArrayList<>();
             this.fillExampleList();
@@ -83,41 +106,55 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
                 for (DataSnapshot userValue : snapshot.getChildren()) {
 
                     if(userValue.getValue() != null) {
-                        System.out.println("rao1" + userValue);
-                        String name = userValue.child("eventName").getValue().toString();
-                        String description = userValue.child("eventDescription").getValue().toString();
-                        String eventId = userValue.child("eventId").getValue().toString();
 
-                        System.out.println(name + " " + description + " " + eventId);
+                        String s[] = userValue.child("eventEndDate").getValue().toString().split("/");
 
-                        // Avoid adding the logged in user to the friends list
-                        //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
-                        //System.out.println("rao1" + name[0] + " ---- " + uid);
+                        if (
+                                userage >= Integer.parseInt(userValue.child("minAgelimit").getValue().toString()) &&
+                                        userage <= Integer.parseInt(userValue.child("maxAgelimit").getValue().toString()) &&
+                                        currentYear <= Integer.parseInt(s[2]) &&
+                                        currentMonth <= Integer.parseInt(s[1]) &&
+                                        currentDay <= Integer.parseInt(s[0])
 
-                        ImageView v = null;
-                        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
-                        if(mStorageStickerReference1==null){ continue;}
-                        File localFileSticker1 = null;
-                        try {
-                            localFileSticker1 = File.createTempFile("sticker1", "jpg");
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        ){
+                            System.out.println("rao1" + userValue);
+                            String name = userValue.child("eventName").getValue().toString();
+                            String description = userValue.child("eventDescription").getValue().toString();
+                            String eventId = userValue.child("eventId").getValue().toString();
+
+                            System.out.println(name + " " + description + " " + eventId);
+
+                            // Avoid adding the logged in user to the friends list
+                            //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+                            //System.out.println("rao1" + name[0] + " ---- " + uid);
+
+                            ImageView v = null;
+                            mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
+                            if (mStorageStickerReference1 == null) {
+                                continue;
+                            }
+                            File localFileSticker1 = null;
+                            try {
+                                localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            File finalLocalFileSticker = localFileSticker1;
+                            mStorageStickerReference1.getFile(localFileSticker1)
+                                    .addOnSuccessListener(taskSnapshot -> {
+                                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                                        //v.setImageBitmap(bitmap1);
+                                        System.out.println("000000000" + bitmap1);
+                                    });
+
+
+                            Bitmap bitmap1 = null;
+                            System.out.println("000000000" + bitmap1);
+                            exampleList.add(new ExampleItem(
+                                    bitmap1,
+                                    R.drawable.ic_launcher_background,
+                                    name, description, eventId));
                         }
-                        File finalLocalFileSticker = localFileSticker1;
-                        mStorageStickerReference1.getFile(localFileSticker1)
-                                .addOnSuccessListener(taskSnapshot -> {
-                                    Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
-                                    //v.setImageBitmap(bitmap1);
-                                    System.out.println("000000000" + bitmap1);
-                                });
-
-
-                        Bitmap bitmap1 = null;
-                        System.out.println("000000000" + bitmap1);
-                        exampleList.add(new ExampleItem(
-                                bitmap1,
-                                R.drawable.ic_launcher_background,
-                                name, description, eventId));
                     }
                 }
 

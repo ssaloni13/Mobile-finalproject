@@ -35,6 +35,9 @@ import java.util.HashMap;
 
 public class UserEventFullViewActivity extends AppCompatActivity {
 
+    String months[] = {"January", "February", "March", "April",
+            "May", "June", "July", "August", "September",
+            "October", "November", "December"};
     String eventId, usermail;
     private StorageReference mStorageStickerReference1;
     private TextView editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
@@ -75,6 +78,7 @@ public class UserEventFullViewActivity extends AppCompatActivity {
 
                     if(userValue.getValue() != null &&
                             userValue.child("eventId").getValue().toString().equals(eventId)) {
+
                         System.out.println("rao1" + userValue);
                         String name = userValue.child("eventName").getValue().toString();
                         String description = userValue.child("eventDescription").getValue().toString();
@@ -87,8 +91,15 @@ public class UserEventFullViewActivity extends AppCompatActivity {
                         editTextDes.setText(userValue.child("eventDescription").getValue().toString());
                         editTextMax.setText(userValue.child("maxAgelimit").getValue().toString());
                         editTextMin.setText(userValue.child("minAgelimit").getValue().toString());
-                        editTextStart.setText(userValue.child("eventStartDate").getValue().toString());
-                        editTextEnd.setText(userValue.child("eventEndDate").getValue().toString());
+
+                        String start[] = userValue.child("eventStartDate").getValue().toString().split("/");
+                        String start1 = start[0] + "-" + months[Integer.parseInt(start[1])-1] + "-" + start[2];
+                        editTextStart.setText(start1);
+
+                        String end[] = userValue.child("eventEndDate").getValue().toString().split("/");
+                        String end1 = end[0] + "-" + months[Integer.parseInt(end[1])-1] + "-" + end[2];
+                        editTextEnd.setText(end1);
+
                         editTextCap.setText(userValue.child("eventUsersMaxCapacity").getValue().toString());
                         editTextCost.setText(userValue.child("eventTicketCost").getValue().toString());
 
@@ -241,9 +252,6 @@ public class UserEventFullViewActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-
             }
         });
 
