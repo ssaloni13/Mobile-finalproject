@@ -83,13 +83,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 snackbarLayout.setPadding(0,200,0,0);
 
 
-                (custom.findViewById(R.id.registerText)).setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), AskingHostOrUserActivity.class);
-                        startActivity(intent);
-                    }
+                (custom.findViewById(R.id.registerText)).setOnClickListener(v -> {
+                    Intent intent = new Intent(getApplicationContext(), AskingHostOrUserActivity.class);
+                    startActivity(intent);
                 });
 
                 snackbarLayout.addView(custom, 0);

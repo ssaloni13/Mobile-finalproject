@@ -15,9 +15,8 @@ import android.widget.ImageView;
 import com.example.mobile_finalproject.Models.ExampleItem;
 
 import com.example.mobile_finalproject.Events.EventsListSelectItem;
-import com.example.mobile_finalproject.Events.HostEventsMainActivity;
-import com.example.mobile_finalproject.Models.Event;
 
+import com.example.mobile_finalproject.Profile.HostProfileActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,12 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import android.widget.SearchView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
 
 import java.io.File;
 import java.io.IOException;

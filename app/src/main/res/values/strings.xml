@@ -43,4 +43,23 @@
     <string name="i_am_a_host_or_user_text">I am a</string>
     <string name="maximum_age_for_entry_value">Maximum Age for Entry</string>
     <string name="minimum_age_for_entry_value">Minimum Age for Entry</string>
+    <string name="logout">LOGOUT</string>
+    <string name="account_settings">ACCOUNT SETTINGS</string>
+    <string name="manage_events">MANAGE EVENTS</string>
+    <string name="update_profile_picture">Update Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="small_arrow"><![CDATA[>]]></string>
+    <string name="email_text">Email</string>
+    <string name="update_password">Update Password</string>
+    <string name="password_text">Password</string>
+    <string name="account_text">Account</string>
+    <string name="close_your_account">Close your Account</string>
+    <string name="first_last_text">First Last</string>
+    <string name="update_name">Update NAME</string>
+    <string name="enter_your_name_text">Enter your Name</string>
+    <string name="update_password_text">Update Password</string>
+    <string name="current_password_text">Current Password</string>
+    <string name="new_password_text">New Password</string>
+    <string name="confirm_new_password_text">Confirm New Password</string>
+    <string name="deactivate_account_text">Deactivate Account</string>
 </resources>

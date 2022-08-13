@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (task.isSuccessful()) {
 
                 // Checking whether the email of the user / host has been verified or not
-                if (!(Objects.requireNonNull(user).isEmailVerified())) {
+                if (!(user.isEmailVerified())) {
                     // If email is not verified, send the verification link to the user
                     // Verify the email of the user
                     user.sendEmailVerification();

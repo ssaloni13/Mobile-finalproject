@@ -16,6 +16,7 @@ import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.Models.Host;
 import com.example.mobile_finalproject.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
@@ -126,6 +127,12 @@ public class RegisterHostActivity extends AppCompatActivity {
                                         Toast.makeText(RegisterHostActivity.this,
                                                 "Host has been Registered Successfully!",
                                                 Toast.LENGTH_LONG).show();
+
+                                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(fullName).build();
+                                        // Adding Display name for the host
+                                        Objects.requireNonNull(mAuth.getCurrentUser()).updateProfile(profileChangeRequest);
+
                                         progressBar.setVisibility(View.GONE);
 
 

@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
@@ -134,6 +135,13 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
                                         Toast.makeText(RegisterUserActivity.this,
                                                 "User has been Registered Successfully!",
                                                 Toast.LENGTH_LONG).show();
+
+                                        UserProfileChangeRequest profileChangeRequest =
+                                                new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(fullName).build();
+                                        // Adding Display name for the user
+                                        Objects.requireNonNull(mAuth.getCurrentUser()).updateProfile(profileChangeRequest);
+
                                         progressBar.setVisibility(View.GONE);
 
                                         // Redirects the Host to the main events page for hosts
