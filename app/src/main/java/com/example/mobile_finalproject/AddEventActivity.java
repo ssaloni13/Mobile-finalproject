@@ -379,12 +379,14 @@ public class AddEventActivity extends AppCompatActivity {
                     System.out.println("received");
                     startActivityForResult(takePicture, 0);
                     //someActivityResultLauncher.launch(takePicture);
+                    dialogInterface.dismiss();
                 }
                 else if(optionsMenu[i].equals("Choose from Gallery")){
                     // choose from  external storage
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     System.out.println("received");
                     startActivityForResult(pickPhoto , 1);
+                    dialogInterface.dismiss();
                     //someActivityResultLauncher.launch(pickPhoto);
                 }
                 else if (optionsMenu[i].equals("Exit")) {

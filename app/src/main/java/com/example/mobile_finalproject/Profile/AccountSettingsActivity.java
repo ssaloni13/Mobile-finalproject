@@ -283,6 +283,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
                     System.out.println("received");
                     startActivityForResult(takePicture, 0);
                     //someActivityResultLauncher.launch(takePicture);
+                    dialogInterface.dismiss();
                 }
                 else if(optionsMenu[i].equals("Choose from Gallery")){
                     // choose from  external storage
@@ -290,6 +291,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
                     System.out.println("received");
                     startActivityForResult(pickPhoto , 1);
                     //someActivityResultLauncher.launch(pickPhoto);
+                    dialogInterface.dismiss();
                 }
                 else if (optionsMenu[i].equals("Exit")) {
                     dialogInterface.dismiss();

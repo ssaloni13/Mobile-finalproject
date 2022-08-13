@@ -449,6 +449,7 @@ public class EditEventActivity extends AppCompatActivity {
                     Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     System.out.println("received");
                     startActivityForResult(takePicture, 0);
+                    dialogInterface.dismiss();
                     //someActivityResultLauncher.launch(takePicture);
                 }
                 else if(optionsMenu[i].equals("Choose from Gallery")){
@@ -456,6 +457,7 @@ public class EditEventActivity extends AppCompatActivity {
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     System.out.println("received");
                     startActivityForResult(pickPhoto , 1);
+                    dialogInterface.dismiss();
                     //someActivityResultLauncher.launch(pickPhoto);
                 }
                 else if (optionsMenu[i].equals("Exit")) {

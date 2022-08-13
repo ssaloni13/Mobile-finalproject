@@ -8,13 +8,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="384dp"
-        android:layout_height="102dp"
+        android:layout_width="228dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="80dp"
         android:background="#d41b2b"
         android:textColor="#ffffff"
         app:flow_horizontalBias="1.0"
         app:flow_verticalBias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/user_profile_image"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -40,7 +43,7 @@
         android:layout_height="170dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:srcCompat="@mipmap/profile_foreground" />
@@ -52,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_User_Name"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_image"
         tools:ignore="NotSibling">
 
         <LinearLayout
