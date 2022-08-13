@@ -8,16 +8,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="228dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:background="#d41b2b"
         android:textColor="#ffffff"
         app:flow_horizontalBias="1.0"
         app:flow_verticalBias="0.0"
-        app:layout_constraintBottom_toTopOf="@+id/user_profile_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -41,21 +38,22 @@
         android:id="@+id/user_profile_image"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        android:layout_marginTop="116dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         tools:srcCompat="@mipmap/profile_foreground" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
         android:layout_width="409dp"
         android:layout_height="443dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="287dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_User_Name"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="NotSibling">
 
         <LinearLayout
@@ -65,17 +63,17 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" >
 
             <Button
                 android:id="@+id/button_account_settings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#d41b2b"
+                android:textSize="17sp"
                 android:text="@string/account_settings"
-                android:textColor="#ffffff"
-                android:textSize="17sp" />
+                android:backgroundTint="#d41b2b"
+                android:textColor="#ffffff"/>
         </LinearLayout>
 
         <LinearLayout
@@ -92,10 +90,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#d41b2b"
+                android:textSize="17sp"
                 android:text="@string/manage_events"
-                android:textColor="#ffffff"
-                android:textSize="17sp" />
+                android:backgroundTint="#d41b2b"
+                android:textColor="#ffffff"/>
         </LinearLayout>
 
         <LinearLayout
@@ -112,10 +110,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:backgroundTint="#d41b2b"
+                android:textSize="17sp"
                 android:text="@string/logout"
-                android:textColor="#ffffff"
-                android:textSize="17sp" />
+                android:backgroundTint="#d41b2b"
+                android:textColor="#ffffff"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
