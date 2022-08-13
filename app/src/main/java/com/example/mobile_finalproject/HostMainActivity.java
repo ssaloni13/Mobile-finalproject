@@ -54,26 +54,20 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
             this.fillExampleList();
         }
 
-        FloatingActionButton fab = findViewById(R.id.profile);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent  = new Intent(HostMainActivity.this, HostProfileActivity.class);
-                intent.putExtra("hostemail", hostemail);
-                //intent.putExtra("userID", intentUsername);
-                startActivity(intent);
-            }
+        com.getbase.floatingactionbutton.FloatingActionButton fab = findViewById(R.id.profile);
+        fab.setOnClickListener(v -> {
+            Intent intent  = new Intent(HostMainActivity.this, HostProfileActivity.class);
+            intent.putExtra("hostemail", hostemail);
+            //intent.putExtra("userID", intentUsername);
+            startActivity(intent);
         });
 
-        FloatingActionButton fab1 = findViewById(R.id.add_event);
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println(hostemail + "111111111111111111111111111111");
-                Intent intent  = new Intent(HostMainActivity.this, AddEventActivity.class);
-                intent.putExtra("hostemail", hostemail);
-                startActivity(intent);
-            }
+        com.getbase.floatingactionbutton.FloatingActionButton fab1 = findViewById(R.id.add_event);
+        fab1.setOnClickListener(view -> {
+            System.out.println(hostemail + "111111111111111111111111111111");
+            Intent intent  = new Intent(HostMainActivity.this, AddEventActivity.class);
+            intent.putExtra("hostemail", hostemail);
+            startActivity(intent);
         });
     }
 

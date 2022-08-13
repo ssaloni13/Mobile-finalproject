@@ -36,7 +36,7 @@
         <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_current_registrations.xml" value="0.266304347826087" />
-        <entry key="app/src/main/res/layout/activity_deactivate_account.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/activity_deactivate_account.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_edit_event.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_event_full_view.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />

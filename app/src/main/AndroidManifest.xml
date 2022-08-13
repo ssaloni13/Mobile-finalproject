@@ -38,7 +38,7 @@
             android:name=".Profile.AccountSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".Profile.UserProfileActivity"
             android:exported="false" />
         <activity
             android:name=".RegisteredUserOfEventActivity"

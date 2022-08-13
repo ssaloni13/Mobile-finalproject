@@ -1,8 +1,10 @@
-package com.example.mobile_finalproject;
+package com.example.mobile_finalproject.Profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.mobile_finalproject.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 

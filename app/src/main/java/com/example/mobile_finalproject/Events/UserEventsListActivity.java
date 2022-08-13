@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mobile_finalproject.ExampleAdapter;
+import com.example.mobile_finalproject.Profile.UserProfileActivity;
 import com.example.mobile_finalproject.R;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +28,6 @@ import android.widget.ImageView;
 
 import com.example.mobile_finalproject.Models.ExampleItem;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -56,17 +58,22 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
             this.fillExampleList();
         }
 
-        FloatingActionButton fab = findViewById(R.id.profile);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent  = new Intent(UserEventsListActivity.this, UserIndividualEventActivity.class);
-                intent.putExtra("useremail", useremail);
-                //intent.putExtra("userID", intentUsername);
-                startActivity(intent);
-            }
+
+        // FAB 1 - Events
+        FloatingActionButton fab1 = findViewById(R.id.fab_action1);
+        fab1.setOnClickListener(v -> {
+            Intent intent  = new Intent(UserEventsListActivity.this, UserIndividualEventActivity.class);
+            intent.putExtra("useremail", useremail);
+            startActivity(intent);
         });
 
+        // FAB 2 - Settings
+        FloatingActionButton fab2 = findViewById(R.id.fab_action2);
+        fab2.setOnClickListener(v -> {
+            Intent intent  = new Intent(UserEventsListActivity.this, UserProfileActivity.class);
+            intent.putExtra("useremail", useremail);
+            startActivity(intent);
+        });
     }
 
 

@@ -12,14 +12,8 @@ import android.widget.Toast;
 
 import com.example.mobile_finalproject.MainActivity;
 import com.example.mobile_finalproject.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Objects;
 
 public class DeactivateAccountActivity extends AppCompatActivity {
 
@@ -56,6 +50,7 @@ public class DeactivateAccountActivity extends AppCompatActivity {
 
         // Before changing the password, re-authenticating the user
 
+        // TODO - Not able to delete the account
         user.delete().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(DeactivateAccountActivity.this,

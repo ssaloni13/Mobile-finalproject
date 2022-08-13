@@ -6,38 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".HostMainActivity">
 
-
-    <!-- <ImageView
-        android:id="@+id/profile"
-        android:layout_width="72dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@mipmap/profile_foreground" />
-    -->
-
-
-    <!--
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Add Event"
-        android:src="@drawable/plus"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.904" />
-    -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="416dp"
@@ -51,27 +19,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_event"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floating_action_button_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/plus" />
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="#ffffff"
+        app:fab_addButtonColorNormal="#d41b2b"
+        app:fab_addButtonColorPressed="#d24c4a">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/add_event"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_event"
+            app:fab_icon="@drawable/ic_events_white"
+            app:fab_colorNormal="#d41b2b"
+            app:fab_colorPressed="#d24c4a" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile"
+            app:fab_icon="@drawable/ic_settings_white"
+            app:fab_addButtonColorNormal="#d41b2b"
+            app:fab_colorNormal="#d41b2b"
+            app:fab_colorPressed="#d24c4a"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
