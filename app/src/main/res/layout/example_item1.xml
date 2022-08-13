@@ -16,8 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="34dp"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="22dp"
             android:text="User Name"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -29,9 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="34dp"
+            android:layout_marginStart="66dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@+id/text_view_event_name1"
             android:text="User Email"
             android:textSize="20sp" />
 

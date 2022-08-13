@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -50,11 +51,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import com.google.firebase.storage.FirebaseStorage;
@@ -77,6 +82,7 @@ public class AddEventActivity extends AppCompatActivity {
     StorageReference storageReference;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +107,11 @@ public class AddEventActivity extends AppCompatActivity {
 
         Button b = findViewById(R.id.add_event_button);
         b.setOnClickListener(v -> {
-            registerNewEvent(hostemail);
+            try {
+                registerNewEvent(hostemail);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
 
 
@@ -117,7 +127,8 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
     // Helper method to register new hosts in database
-    private void registerNewEvent(String hostemail) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void registerNewEvent(String hostemail) throws ParseException {
 
         editTextEventName = findViewById(R.id.event_name1);
         editTextAddress = findViewById(R.id.event_address1);
@@ -159,23 +170,23 @@ public class AddEventActivity extends AppCompatActivity {
             editTextDes.requestFocus();
             return;
         }
-        if (Integer.toString(event_max).isEmpty()) {
-            editTextMax.setError("Event Max age is Required");
-            editTextMax.requestFocus();
-            return;
-        }
-        if (Integer.toString(event_min).isEmpty()) {
-            editTextMin.setError("Event Min age is Required");
+        if (Integer.toString(event_min).isEmpty() || event_min <=0) {
+            editTextMin.setError("Event Min age is Required and should be greater than 0");
             editTextMin.requestFocus();
             return;
         }
-        if (Integer.toString(event_cap).isEmpty()) {
-            editTextCap.setError("Event Capacity is Required");
+        if (Integer.toString(event_max).isEmpty() || event_max < event_min) {
+            editTextMax.setError("Event Max age is Required and greater than min age");
+            editTextMax.requestFocus();
+            return;
+        }
+        if (Integer.toString(event_cap).isEmpty() || event_cap <= 0) {
+            editTextCap.setError("Event Capacity is Required and should be positive");
             editTextCap.requestFocus();
             return;
         }
-        if (Integer.toString(event_cost).isEmpty()) {
-            editTextCost.setError("Event Cost is Required");
+        if (Integer.toString(event_cost).isEmpty() || event_cost < 0) {
+            editTextCost.setError("Event Cost is Required and should be positive");
             editTextCost.requestFocus();
             return;
         }
@@ -219,6 +230,28 @@ public class AddEventActivity extends AppCompatActivity {
                 return;
             }
         }
+
+        String[] s = event_start.split("/");
+        String[] e = event_end.split("/");
+
+        if(
+
+                !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) && Integer.parseInt(e[1]) >= Integer.parseInt(s[1]) &&
+                        Integer.parseInt(e[0]) >= Integer.parseInt(s[0]) )
+        ){
+            editTextEnd.setError("Event End date should be greater than Start date");
+            editTextEnd.requestFocus();
+            return;
+        }
+
+
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(event_start);
+
+        /*
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH);
+        String start = formatter.format(date1);*/
+        System.out.println(date1);
+
 
         FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");

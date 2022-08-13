@@ -1,12 +1,24 @@
 package com.example.mobile_finalproject;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,28 +27,43 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobile_finalproject.Models.Event;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditEventActivity extends AppCompatActivity {
 
     String eventId, hostEmailId;
+    private Uri filePath;
     private StorageReference mStorageStickerReference1;
     private ImageView imageview;
     private EditText editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -123,6 +150,27 @@ public class EditEventActivity extends AppCompatActivity {
             }
         });
 
+        //for delete
+        Button button1 = findViewById(R.id.button);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletesubmit();
+                Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
+                intent.putExtra("hostemail", hostEmailId);
+                startActivity(intent);
+            }
+        });
+
+        Button button2 = findViewById(R.id.textView_upload_image_text);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkAndRequestPermissions(EditEventActivity.this);
+                chooseImage(EditEventActivity.this);
+            }
+        });
+
 
     }
 
@@ -140,6 +188,97 @@ public class EditEventActivity extends AppCompatActivity {
         String event_end = editTextEnd.getText().toString().trim();
         int event_cap = Integer.parseInt(String.valueOf(editTextCap.getText()));
         int event_cost = Integer.parseInt(String.valueOf(editTextCost.getText()));
+
+
+
+        if (event_Name.isEmpty()) {
+            editTextEventName.setError("Event Name is Required");
+            editTextEventName.requestFocus();
+            return;
+        }
+        if (event_Address.isEmpty()) {
+            editTextAddress.setError("Event Address is Required");
+            editTextAddress.requestFocus();
+            return;
+        }
+        if (event_description.isEmpty()) {
+            editTextDes.setError("Event Description is Required");
+            editTextDes.requestFocus();
+            return;
+        }
+        if (Integer.toString(event_min).isEmpty() || event_min <=0) {
+            editTextMin.setError("Event Min age is Required and should be greater than 0");
+            editTextMin.requestFocus();
+            return;
+        }
+        if (Integer.toString(event_max).isEmpty() || event_max < event_min) {
+            editTextMax.setError("Event Max age is Required and greater than min age");
+            editTextMax.requestFocus();
+            return;
+        }
+        if (Integer.toString(event_cap).isEmpty() || event_cap <= 0) {
+            editTextCap.setError("Event Capacity is Required and should be positive");
+            editTextCap.requestFocus();
+            return;
+        }
+        if (Integer.toString(event_cost).isEmpty() || event_cost < 0) {
+            editTextCost.setError("Event Cost is Required and should be positive");
+            editTextCost.requestFocus();
+            return;
+        }
+        if (event_start.isEmpty()) {
+            editTextStart.setError("Event Start date is Required");
+            editTextStart.requestFocus();
+            return;
+        }
+        else {
+            if (!event_start.matches("^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}$")){
+                editTextStart.setError("Event Start date format is wrong");
+                editTextStart.requestFocus();
+                return;
+            }
+            SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                format.parse(event_start);
+            }catch (ParseException e){
+                editTextStart.setError("Event Start date format is wrong");
+                editTextStart.requestFocus();
+                return;
+            }
+        }
+        if (event_end.isEmpty()) {
+            editTextEnd.setError("Event End date is Required");
+            editTextEnd.requestFocus();
+            return;
+        }
+        else {
+            if (!event_end.matches("^(1[0-9]|0[1-9]|3[0-1]|2[1-9])/(0[1-9]|1[0-2])/[0-9]{4}$")){
+                editTextEnd.setError("Event Start date format is wrong");
+                editTextEnd.requestFocus();
+                return;
+            }
+            SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                format.parse(event_end);
+            }catch (ParseException e){
+                editTextEnd.setError("Event Start date format is wrong");
+                editTextEnd.requestFocus();
+                return;
+            }
+        }
+
+        String[] s = event_start.split("/");
+        String[] e = event_end.split("/");
+
+        if(
+
+                !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) && Integer.parseInt(e[1]) >= Integer.parseInt(s[1]) &&
+                        Integer.parseInt(e[0]) >= Integer.parseInt(s[0]) )
+        ){
+            editTextEnd.setError("Event End date should be greater than Start date");
+            editTextEnd.requestFocus();
+            return;
+        }
 
 
         FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
@@ -161,6 +300,7 @@ public class EditEventActivity extends AppCompatActivity {
                         event.setEventId(eventId);
 
                         myRefFireBase.child("Events").child(userValue.getKey()).setValue(event);
+                        uploadImage(eventId);
 
                         Toast.makeText(EditEventActivity.this,
                                 "Event has been Edited Successfully!",
@@ -176,4 +316,239 @@ public class EditEventActivity extends AppCompatActivity {
 
         });
     }
+
+
+    //todo we need to delete this event for users who registered and notify
+    public void deletesubmit(){
+
+        FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
+
+
+        FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // Iterate over all the users(key) in the child users in the db
+                for (DataSnapshot userValue : snapshot.getChildren()) {
+
+                    if(userValue.getValue() != null &&
+                            userValue.child("eventId").getValue().toString().equals(eventId)) {
+
+
+                        myRefFireBase.child("Events").child(userValue.getKey()).removeValue();
+
+                        Toast.makeText(EditEventActivity.this,
+                                "Event has been Removed Successfully!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+    }
+
+
+
+
+    // UploadImage method
+    private void uploadImage(String eventid)
+    {
+        if (filePath != null) {
+
+            // Code for showing progressDialog while uploading
+            ProgressDialog progressDialog
+                    = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            // Defining the child of storageReference
+            StorageReference ref
+                    = storageReference
+                    .child(
+                            "Images/"
+                                    + eventid);
+
+            // adding listeners on upload
+            // or failure of image
+            ref.putFile(filePath)
+                    .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                                @Override
+                                public void onSuccess(
+                                        UploadTask.TaskSnapshot taskSnapshot)
+                                {
+
+                                    // Image uploaded successfully
+                                    // Dismiss dialog
+                                    progressDialog.dismiss();
+                                    Toast
+                                            .makeText(EditEventActivity.this,
+                                                    "Image Uploaded!!",
+                                                    Toast.LENGTH_SHORT)
+                                            .show();
+                                }
+                            })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e)
+                        {
+
+                            // Error, Image not uploaded
+                            progressDialog.dismiss();
+                            Toast
+                                    .makeText(EditEventActivity.this,
+                                            "Failed " + e.getMessage(),
+                                            Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    })
+                    .addOnProgressListener(
+                            new OnProgressListener<UploadTask.TaskSnapshot>() {
+
+                                // Progress Listener for loading
+                                // percentage on the dialog box
+                                @Override
+                                public void onProgress(
+                                        UploadTask.TaskSnapshot taskSnapshot)
+                                {
+                                    double progress
+                                            = (100.0
+                                            * taskSnapshot.getBytesTransferred()
+                                            / taskSnapshot.getTotalByteCount());
+                                    progressDialog.setMessage(
+                                            "Uploaded "
+                                                    + (int)progress + "%");
+                                }
+                            });
+        }
+    }
+
+
+
+    public void chooseImage(Context context){
+
+
+        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
+        // create a dialog for showing the optionsMenu
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        // set the items in builder
+        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(optionsMenu[i].equals("Take Photo")){
+                    // Open the camera and get the photo
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    System.out.println("received");
+                    startActivityForResult(takePicture, 0);
+                    //someActivityResultLauncher.launch(takePicture);
+                }
+                else if(optionsMenu[i].equals("Choose from Gallery")){
+                    // choose from  external storage
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    System.out.println("received");
+                    startActivityForResult(pickPhoto , 1);
+                    //someActivityResultLauncher.launch(pickPhoto);
+                }
+                else if (optionsMenu[i].equals("Exit")) {
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        filePath = data.getData();
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        imageview.setImageBitmap(selectedImage);
+                    }
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                imageview.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                cursor.close();
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+
+    //check permissions
+    public static boolean checkAndRequestPermissions(final Activity context) {
+        int WExtstorePermission = ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int cameraPermission = ContextCompat.checkSelfPermission(context,
+                Manifest.permission.CAMERA);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CAMERA);
+        }
+        if (WExtstorePermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded
+                    .add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(context, listPermissionsNeeded
+                            .toArray(new String[listPermissionsNeeded.size()]),
+                    REQUEST_ID_MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
+
+
+    // Handled permission Result
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_ID_MULTIPLE_PERMISSIONS:
+                if (ContextCompat.checkSelfPermission(EditEventActivity.this,
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(),
+                                    "FlagUp Requires Access to Camara.", Toast.LENGTH_SHORT)
+                            .show();
+                } else if (ContextCompat.checkSelfPermission(EditEventActivity.this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(),
+                            "FlagUp Requires Access to Your Storage.",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    chooseImage(EditEventActivity.this);
+                }
+                break;
+        }
+    }
+
+
+
+
 }

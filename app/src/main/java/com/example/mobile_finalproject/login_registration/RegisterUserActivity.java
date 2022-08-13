@@ -148,6 +148,7 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
                                         Intent intent = new Intent(RegisterUserActivity.this,
                                                 UserEventsListActivity.class);
                                         intent.putExtra("useremail", email);
+                                        intent.putExtra("userage", age);
                                         startActivity(intent);
 
                                     } else {
