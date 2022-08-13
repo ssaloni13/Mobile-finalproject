@@ -16,7 +16,7 @@ import com.example.mobile_finalproject.R;
 
 import java.util.List;
 
-public class HostProfileActivity extends AppCompatActivity {
+public class GenericProfileActivity extends AppCompatActivity {
 
     private TextView textViewUserName;
     private ImageView userProfileImage;
@@ -28,7 +28,7 @@ public class HostProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_host_profile);
+        setContentView(R.layout.activity_generic_profile);
 
         textViewUserName = findViewById(R.id.textView_User_Name);
         userProfileImage = findViewById(R.id.user_profile_image);
@@ -48,19 +48,19 @@ public class HostProfileActivity extends AppCompatActivity {
 
     // Helper method to open account setting activity
     private void openAccountSettingsActivity() {
-        Intent intent = new Intent(HostProfileActivity.this, AccountSettingsActivity.class);
+        Intent intent = new Intent(GenericProfileActivity.this, AccountSettingsActivity.class);
         startActivity(intent);
     }
 
     // Helper method to open manage events activity
     private void openManageEventsActivity() {
-        Intent intent = new Intent(HostProfileActivity.this, ManageEventsHostActivity.class);
+        Intent intent = new Intent(GenericProfileActivity.this, ManageEventsHostActivity.class);
         startActivity(intent);
     }
 
     // Helper method to remove the session and log out the user
     private void logout() {
-        SessionManagement sessionManagement = new SessionManagement(HostProfileActivity.this);
+        SessionManagement sessionManagement = new SessionManagement(GenericProfileActivity.this);
         sessionManagement.removeSession();
 
         moveToLoginActivity();
@@ -68,7 +68,7 @@ public class HostProfileActivity extends AppCompatActivity {
 
     // Once the session is removed, move the user to login activity
     private void moveToLoginActivity() {
-        Intent intent = new Intent(HostProfileActivity.this, MainActivity.class);
+        Intent intent = new Intent(GenericProfileActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

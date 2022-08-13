@@ -11,23 +11,19 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.example.mobile_finalproject.ExampleAdapter;
-import com.example.mobile_finalproject.Profile.UserProfileActivity;
+import com.example.mobile_finalproject.Profile.GenericProfileActivity;
 import com.example.mobile_finalproject.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.example.mobile_finalproject.Models.ExampleItem;
@@ -37,7 +33,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -93,7 +88,7 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         // FAB 2 - Settings
         FloatingActionButton fab2 = findViewById(R.id.fab_action2);
         fab2.setOnClickListener(v -> {
-            Intent intent  = new Intent(UserEventsListActivity.this, UserProfileActivity.class);
+            Intent intent  = new Intent(UserEventsListActivity.this, GenericProfileActivity.class);
             intent.putExtra("useremail", useremail);
             startActivity(intent);
         });

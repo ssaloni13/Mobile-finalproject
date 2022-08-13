@@ -9,15 +9,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.example.mobile_finalproject.Models.ExampleItem;
 
 import com.example.mobile_finalproject.Events.EventsListSelectItem;
 
-import com.example.mobile_finalproject.Profile.HostProfileActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.mobile_finalproject.Profile.GenericProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +54,7 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
 
         com.getbase.floatingactionbutton.FloatingActionButton fab = findViewById(R.id.profile);
         fab.setOnClickListener(v -> {
-            Intent intent  = new Intent(HostMainActivity.this, HostProfileActivity.class);
+            Intent intent  = new Intent(HostMainActivity.this, GenericProfileActivity.class);
             intent.putExtra("hostemail", hostemail);
             //intent.putExtra("userID", intentUsername);
             startActivity(intent);

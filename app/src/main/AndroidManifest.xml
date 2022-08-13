@@ -91,7 +91,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Profile.HostProfileActivity"
+            android:name=".Profile.GenericProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
