@@ -49,6 +49,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_manage_events_host.xml" value="0.2821557971014493" />
+        <entry key="app/src/main/res/layout/activity_manage_events_user.xml" value="0.29583333333333334" />
         <entry key="app/src/main/res/layout/activity_register_host.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_registered_user_of_event.xml" value="0.266304347826087" />

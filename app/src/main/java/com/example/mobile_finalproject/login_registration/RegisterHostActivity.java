@@ -140,7 +140,9 @@ public class RegisterHostActivity extends AppCompatActivity {
                                         Intent intent = new Intent(RegisterHostActivity.this,
                                                 HostMainActivity.class);
                                         intent.putExtra("hostemail", email);
+                                        finishAffinity();
                                         startActivity(intent);
+                                        this.finish();
 
                                     } else {
                                         Toast.makeText(RegisterHostActivity.this,

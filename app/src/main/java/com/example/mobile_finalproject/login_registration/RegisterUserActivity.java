@@ -149,7 +149,9 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
                                                 UserEventsListActivity.class);
                                         intent.putExtra("useremail", email);
                                         intent.putExtra("userage", age);
+                                        finishAffinity();
                                         startActivity(intent);
+                                        this.finish();
 
                                     } else {
                                         Toast.makeText(RegisterUserActivity.this,

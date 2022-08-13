@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 public class UserIndividualEventActivity extends AppCompatActivity {
 
-    private Button logoutButton;
     public ArrayList<String> registeredEvents;
     String eName;
 
@@ -32,12 +31,9 @@ public class UserIndividualEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_individual_event_layout);
 
-        logoutButton = findViewById(R.id.button_logout);
-        logoutButton.setOnClickListener(v -> logout());
-
         TextView eventTitle = findViewById(R.id.textViewEventTitle);
         TextView eventDetail = findViewById(R.id.textViewEventDetail);
-        Button reg = findViewById(R.id.buttonUserEventsReg);
+        Button reg = findViewById(R.id.buttonRegisterEventUser);
 
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,20 +69,5 @@ public class UserIndividualEventActivity extends AppCompatActivity {
                 Log.w("Error: ", "loadPost:onCancelled", error.toException());
             }
         });
-    }
-
-    // Helper method to remove the session and log out the user
-    private void logout() {
-        SessionManagement sessionManagement = new SessionManagement(UserIndividualEventActivity.this);
-        sessionManagement.removeSession();
-
-        moveToLoginActivity();
-    }
-
-    // Once the session is removed, move the user to login activity
-    private void moveToLoginActivity() {
-        Intent intent = new Intent(UserIndividualEventActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 }

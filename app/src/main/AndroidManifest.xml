@@ -23,6 +23,9 @@
         tools:ignore="LockedOrientationActivity"
         tools:targetApi="31">
         <activity
+            android:name=".Profile.ManageEventsUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".Profile.AccountSettings.DeactivateAccountActivity"
             android:exported="false" />
         <activity
