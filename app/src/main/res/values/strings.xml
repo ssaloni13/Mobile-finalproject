@@ -62,4 +62,7 @@
     <string name="new_password_text">New Password</string>
     <string name="confirm_new_password_text">Confirm New Password</string>
     <string name="deactivate_account_text">Deactivate Account</string>
+    <string name="deactivate_text">DELETE</string>
+    <string name="type_deactivate_text">Type DELETE</string>
+    <string name="type_deactivate_to_delete_your_account_text">Type \'DELETE\' to Delete your Account:</string>
 </resources>
