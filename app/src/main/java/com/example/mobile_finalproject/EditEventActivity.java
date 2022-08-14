@@ -159,9 +159,6 @@ public class EditEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deletesubmit();
-                Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
-                intent.putExtra("hostemail", hostEmailId);
-                startActivity(intent);
             }
         });
 
@@ -345,6 +342,10 @@ public class EditEventActivity extends AppCompatActivity {
                         Toast.makeText(EditEventActivity.this,
                                 "Event has been Removed Successfully!",
                                 Toast.LENGTH_LONG).show();
+
+                        Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
+                        intent.putExtra("hostemail", hostEmailId);
+                        startActivity(intent);
                     }
                 }
             }

@@ -154,7 +154,7 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
         Intent intent  = new Intent(HostMainActivity.this, EventFullViewActivity.class);
         intent.putExtra("eventId", currentItem.getEventId());
         startActivity(intent);
-
+        finish();
     }
 
 
