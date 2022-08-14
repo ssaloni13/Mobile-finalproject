@@ -77,34 +77,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
             useremail = extras.getString("useremail");
             userage = Integer.parseInt(extras.getString("userage"));
             System.out.println(useremail + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-
-
-            next=0;
-            if(userage == -1) {next =-1;}
-            FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    // Iterate over all the users(key) in the child users in the db
-                    for (DataSnapshot userValue : snapshot.getChildren()) {
-
-                        System.out.println(userValue.getValue());
-                        if(userValue.getValue() != null && userValue.child("email").getValue().toString().equals(useremail)) {
-                            registeredevents = (ArrayList<String>) userValue.child("registeredevents").getValue();
-                            userage = Integer.parseInt(userValue.child("age").getValue().toString());
-                            System.out.println(registeredevents);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
-
             exampleList = new ArrayList<>();
             this.fillExampleList();
         }
@@ -178,20 +150,10 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
                             Bitmap bitmap1 = null;
                             System.out.println("000000000" + next);
 
-
-                            if(next == -1 && registeredevents!=null && registeredevents.contains(eventId)){
-                                exampleList.add(new ExampleItem(
-                                        bitmap1,
-                                        R.drawable.ic_launcher_background,
-                                        name, description, eventId));
-                            }
-                            else if(next == 0){
-
-                                exampleList.add(new ExampleItem(
-                                        bitmap1,
-                                        R.drawable.ic_launcher_background,
-                                        name, description, eventId));
-                            }
+                            exampleList.add(new ExampleItem(
+                                    bitmap1,
+                                    R.drawable.ic_launcher_background,
+                                    name, description, eventId));
                         }
                     }
                 }
