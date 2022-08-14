@@ -96,8 +96,6 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
 
         Button b = findViewById(R.id.button_Update_picture);
         b.setOnClickListener(v -> {
-
-            System.out.println("raoooooooooooooooooooooooooooooooooooooooooooo");
             checkAndRequestPermissions(AccountSettingsActivity.this);
             chooseImage(AccountSettingsActivity.this);
         });
@@ -139,7 +137,6 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
 
             // adding listeners on upload
             // or failure of image
-            System.out.println(ref + "ref------------------------------");
             ref.putFile(filePath)
                     .addOnSuccessListener(
                             new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -193,7 +190,6 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
                                 }
                             });
         }
-        System.out.println("-----------------------------------------------------");
     }
 
 
@@ -239,7 +235,6 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         filePath = data.getData();
-        System.out.println("file--------------------------" + filePath);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -139,13 +140,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (task.isSuccessful()) {
 
                 // Checking whether the email of the user / host has been verified or not
-                if (!(user.isEmailVerified())) {
-                    // If email is not verified, send the verification link to the user
-                    // Verify the email of the user
-                    user.sendEmailVerification();
-                    Toast.makeText(this,
-                            "Check your Email to Verify your Account",
-                            Toast.LENGTH_LONG).show();
+                try {
+                    if (!(user.isEmailVerified())) {
+                        // If email is not verified, send the verification link to the user
+                        // Verify the email of the user
+                        user.sendEmailVerification();
+                        Toast.makeText(this,
+                                "Check your Email to Verify your Account",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    System.out.println("Can't verify email id due to: " + e);
                 }
 
                 // Redirecting user / hosts to their corresponding activities
