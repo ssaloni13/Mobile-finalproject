@@ -46,7 +46,7 @@
     <string name="logout">LOGOUT</string>
     <string name="account_settings">ACCOUNT SETTINGS</string>
     <string name="manage_events">MANAGE EVENTS</string>
-    <string name="update_profile_picture">Update Profile Picture</string>
+    <string name="update_profile_picture">Select Profile Picture</string>
     <string name="name">Name</string>
     <string name="small_arrow"><![CDATA[>]]></string>
     <string name="email_text">Email</string>

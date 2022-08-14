@@ -90,33 +90,37 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             return;
         }
 
+        if (!newPassword.equals(confirmNewPassword)) {
+            confirmNewPasswordText.setError("Confirm password does not match with New password");
+            confirmNewPasswordText.requestFocus();
+            return;
+        }
+
         progressBar.setVisibility(View.VISIBLE);
 
-        if (newPassword.equals(confirmNewPassword)) {
-            // Before changing the password, re-authenticating the user
-            AuthCredential authCredential = EmailAuthProvider.getCredential(
-                    Objects.requireNonNull(user.getEmail()), currentPassword);
-            user.reauthenticate(authCredential).addOnSuccessListener(unused -> {
-                // User is successfully authenticated
-                user.updatePassword(newPassword).addOnSuccessListener(unused1 -> {
-                    // Password updated
-                    Toast.makeText(UpdatePasswordActivity.this,
-                            "Your Password has been updated!", Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
-                    this.finish();
-                })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(UpdatePasswordActivity.this,
-                                    "Error! Couldn't update the password", Toast.LENGTH_LONG).show();
-                            progressBar.setVisibility(View.GONE);
-                        });
+        // Before changing the password, re-authenticating the user
+        AuthCredential authCredential = EmailAuthProvider.getCredential(
+                Objects.requireNonNull(user.getEmail()), currentPassword);
+        user.reauthenticate(authCredential).addOnSuccessListener(unused -> {
+            // User is successfully authenticated
+            user.updatePassword(newPassword).addOnSuccessListener(unused1 -> {
+                // Password updated
+                Toast.makeText(UpdatePasswordActivity.this,
+                        "Your Password has been updated!", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                this.finish();
             })
                     .addOnFailureListener(e -> {
-                        // Authentication failed
                         Toast.makeText(UpdatePasswordActivity.this,
-                                "Error! Retry", Toast.LENGTH_SHORT).show();
+                                "Error! Couldn't update the password", Toast.LENGTH_LONG).show();
                         progressBar.setVisibility(View.GONE);
                     });
-        }
+        })
+                .addOnFailureListener(e -> {
+                    // Authentication failed
+                    Toast.makeText(UpdatePasswordActivity.this,
+                            "Error! Retry", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                });
     }
 }

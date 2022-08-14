@@ -159,9 +159,6 @@ public class EditEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deletesubmit();
-                Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
-                intent.putExtra("hostemail", hostEmailId);
-                startActivity(intent);
             }
         });
 
@@ -275,8 +272,9 @@ public class EditEventActivity extends AppCompatActivity {
 
         if(
 
-                !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) && Integer.parseInt(e[1]) >= Integer.parseInt(s[1]) &&
-                        Integer.parseInt(e[0]) >= Integer.parseInt(s[0]) )
+                !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) &&
+                        ((Integer.parseInt(e[1]) > Integer.parseInt(s[1]) ) ||
+                        (Integer.parseInt(e[1]) == Integer.parseInt(s[1]) && Integer.parseInt(e[0]) >= Integer.parseInt(s[0])) ))
         ){
             editTextEnd.setError("Event End date should be greater than Start date");
             editTextEnd.requestFocus();
@@ -344,6 +342,10 @@ public class EditEventActivity extends AppCompatActivity {
                         Toast.makeText(EditEventActivity.this,
                                 "Event has been Removed Successfully!",
                                 Toast.LENGTH_LONG).show();
+
+                        Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
+                        intent.putExtra("hostemail", hostEmailId);
+                        startActivity(intent);
                     }
                 }
             }

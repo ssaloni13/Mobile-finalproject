@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
         storageReference = storage.getReference();
 
         userNameValue = findViewById(R.id.textView_User_Name_Value);
-        //userNameValue.setText(user.getDisplayName());
+        userNameValue.setText(user.getDisplayName());
         userNameValue.setOnClickListener(this);
         arrow1_name = findViewById(R.id.arrow1_name);
         arrow1_name.setOnClickListener(this);
@@ -99,86 +100,28 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
             System.out.println("raoooooooooooooooooooooooooooooooooooooooooooo");
             checkAndRequestPermissions(AccountSettingsActivity.this);
             chooseImage(AccountSettingsActivity.this);
-            System.out.println("lll" + filePath);
-            uploadImage();
+        });
+
+        Button b1 = findViewById(R.id.button3);
+        b1.setOnClickListener(v -> {
+            try {
+                callme();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        userNameValue.setText(user.getDisplayName());
-    }
-
-    // Helper method to display the name and email of the logged in user
-    private void displayNameEmail() {
-
-        String name = user.getDisplayName();
-
-        if (name == null) {
-            for (UserInfo userInfo : user.getProviderData()) {
-                if (userInfo.getDisplayName() != null) {
-                    name = userInfo.getDisplayName();
-                }
-            }
-        }
-        userNameValue.setText(name);
-
-        String email = user.getEmail();
-        emailforimage = email;
-        emailValue.setText(email);
-
-
-        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Profiles/" + email);
-        if(mStorageStickerReference1!=null) {
-            File localFileSticker1 = null;
-            try {
-                localFileSticker1 = File.createTempFile("sticker1", "jpg");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            File finalLocalFileSticker = localFileSticker1;
-            mStorageStickerReference1.getFile(localFileSticker1)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
-                        user_profile_image.setImageBitmap(bitmap1);
-                    });
-        }
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            // Updating User Name
-            case R.id.arrow1_name:
-            case R.id.textView_User_Name_Value:
-                startActivity(new Intent(this, UpdateNameActivity.class));
-                break;
-
-            // Updating user's password
-            case R.id.textView_Password_Value:
-            case R.id.arrow2_password:
-                startActivity(new Intent(this, UpdatePasswordActivity.class));
-                break;
-
-            // Deactivating user's account
-            case R.id.textView_Close_Account_Value:
-            case R.id.arrow3_closeAccount:
-                startActivity(new Intent(this, DeactivateAccountActivity.class));
-                break;
-        }
+    private void callme() throws ParseException {
+        uploadImage();
     }
 
 
-
-
-    // UploadImage method
+        // UploadImage method
     private void uploadImage()
     {
-
+        System.out.println("filepath" + filePath);
         if (filePath != null) {
 
             // Code for showing progressDialog while uploading
@@ -255,7 +198,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
 
 
 
-    public void chooseImage(Context context){
+    public boolean chooseImage(Context context){
 
 
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
@@ -287,6 +230,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
             }
         });
         builder.show();
+        return true;
     }
 
 
@@ -295,6 +239,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         filePath = data.getData();
+        System.out.println("file--------------------------" + filePath);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:
@@ -367,6 +312,75 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
                 } else {
                     chooseImage(AccountSettingsActivity.this);
                 }
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        userNameValue.setText(user.getDisplayName());
+    }
+
+    // Helper method to display the name and email of the logged in user
+    private void displayNameEmail() {
+
+        String name = user.getDisplayName();
+
+        if (name == null) {
+            for (UserInfo userInfo : user.getProviderData()) {
+                if (userInfo.getDisplayName() != null) {
+                    name = userInfo.getDisplayName();
+                }
+            }
+        }
+        userNameValue.setText(name);
+
+        String email = user.getEmail();
+        emailforimage = email;
+        emailValue.setText(email);
+
+
+        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Profiles/" + email);
+        if(mStorageStickerReference1!=null) {
+            File localFileSticker1 = null;
+            try {
+                localFileSticker1 = File.createTempFile("sticker1", "jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            File finalLocalFileSticker = localFileSticker1;
+            mStorageStickerReference1.getFile(localFileSticker1)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                        user_profile_image.setImageBitmap(bitmap1);
+                    });
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            // Updating User Name
+            case R.id.arrow1_name:
+            case R.id.textView_User_Name_Value:
+                startActivity(new Intent(this, UpdateNameActivity.class));
+                break;
+
+            // Updating user's password
+            case R.id.textView_Password_Value:
+            case R.id.arrow2_password:
+                startActivity(new Intent(this, UpdatePasswordActivity.class));
+                break;
+
+            // Deactivating user's account
+            case R.id.textView_Close_Account_Value:
+            case R.id.arrow3_closeAccount:
+                // TODO - Code DeactivateAccountActivity
+                startActivity(new Intent(this, DeactivateAccountActivity.class));
                 break;
         }
     }

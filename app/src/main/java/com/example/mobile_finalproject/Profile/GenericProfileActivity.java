@@ -37,11 +37,19 @@ public class GenericProfileActivity extends AppCompatActivity {
     private ImageView userProfileImage;
     private Button buttonAccountSettings, buttonManageEvents, buttonLogout;
     private FirebaseUser user;
+    public String useremail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generic_profile);
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            useremail = extras.getString("useremail");
+            //useremail = extras.getString("hostemail");
+        }
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -100,12 +108,14 @@ public class GenericProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                 }*/
 
-                //redirect to user activitys list
-                Intent intent  = new Intent(GenericProfileActivity.this, UserEventsListActivity.class);
-                intent.putExtra("useremail", user.getEmail());
-                intent.putExtra("userage","-1");
-                startActivity(intent);
-                finish();
+                if (listOfUsersEmail.contains(user.getEmail())) {
+                    //redirect to user activitys list
+                    Intent intent = new Intent(GenericProfileActivity.this, ManageEventsUserActivity.class);
+                    intent.putExtra("useremail", user.getEmail());
+                    intent.putExtra("userage", "-1");
+                    startActivity(intent);
+                    finish();
+                }
 
             }
 
@@ -133,11 +143,13 @@ public class GenericProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                 }*/
 
-                //redirect to host activitys list
-                Intent intent  = new Intent(GenericProfileActivity.this, HostMainActivity.class);
-                intent.putExtra("useremail", user.getEmail());
-                startActivity(intent);
-                finish();
+                //redirect to host activity list
+                if (listOfHostsEmail.contains(user.getEmail())) {
+                    Intent intent = new Intent(GenericProfileActivity.this, HostMainActivity.class);
+                    intent.putExtra("hostemail", user.getEmail());
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             @Override
