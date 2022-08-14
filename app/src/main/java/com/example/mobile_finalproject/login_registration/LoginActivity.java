@@ -20,6 +20,8 @@ import com.example.mobile_finalproject.Events.UserIndividualEventActivity;
 import com.example.mobile_finalproject.Models.SessionManagement;
 import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.R;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

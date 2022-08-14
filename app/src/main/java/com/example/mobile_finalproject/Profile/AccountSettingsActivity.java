@@ -72,7 +72,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
         storageReference = storage.getReference();
 
         userNameValue = findViewById(R.id.textView_User_Name_Value);
-        userNameValue.setText(user.getDisplayName());
+        //userNameValue.setText(user.getDisplayName());
         userNameValue.setOnClickListener(this);
         arrow1_name = findViewById(R.id.arrow1_name);
         arrow1_name.setOnClickListener(this);
@@ -167,7 +167,6 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
             // Deactivating user's account
             case R.id.textView_Close_Account_Value:
             case R.id.arrow3_closeAccount:
-                // TODO - Code DeactivateAccountActivity
                 startActivity(new Intent(this, DeactivateAccountActivity.class));
                 break;
         }

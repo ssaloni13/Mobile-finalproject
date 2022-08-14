@@ -11,20 +11,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="224dp"
-        android:text="@string/type_deactivate_to_delete_your_account_text"
+        android:text="@string/enter_your_password_to_delete_your_account"
         android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.236"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_deactivate"
+        android:id="@+id/editText_Password"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/type_deactivate_text"
-        android:inputType="textCapCharacters"
+        android:hint="@string/enter_password"
+        android:inputType="textPassword"
         android:textSize="22sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -41,7 +40,7 @@
         android:backgroundTint="#d41b2b"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/editText_deactivate"
+        app:layout_constraintTop_toBottomOf="@+id/editText_Password"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
