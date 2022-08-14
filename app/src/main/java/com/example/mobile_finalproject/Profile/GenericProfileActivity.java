@@ -111,7 +111,7 @@ public class GenericProfileActivity extends AppCompatActivity {
 
                 if (listOfUsersEmail.contains(user.getEmail())) {
                     //redirect to user activitys list
-                    Intent intent = new Intent(GenericProfileActivity.this, UserEventsListActivity.class);
+                    Intent intent = new Intent(GenericProfileActivity.this, ManageEventsUserActivity.class);
                     System.out.println("ccccccccccccccccccccccccccc" + useremail + user.getEmail());
                     intent.putExtra("useremail", user.getEmail());
                     intent.putExtra("userage", "-1");
