@@ -18,7 +18,7 @@ public class Event {
     }
 
     public Event(String hostEmailId, String eventName, String eventAddress, String eventDescription, String eventStartDate, String eventEndDate,
-    int evenTicketCost, int eventUsersMaxCapacity, int minAgelimit, int maxAgelimit) {
+    int evenTicketCost, int eventUsersMaxCapacity, int minAgelimit, int maxAgelimit, ArrayList<String> registeredusers) {
         this.eventId = UUID.randomUUID().toString();
         this.hostEmailId = hostEmailId;
         this.eventName = eventName;
@@ -30,7 +30,7 @@ public class Event {
         this.eventUsersMaxCapacity = eventUsersMaxCapacity;
         this.minAgelimit = minAgelimit;
         this.maxAgelimit = maxAgelimit;
-        this.registeredusers = new ArrayList<>();
+        this.registeredusers = registeredusers;
     }
 
     public String getEventId(){ return  eventId;}

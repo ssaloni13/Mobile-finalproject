@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mobile_finalproject.Events.UserEventFullViewActivity;
 import com.example.mobile_finalproject.Events.UserEventsListActivity;
 import com.example.mobile_finalproject.ExampleAdapter;
 import com.example.mobile_finalproject.HostMainActivity;
@@ -92,11 +93,20 @@ public class GenericProfileActivity extends AppCompatActivity {
                     listOfUsersEmail.add(tempEmail);
                 }
 
+                /*
                 // If the current User is a Normal user, redirect to ManageEventsUserActivity
                 if (listOfUsersEmail.contains(user.getEmail())) {
                     Intent intent = new Intent(GenericProfileActivity.this, ManageEventsUserActivity.class);
                     startActivity(intent);
-                }
+                }*/
+
+                //redirect to user activitys list
+                Intent intent  = new Intent(GenericProfileActivity.this, UserEventsListActivity.class);
+                intent.putExtra("useremail", user.getEmail());
+                intent.putExtra("userage","-1");
+                startActivity(intent);
+                finish();
+
             }
 
             @Override
@@ -116,11 +126,18 @@ public class GenericProfileActivity extends AppCompatActivity {
                     listOfHostsEmail.add(tempEmail);
                 }
 
+                /*
                 // If the current User is a Host user, redirect to ManageEventsHostActivity
                 if (listOfHostsEmail.contains(user.getEmail())) {
                     Intent intent = new Intent(GenericProfileActivity.this, ManageEventsHostActivity.class);
                     startActivity(intent);
-                }
+                }*/
+
+                //redirect to host activitys list
+                Intent intent  = new Intent(GenericProfileActivity.this, HostMainActivity.class);
+                intent.putExtra("useremail", user.getEmail());
+                startActivity(intent);
+                finish();
             }
 
             @Override

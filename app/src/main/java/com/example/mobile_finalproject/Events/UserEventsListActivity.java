@@ -53,6 +53,8 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
     DatabaseReference myRefFireBase;
     RecyclerView recyclerViewFriendsList;
     private StorageReference mStorageStickerReference1;
+    private ArrayList<String> registeredevents;
+    private int next = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -72,6 +74,34 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
             useremail = extras.getString("useremail");
             userage = Integer.parseInt(extras.getString("userage"));
             System.out.println(useremail + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
+
+            next=0;
+            if(userage == -1) {next =-1;}
+            FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    // Iterate over all the users(key) in the child users in the db
+                    for (DataSnapshot userValue : snapshot.getChildren()) {
+
+                        System.out.println(userValue.getValue());
+                        if(userValue.getValue() != null && userValue.child("email").getValue().toString().equals(useremail)) {
+                            registeredevents = (ArrayList<String>) userValue.child("registeredevents").getValue();
+                            userage = Integer.parseInt(userValue.child("age").getValue().toString());
+                            System.out.println(registeredevents);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
             exampleList = new ArrayList<>();
             this.fillExampleList();
         }
@@ -88,7 +118,8 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
     private void fillExampleList() {
         exampleList = new ArrayList<>();
-        System.out.println("rao");
+        System.out.println("rao" + registeredevents);
+
 
         // Iterate the child - users
         FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -142,11 +173,22 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
 
                             Bitmap bitmap1 = null;
-                            System.out.println("000000000" + bitmap1);
-                            exampleList.add(new ExampleItem(
-                                    bitmap1,
-                                    R.drawable.ic_launcher_background,
-                                    name, description, eventId));
+                            System.out.println("000000000" + next);
+
+
+                            if(next == -1 && registeredevents!=null && registeredevents.contains(eventId)){
+                                exampleList.add(new ExampleItem(
+                                        bitmap1,
+                                        R.drawable.ic_launcher_background,
+                                        name, description, eventId));
+                            }
+                            else if(next == 0){
+
+                                exampleList.add(new ExampleItem(
+                                        bitmap1,
+                                        R.drawable.ic_launcher_background,
+                                        name, description, eventId));
+                            }
                         }
                     }
                 }
@@ -190,6 +232,7 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         intent.putExtra("usermail", useremail);
         intent.putExtra("eventId", currentItem.getEventId());
         startActivity(intent);
+        finish();
 
     }
 
