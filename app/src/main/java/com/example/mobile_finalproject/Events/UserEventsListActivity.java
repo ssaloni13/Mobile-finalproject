@@ -62,14 +62,11 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_events_list);
 
-
         Calendar cal = Calendar.getInstance();
         currentDay = cal.get(Calendar.DATE);
         currentMonth = cal.get(Calendar.MONTH) + 1;
         currentYear = cal.get(Calendar.YEAR);
 
-
-        System.out.println("cameback");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             System.out.println(extras);
@@ -94,7 +91,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
     private void fillExampleList() {
         exampleList = new ArrayList<>();
         System.out.println("rao" + registeredevents);
-
 
         // Iterate the child - users
         FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -125,7 +121,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
                             // Avoid adding the logged in user to the friends list
                             //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
-                            //System.out.println("rao1" + name[0] + " ---- " + uid);
 
                             ImageView v = null;
                             mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
@@ -154,6 +149,7 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
                                     bitmap1,
                                     R.drawable.ic_launcher_background,
                                     name, description, eventId));
+
                         }
                     }
                 }
@@ -170,12 +166,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
             }
         });
-
-        //exampleList.add(new ExampleItem(R.drawable.ic_launcher_foreground, "One", "Ten", "rao"));
-        //exampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Two", "Eleven", "rao1"));
-
-        System.out.println("size" + exampleList.size());
-
     }
 
     private void setUpRecyclerView() {
@@ -200,34 +190,4 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         finish();
 
     }
-
-
-
-
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.example_menu, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        return true;
-    }*/
 }

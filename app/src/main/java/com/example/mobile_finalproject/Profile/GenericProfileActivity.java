@@ -49,7 +49,6 @@ public class GenericProfileActivity extends AppCompatActivity {
         if (extras != null) {
             useremail = extras.getString("useremail");
             //useremail = extras.getString("hostemail");
-            System.out.println(useremail + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         }
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -112,7 +111,6 @@ public class GenericProfileActivity extends AppCompatActivity {
                 if (listOfUsersEmail.contains(user.getEmail())) {
                     //redirect to user activitys list
                     Intent intent = new Intent(GenericProfileActivity.this, ManageEventsUserActivity.class);
-                    System.out.println("ccccccccccccccccccccccccccc" + useremail + user.getEmail());
                     intent.putExtra("useremail", user.getEmail());
                     intent.putExtra("userage", "-1");
                     startActivity(intent);
@@ -145,7 +143,7 @@ public class GenericProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                 }*/
 
-                //redirect to host activitys list
+                //redirect to host activity list
                 if (listOfHostsEmail.contains(user.getEmail())) {
                     Intent intent = new Intent(GenericProfileActivity.this, HostMainActivity.class);
                     intent.putExtra("hostemail", user.getEmail());
