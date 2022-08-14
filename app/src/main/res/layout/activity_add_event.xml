@@ -26,6 +26,7 @@
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
+        android:backgroundTint="#d41b2b "
         android:text="Upload Poster"
         app:layout_constraintBottom_toTopOf="@+id/event_name"
         app:layout_constraintEnd_toEndOf="parent"

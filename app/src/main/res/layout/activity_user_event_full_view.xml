@@ -220,9 +220,11 @@
 
     <Button
         android:id="@+id/buttonUserShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share it"
+        android:layout_width="153dp"
+        android:layout_height="83dp"
+        android:drawableTop="@android:drawable/ic_menu_share"
+        android:text="SHARE IT"
+        app:backgroundTint="#d41b2b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -235,6 +237,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
+        app:backgroundTint="#d41b2b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonUserShare"
         app:layout_constraintHorizontal_bias="0.108"
