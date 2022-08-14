@@ -68,7 +68,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
 
     private void fillExampleList() {
         exampleList = new ArrayList<>();
-        System.out.println("rao");
 
         // Iterate the child - users
         FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -103,7 +102,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
                                     Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
                                     System.out.println("000000000" + bitmap1);
                                 });
-
 
                         Bitmap bitmap1 = null;
 
