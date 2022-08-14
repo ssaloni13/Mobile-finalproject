@@ -14,11 +14,9 @@
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_main.xml" value="0.2375" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_host.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_register_user.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_registered_user_of_event.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activity_user_events_main.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/activityhostmain.xml" value="0.25" />
         <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/example_item.xml" value="0.25" />
-        <entry key="..\:/Users/malya/AndroidStudioProjects/Mobilefinalproject/app/src/main/res/layout/example_item1.xml" value="0.25" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/drawable/ic_launcher_background.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.35280797101449274" />
@@ -30,7 +28,10 @@
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_main.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_register_host.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_register_user.xml" value="0.35280797101449274" />
+        <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_user_event_full_view.xml" value="0.3686594202898551" />
+        <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_user_events_list.xml" value="0.3686594202898551" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_user_events_main.xml" value="0.35280797101449274" />
+        <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/activity_user_individual_event_layout.xml" value="0.3686594202898551" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/layout/snackbar_layout.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2335" />
