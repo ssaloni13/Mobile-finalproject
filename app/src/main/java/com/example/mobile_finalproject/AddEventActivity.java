@@ -257,7 +257,7 @@ public class AddEventActivity extends AppCompatActivity {
         DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
         System.out.println("event_start" + event_min + "event_end" + event_max);
-        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max);
+        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, new ArrayList<String>());
         myRefFireBase.child("Events").push().setValue(event);
 
         uploadImage(event.getEventId());

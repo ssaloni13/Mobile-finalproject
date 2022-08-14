@@ -56,6 +56,7 @@ public class EditEventActivity extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 101;
+    private ArrayList<String> registeredusers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,8 @@ public class EditEventActivity extends AppCompatActivity {
                         editTextEnd.setText(userValue.child("eventEndDate").getValue().toString());
                         editTextCap.setText(userValue.child("eventUsersMaxCapacity").getValue().toString());
                         editTextCost.setText(userValue.child("eventTicketCost").getValue().toString());
+
+                        registeredusers = (ArrayList<String>) userValue.child("registeredusers").getValue();
 
                         mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
                         if(mStorageStickerReference1==null){ continue;}
@@ -296,7 +299,7 @@ public class EditEventActivity extends AppCompatActivity {
                         System.out.println("rao1" + userValue);
                         String hostemail = userValue.child("hostEmailId").getValue().toString();
 
-                        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max);
+                        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, registeredusers);
                         event.setEventId(eventId);
 
                         myRefFireBase.child("Events").child(userValue.getKey()).setValue(event);

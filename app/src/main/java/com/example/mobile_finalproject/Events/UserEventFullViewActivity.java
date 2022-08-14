@@ -1,5 +1,6 @@
 package com.example.mobile_finalproject.Events;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,6 +59,8 @@ public class UserEventFullViewActivity extends AppCompatActivity {
         }
 
         Button button1 = findViewById(R.id.registered_users);
+        String buttonText = button1.getText().toString();
+
 
         editTextEventName = findViewById(R.id.event_name1);
         editTextAddress = findViewById(R.id.event_address1);
@@ -188,10 +191,10 @@ public class UserEventFullViewActivity extends AppCompatActivity {
                                 ArrayList<String> ar1 = (ArrayList<String>) userValue.child("registeredusers").getValue();
 
 
-                                System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww" + ar1.size());
+                                //System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww" + ar1.size());
 
                                 maxcap = Integer.parseInt(userValue.child("eventUsersMaxCapacity").getValue().toString());
-                                if(ar1!=null && ar1.size() == maxcap){
+                                if(ar1!=null && ar1.size() == maxcap && buttonText.equals("REGISTER")){
                                     k=1;
                                     Toast.makeText(UserEventFullViewActivity.this, "Sorry the Max Seat Capacity is reached",
                                             Toast.LENGTH_SHORT).show();
