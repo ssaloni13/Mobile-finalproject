@@ -101,6 +101,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         return exampleList.size();
     }
 
+
     /*
     @Override
     public Filter getFilter() {

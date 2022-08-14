@@ -236,8 +236,9 @@ public class AddEventActivity extends AppCompatActivity {
 
         if(
 
-                !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) && Integer.parseInt(e[1]) >= Integer.parseInt(s[1]) &&
-                        Integer.parseInt(e[0]) >= Integer.parseInt(s[0]) )
+                !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) &&
+                        ((Integer.parseInt(e[1]) > Integer.parseInt(s[1]) ) ||
+                                (Integer.parseInt(e[1]) == Integer.parseInt(s[1]) && Integer.parseInt(e[0]) >= Integer.parseInt(s[0])) ))
         ){
             editTextEnd.setError("Event End date should be greater than Start date");
             editTextEnd.requestFocus();
