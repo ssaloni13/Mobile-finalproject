@@ -94,7 +94,6 @@ public class AddEventActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             hostemail = extras.getString("hostemail");
-            System.out.println(hostemail + "fffffffffffffffffffffffffffffff");
         }
 
         //Notification check code
@@ -121,8 +120,6 @@ public class AddEventActivity extends AppCompatActivity {
             checkAndRequestPermissions(AddEventActivity.this);
             chooseImage(AddEventActivity.this);
             context = AddEventActivity.this;
-            //openSomeActivityForResult();
-
         });
     }
 
@@ -170,8 +167,8 @@ public class AddEventActivity extends AppCompatActivity {
             editTextDes.requestFocus();
             return;
         }
-        if (Integer.toString(event_min).isEmpty() || event_min <=0) {
-            editTextMin.setError("Event Min age is Required and should be greater than 0");
+        if (Integer.toString(event_min).isEmpty() || event_min < 18) {
+            editTextMin.setError("Event Min age is Required and should be greater than 18");
             editTextMin.requestFocus();
             return;
         }
@@ -281,6 +278,7 @@ public class AddEventActivity extends AppCompatActivity {
         Intent intent = new Intent(AddEventActivity.this, HostMainActivity.class);
         intent.putExtra("hostemail", hostemail);
         startActivity(intent);
+        AddEventActivity.this.finish();
     }
 
 
