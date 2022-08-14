@@ -69,8 +69,11 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         currentYear = cal.get(Calendar.YEAR);
 
 
+        System.out.println("cameback");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            System.out.println(extras);
+
             useremail = extras.getString("useremail");
             userage = Integer.parseInt(extras.getString("userage"));
             System.out.println(useremail + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
