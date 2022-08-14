@@ -19,11 +19,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mobile_finalproject.Models.Event;
@@ -69,7 +67,6 @@ public class EditEventActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             eventId = extras.getString("eventId");
-            System.out.println(eventId + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         }
 
         editTextEventName = findViewById(R.id.event_name1);
@@ -93,14 +90,9 @@ public class EditEventActivity extends AppCompatActivity {
 
                     if(userValue.getValue() != null &&
                             userValue.child("eventId").getValue().toString().equals(eventId)) {
-                        System.out.println("rao1" + userValue);
                         String name = userValue.child("eventName").getValue().toString();
                         String description = userValue.child("eventDescription").getValue().toString();
                         String eventId = userValue.child("eventId").getValue().toString();
-
-                        System.out.println(userValue);
-                        System.out.println(userValue.child("eventStartDate").getValue().toString());
-
 
                         hostEmailId = userValue.child("hostEmailId").getValue().toString();
 
@@ -141,43 +133,27 @@ public class EditEventActivity extends AppCompatActivity {
             }
         });
 
-
         Button button = findViewById(R.id.submiteditbutton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editsubmit();
-                Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
-                intent.putExtra("hostemail", hostEmailId);
-                startActivity(intent);
-            }
+        button.setOnClickListener(view -> {
+            editsubmit();
+            Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
+            intent.putExtra("hostemail", hostEmailId);
+            startActivity(intent);
+            EditEventActivity.this.finish();
         });
 
         //for delete
-        Button button1 = findViewById(R.id.button);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deletesubmit();
-            }
-        });
+        Button button1 = findViewById(R.id.button_delete_event);
+        button1.setOnClickListener(v -> deletesubmit());
 
         Button button2 = findViewById(R.id.textView_upload_image_text);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAndRequestPermissions(EditEventActivity.this);
-                chooseImage(EditEventActivity.this);
-            }
+        button2.setOnClickListener(v -> {
+            checkAndRequestPermissions(EditEventActivity.this);
+            chooseImage(EditEventActivity.this);
         });
-
-
     }
 
-
-
     public void editsubmit(){
-
 
         String event_Name = editTextEventName.getText().toString().trim();
         String event_Address = editTextAddress.getText().toString().trim();
@@ -188,8 +164,6 @@ public class EditEventActivity extends AppCompatActivity {
         String event_end = editTextEnd.getText().toString().trim();
         int event_cap = Integer.parseInt(String.valueOf(editTextCap.getText()));
         int event_cost = Integer.parseInt(String.valueOf(editTextCost.getText()));
-
-
 
         if (event_Name.isEmpty()) {
             editTextEventName.setError("Event Name is Required");
@@ -271,7 +245,6 @@ public class EditEventActivity extends AppCompatActivity {
         String[] e = event_end.split("/");
 
         if(
-
                 !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) &&
                         ((Integer.parseInt(e[1]) > Integer.parseInt(s[1]) ) ||
                         (Integer.parseInt(e[1]) == Integer.parseInt(s[1]) && Integer.parseInt(e[0]) >= Integer.parseInt(s[0])) ))
@@ -280,7 +253,6 @@ public class EditEventActivity extends AppCompatActivity {
             editTextEnd.requestFocus();
             return;
         }
-
 
         FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
@@ -318,7 +290,6 @@ public class EditEventActivity extends AppCompatActivity {
         });
     }
 
-
     //todo we need to delete this event for users who registered and notify
     public void deletesubmit(){
 
@@ -346,6 +317,7 @@ public class EditEventActivity extends AppCompatActivity {
                         Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
                         intent.putExtra("hostemail", hostEmailId);
                         startActivity(intent);
+                        EditEventActivity.this.finish();
                     }
                 }
             }
@@ -356,11 +328,7 @@ public class EditEventActivity extends AppCompatActivity {
             }
 
         });
-
     }
-
-
-
 
     // UploadImage method
     private void uploadImage(String eventid)
@@ -477,33 +445,37 @@ public class EditEventActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        filePath = data.getData();
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        imageview.setImageBitmap(selectedImage);
-                    }
-                    break;
-                case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                imageview.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            filePath = data.getData();
+            if (resultCode != RESULT_CANCELED) {
+                switch (requestCode) {
+                    case 0:
+                        if (resultCode == RESULT_OK && data != null) {
+                            Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                            imageview.setImageBitmap(selectedImage);
+                        }
+                        break;
+                    case 1:
+                        if (resultCode == RESULT_OK && data != null) {
+                            Uri selectedImage = data.getData();
+                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                            if (selectedImage != null) {
+                                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                                if (cursor != null) {
+                                    cursor.moveToFirst();
+                                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                    String picturePath = cursor.getString(columnIndex);
+                                    imageview.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                    cursor.close();
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
+                }
             }
+        } catch (Exception e) {
+            System.out.println("Can't upload empty Posters!");
         }
     }
 

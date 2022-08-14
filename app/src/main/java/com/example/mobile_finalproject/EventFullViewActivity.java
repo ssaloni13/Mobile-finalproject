@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mobile_finalproject.Models.Event;
 import com.example.mobile_finalproject.Models.ExampleItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.widget.ImageView;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 
 public class EventFullViewActivity extends AppCompatActivity {
 
-    String months[] = {"January", "February", "March", "April",
+    String[] months = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September",
             "October", "November", "December"};
     String eventId;
@@ -51,7 +52,6 @@ public class EventFullViewActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             eventId = extras.getString("eventId");
-            System.out.println(eventId + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         }
 
         editTextEventName = findViewById(R.id.event_name1);
@@ -89,11 +89,11 @@ public class EventFullViewActivity extends AppCompatActivity {
                         editTextMin.setText(userValue.child("minAgelimit").getValue().toString());
 
 
-                        String start[] = userValue.child("eventStartDate").getValue().toString().split("/");
+                        String[] start = userValue.child("eventStartDate").getValue().toString().split("/");
                         String start1 = start[0] + "-" + months[Integer.parseInt(start[1])-1] + "-" + start[2];
                         editTextStart.setText(start1);
 
-                        String end[] = userValue.child("eventEndDate").getValue().toString().split("/");
+                        String[] end = userValue.child("eventEndDate").getValue().toString().split("/");
                         String end1 = end[0] + "-" + months[Integer.parseInt(end[1])-1] + "-" + end[2];
                         editTextEnd.setText(end1);
 
@@ -125,28 +125,28 @@ public class EventFullViewActivity extends AppCompatActivity {
             }
         });
 
-
-
         Button button = findViewById(R.id.editbutton);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent  = new Intent(EventFullViewActivity.this, EditEventActivity.class);
-                intent.putExtra("eventId", eventId);
-                startActivity(intent);
-            }
+        button.setOnClickListener(view -> {
+            Intent intent  = new Intent(EventFullViewActivity.this, EditEventActivity.class);
+            intent.putExtra("eventId", eventId);
+            startActivity(intent);
+            EventFullViewActivity.this.finish();
         });
 
 
         Button button1 = findViewById(R.id.registered_users);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent  = new Intent(EventFullViewActivity.this, RegisteredUserOfEventActivity.class);
-                intent.putExtra("eventId", eventId);
-                startActivity(intent);
-            }
+        button1.setOnClickListener(view -> {
+            Intent intent  = new Intent(EventFullViewActivity.this, RegisteredUserOfEventActivity.class);
+            intent.putExtra("eventId", eventId);
+            startActivity(intent);
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        startActivity(new Intent(EventFullViewActivity.this, HostMainActivity.class));
+        EventFullViewActivity.this.finish();
     }
 }

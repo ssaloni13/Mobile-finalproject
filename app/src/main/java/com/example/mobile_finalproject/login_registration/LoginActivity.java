@@ -105,7 +105,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (!userID.equals("null")) {
             // User is logged in and Move to the corresponding activity
-            redirectUserHostToActivities();
+            //userHostLogin();
+            try {
+                redirectUserHostToActivities();
+            } catch (Exception e) {
+                System.out.println("Can't login via saved session");
+            }
         }
         // If user is not logged in, we'll do nothing
     }

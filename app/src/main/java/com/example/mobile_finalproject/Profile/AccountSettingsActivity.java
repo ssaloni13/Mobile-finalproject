@@ -137,57 +137,41 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
 
             // adding listeners on upload
             // or failure of image
+            // Progress Listener for loading
+// percentage on the dialog box
             ref.putFile(filePath)
                     .addOnSuccessListener(
-                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            taskSnapshot -> {
 
-                                @Override
-                                public void onSuccess(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
-
-                                    // Image uploaded successfully
-                                    // Dismiss dialog
-                                    progressDialog.dismiss();
-                                    Toast
-                                            .makeText(AccountSettingsActivity.this,
-                                                    "Image Uploaded!!",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
-                                }
+                                // Image uploaded successfully
+                                // Dismiss dialog
+                                progressDialog.dismiss();
+                                Toast
+                                        .makeText(AccountSettingsActivity.this,
+                                                "Image Uploaded!!",
+                                                Toast.LENGTH_SHORT)
+                                        .show();
                             })
 
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
+                    .addOnFailureListener(e -> {
 
-                            // Error, Image not uploaded
-                            progressDialog.dismiss();
-                            Toast
-                                    .makeText(AccountSettingsActivity.this,
-                                            "Failed " + e.getMessage(),
-                                            Toast.LENGTH_SHORT)
-                                    .show();
-                        }
+                        // Error, Image not uploaded
+                        progressDialog.dismiss();
+                        Toast
+                                .makeText(AccountSettingsActivity.this,
+                                        "Failed " + e.getMessage(),
+                                        Toast.LENGTH_SHORT)
+                                .show();
                     })
                     .addOnProgressListener(
-                            new OnProgressListener<UploadTask.TaskSnapshot>() {
-
-                                // Progress Listener for loading
-                                // percentage on the dialog box
-                                @Override
-                                public void onProgress(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
-                                    double progress
-                                            = (100.0
-                                            * taskSnapshot.getBytesTransferred()
-                                            / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage(
-                                            "Uploaded "
-                                                    + (int)progress + "%");
-                                }
+                            taskSnapshot -> {
+                                double progress
+                                        = (100.0
+                                        * taskSnapshot.getBytesTransferred()
+                                        / taskSnapshot.getTotalByteCount());
+                                progressDialog.setMessage(
+                                        "Uploaded "
+                                                + (int)progress + "%");
                             });
         }
     }
@@ -196,70 +180,69 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
 
     public boolean chooseImage(Context context){
 
-
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
         // create a dialog for showing the optionsMenu
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         // set the items in builder
-        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(optionsMenu[i].equals("Take Photo")){
-                    // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    System.out.println("received");
-                    startActivityForResult(takePicture, 0);
-                    //someActivityResultLauncher.launch(takePicture);
-                    dialogInterface.dismiss();
-                }
-                else if(optionsMenu[i].equals("Choose from Gallery")){
-                    // choose from  external storage
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    System.out.println("received");
-                    startActivityForResult(pickPhoto , 1);
-                    //someActivityResultLauncher.launch(pickPhoto);
-                    dialogInterface.dismiss();
-                }
-                else if (optionsMenu[i].equals("Exit")) {
-                    dialogInterface.dismiss();
-                }
+        builder.setItems(optionsMenu, (dialogInterface, i) -> {
+            if(optionsMenu[i].equals("Take Photo")){
+                // Open the camera and get the photo
+                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                System.out.println("received");
+                startActivityForResult(takePicture, 0);
+                //someActivityResultLauncher.launch(takePicture);
+                dialogInterface.dismiss();
+            }
+            else if(optionsMenu[i].equals("Choose from Gallery")){
+                // choose from  external storage
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                System.out.println("received");
+                startActivityForResult(pickPhoto , 1);
+                //someActivityResultLauncher.launch(pickPhoto);
+                dialogInterface.dismiss();
+            }
+            else if (optionsMenu[i].equals("Exit")) {
+                dialogInterface.dismiss();
             }
         });
         builder.show();
         return true;
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        filePath = data.getData();
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        user_profile_image.setImageBitmap(selectedImage);
-                    }
-                    break;
-                case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                user_profile_image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            filePath = data.getData();
+            if (resultCode != RESULT_CANCELED) {
+                switch (requestCode) {
+                    case 0:
+                        if (resultCode == RESULT_OK && data != null) {
+                            Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                            user_profile_image.setImageBitmap(selectedImage);
+                        }
+                        break;
+                    case 1:
+                        if (resultCode == RESULT_OK && data != null) {
+                            Uri selectedImage = data.getData();
+                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                            if (selectedImage != null) {
+                                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                                if (cursor != null) {
+                                    cursor.moveToFirst();
+                                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                    String picturePath = cursor.getString(columnIndex);
+                                    user_profile_image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                    cursor.close();
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
+                }
             }
+
+        } catch (Exception e) {
+            System.out.println("Can't upload empty photo!");
         }
     }
 

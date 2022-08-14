@@ -55,7 +55,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
         fab.setOnClickListener(v -> {
             Intent intent  = new Intent(HostMainActivity.this, GenericProfileActivity.class);
             intent.putExtra("hostemail", hostemail);
-            //intent.putExtra("userID", intentUsername);
             startActivity(intent);
         });
 
@@ -66,7 +65,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
             startActivity(intent);
         });
     }
-
 
     private void fillExampleList() {
         exampleList = new ArrayList<>();
@@ -82,12 +80,9 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
 
                     if(userValue.getValue() != null &&
                             userValue.child("hostEmailId").getValue().toString().equals(hostemail)) {
-                        //System.out.println("rao1" + userValue);
                         String name = userValue.child("eventName").getValue().toString();
                         String description = userValue.child("eventDescription").getValue().toString();
                         String eventId = userValue.child("eventId").getValue().toString();
-
-                        //System.out.println(name + " " + description + " " + eventId);
 
                         // Avoid adding the logged in user to the friends list
                         //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
@@ -106,7 +101,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
                         mStorageStickerReference1.getFile(localFileSticker1)
                                 .addOnSuccessListener(taskSnapshot -> {
                                     Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
-                                    //v.setImageBitmap(bitmap1);
                                     System.out.println("000000000" + bitmap1);
                                 });
 
@@ -132,12 +126,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
 
             }
         });
-
-        //exampleList.add(new ExampleItem(R.drawable.ic_launcher_foreground, "One", "Ten", "rao"));
-        //exampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Two", "Eleven", "rao1"));
-
-        //System.out.println("size" + exampleList.size());
-
     }
 
     private void setUpRecyclerView() {
@@ -156,31 +144,4 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
         startActivity(intent);
         finish();
     }
-
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.example_menu, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        return true;
-    }*/
 }
