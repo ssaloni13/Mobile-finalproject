@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.example.mobile_finalproject.Events.EventsListSelectItem;
+import com.example.mobile_finalproject.Events.UserEventFullViewActivity;
 import com.example.mobile_finalproject.ExampleAdapter;
 import com.example.mobile_finalproject.Profile.GenericProfileActivity;
 import com.example.mobile_finalproject.R;
@@ -227,12 +228,12 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
 
 
         System.out.println("--------------------" + currentItem.getEventId());
-        /*
-        Intent intent  = new Intent(com.example.mobile_finalproject.Events.UserEventsListActivity.this, UserEventFullViewActivity.class);
+
+        Intent intent  = new Intent(ManageEventsUserActivity.this, UserEventFullViewActivity.class);
         intent.putExtra("usermail", useremail);
         intent.putExtra("eventId", currentItem.getEventId());
         startActivity(intent);
-        finish();*/
+        finish();
 
     }
 
