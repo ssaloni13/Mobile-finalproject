@@ -48,7 +48,6 @@ public class GenericProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             useremail = extras.getString("useremail");
-            //useremail = extras.getString("hostemail");
         }
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -114,7 +113,6 @@ public class GenericProfileActivity extends AppCompatActivity {
                     intent.putExtra("useremail", user.getEmail());
                     intent.putExtra("userage", "-1");
                     startActivity(intent);
-                    finish();
                 }
 
             }
