@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.mobile_finalproject.Events.HostEventsMainActivity;
 import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.Models.Host;
 import com.example.mobile_finalproject.R;

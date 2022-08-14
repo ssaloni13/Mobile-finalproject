@@ -51,10 +51,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Events.HostEventsMainActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Events.UserIndividualEventActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

@@ -34,14 +34,6 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/add_event"
-            app:fab_icon="@drawable/ic_events_white"
-            app:fab_colorNormal="#d41b2b"
-            app:fab_colorPressed="#d24c4a" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/profile"
             app:fab_icon="@drawable/ic_settings_white"
             app:fab_addButtonColorNormal="#d41b2b"

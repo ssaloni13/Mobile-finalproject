@@ -6,17 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.mobile_finalproject.login_registration.AskingHostOrUserActivity;
-import android.view.View;
-import android.widget.Button;
-
-import com.example.mobile_finalproject.Events.HostEventsMainActivity;
 import com.example.mobile_finalproject.login_registration.LoginActivity;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
