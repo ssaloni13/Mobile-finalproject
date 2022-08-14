@@ -186,6 +186,7 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         Intent intent  = new Intent(UserEventsListActivity.this, UserEventFullViewActivity.class);
         intent.putExtra("usermail", useremail);
         intent.putExtra("eventId", currentItem.getEventId());
+        intent.putExtra("userage", Integer.toString(userage));
         startActivity(intent);
         finish();
 

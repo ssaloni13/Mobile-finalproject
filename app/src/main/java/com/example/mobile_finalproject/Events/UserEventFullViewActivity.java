@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobile_finalproject.EventFullViewActivity;
 import com.example.mobile_finalproject.ExampleAdapter;
+import com.example.mobile_finalproject.HostMainActivity;
 import com.example.mobile_finalproject.Models.Event;
 import com.example.mobile_finalproject.Models.ExampleItem;
 import com.example.mobile_finalproject.R;
@@ -39,7 +41,7 @@ public class UserEventFullViewActivity extends AppCompatActivity {
     String months[] = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September",
             "October", "November", "December"};
-    String eventId, usermail;
+    String eventId, usermail, userage;
     private StorageReference mStorageStickerReference1;
     private TextView editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
     private ImageView imageView;
@@ -55,6 +57,7 @@ public class UserEventFullViewActivity extends AppCompatActivity {
         if (extras != null) {
             eventId = extras.getString("eventId");
             usermail = extras.getString("usermail");
+            userage = extras.getString("userage");
             System.out.println(eventId + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         }
 
@@ -274,5 +277,16 @@ public class UserEventFullViewActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(UserEventFullViewActivity.this, UserEventsListActivity.class);
+        intent.putExtra("useremail", usermail);
+        intent.putExtra("userage", userage);
+        startActivity(intent);
+        UserEventFullViewActivity.this.finish();
     }
 }
