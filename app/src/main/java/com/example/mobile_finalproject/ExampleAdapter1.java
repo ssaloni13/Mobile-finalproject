@@ -38,9 +38,9 @@ public class ExampleAdapter1 extends RecyclerView.Adapter<ExampleAdapter1.Exampl
 
         ExampleViewHolder(View itemView) {
             super(itemView);
-            textViewEventName = itemView.findViewById(R.id.text_view_event_name1);
-            textViewEventEmail = itemView.findViewById(R.id.textView3);
-            eventsListLayout = itemView.findViewById((R.id.EventsListCardLayoutMain1));
+            textViewEventName = itemView.findViewById(R.id.text_view_event_name);
+            textViewEventEmail = itemView.findViewById(R.id.text_view_event_desc);
+            eventsListLayout = itemView.findViewById((R.id.EventsListCardLayoutMain));
         }
     }
 

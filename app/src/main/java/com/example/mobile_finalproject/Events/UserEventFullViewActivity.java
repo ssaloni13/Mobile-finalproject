@@ -42,12 +42,14 @@ public class UserEventFullViewActivity extends AppCompatActivity {
     private StorageReference mStorageStickerReference1;
     private TextView editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
     private ImageView imageView;
+    private int maxcap, k=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_event_full_view);
 
+        k=0;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             eventId = extras.getString("eventId");
@@ -158,6 +160,7 @@ public class UserEventFullViewActivity extends AppCompatActivity {
 
         //For register
         button1.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 //Intent intent  = new Intent(UserEventFullViewActivity.this, RegisteredUserOfEventActivity.class);
@@ -184,26 +187,38 @@ public class UserEventFullViewActivity extends AppCompatActivity {
 
                                 ArrayList<String> ar1 = (ArrayList<String>) userValue.child("registeredusers").getValue();
 
-                                if (ar1!=null && ar1.contains(usermail)) {
-                                    ar1.remove(usermail);
-                                    button1.setText("REGISTER");
-                                    Toast.makeText(UserEventFullViewActivity.this, "Unregistered successfully.",
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    if(ar1==null){
-                                        ar1 = new ArrayList<>();
-                                    }
-                                    ar1.add(usermail);
-                                    button1.setText("UNREGISTER");
-                                    Toast.makeText(UserEventFullViewActivity.this, "Registered successfully.",
+
+                                System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww" + ar1.size());
+
+                                maxcap = Integer.parseInt(userValue.child("eventUsersMaxCapacity").getValue().toString());
+                                if(ar1!=null && ar1.size() == maxcap){
+                                    k=1;
+                                    Toast.makeText(UserEventFullViewActivity.this, "Sorry the Max Seat Capacity is reached",
                                             Toast.LENGTH_SHORT).show();
                                 }
+                                else {
+
+                                    if (ar1 != null && ar1.contains(usermail)) {
+                                        ar1.remove(usermail);
+                                        button1.setText("REGISTER");
+                                        Toast.makeText(UserEventFullViewActivity.this, "Unregistered successfully.",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (ar1 == null) {
+                                            ar1 = new ArrayList<>();
+                                        }
+                                        ar1.add(usermail);
+                                        button1.setText("UNREGISTER");
+                                        Toast.makeText(UserEventFullViewActivity.this, "Registered successfully.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
 
 
-                                myRefFireBase.child("Events").child(userValue.getKey()).child("registeredusers").setValue(ar1);
+                                    myRefFireBase.child("Events").child(userValue.getKey()).child("registeredusers").setValue(ar1);
 
-                                System.out.println(name + " " + description + " " + eventId);
+                                    System.out.println(name + " " + description + " " + eventId);
 
+                                }
                                 // Avoid adding the logged in user to the friends list
                                 //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
                                 //System.out.println("rao1" + name[0] + " ---- " + uid);
@@ -229,17 +244,18 @@ public class UserEventFullViewActivity extends AppCompatActivity {
 
                                 ArrayList<String> a1 = (ArrayList<String>) userValue.child("registeredevents").getValue();
 
-
-                                    if (a1!=null && a1.contains(eventId)) {
+                                if(k==0) {
+                                    if (a1 != null && a1.contains(eventId)) {
                                         a1.remove(eventId);
                                     } else {
-                                        if(a1==null){
+                                        if (a1 == null) {
                                             a1 = new ArrayList<>();
                                         }
                                         a1.add(eventId);
                                     }
 
                                     myRefFireBase.child("Users").child(userValue.getKey()).child("registeredevents").setValue(a1);
+                                }
                                 // Avoid adding the logged in user to the friends list
                                 //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
                                 //System.out.println("rao1" + name[0] + " ---- " + uid);
