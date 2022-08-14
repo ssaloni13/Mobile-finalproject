@@ -47,7 +47,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             hostemail = extras.getString("hostemail");
-            System.out.println(hostemail + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             exampleList = new ArrayList<>();
             this.fillExampleList();
         }
@@ -62,7 +61,6 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
 
         com.getbase.floatingactionbutton.FloatingActionButton fab1 = findViewById(R.id.add_event);
         fab1.setOnClickListener(view -> {
-            System.out.println(hostemail + "111111111111111111111111111111");
             Intent intent  = new Intent(HostMainActivity.this, AddEventActivity.class);
             intent.putExtra("hostemail", hostemail);
             startActivity(intent);
@@ -84,12 +82,12 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
 
                     if(userValue.getValue() != null &&
                             userValue.child("hostEmailId").getValue().toString().equals(hostemail)) {
-                        System.out.println("rao1" + userValue);
+                        //System.out.println("rao1" + userValue);
                         String name = userValue.child("eventName").getValue().toString();
                         String description = userValue.child("eventDescription").getValue().toString();
                         String eventId = userValue.child("eventId").getValue().toString();
 
-                        System.out.println(name + " " + description + " " + eventId);
+                        //System.out.println(name + " " + description + " " + eventId);
 
                         // Avoid adding the logged in user to the friends list
                         //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
@@ -114,7 +112,7 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
 
 
                         Bitmap bitmap1 = null;
-                        System.out.println("000000000" + bitmap1);
+
                         exampleList.add(new ExampleItem(
                                 bitmap1,
                                 R.drawable.ic_launcher_background,
@@ -138,7 +136,7 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
         //exampleList.add(new ExampleItem(R.drawable.ic_launcher_foreground, "One", "Ten", "rao"));
         //exampleList.add(new ExampleItem(R.drawable.ic_launcher_background, "Two", "Eleven", "rao1"));
 
-        System.out.println("size" + exampleList.size());
+        //System.out.println("size" + exampleList.size());
 
     }
 
@@ -147,24 +145,17 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new ExampleAdapter(exampleList, HostMainActivity.this);
-        System.out.println("ex " + exampleList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onSelectEventToFullView(ExampleItem currentItem) {
-
-
-        System.out.println("--------------------" + currentItem.getEventId());
         Intent intent  = new Intent(HostMainActivity.this, EventFullViewActivity.class);
         intent.putExtra("eventId", currentItem.getEventId());
         startActivity(intent);
 
     }
-
-
-
 
 
     /*
