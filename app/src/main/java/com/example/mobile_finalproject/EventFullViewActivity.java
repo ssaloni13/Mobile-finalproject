@@ -39,7 +39,7 @@ public class EventFullViewActivity extends AppCompatActivity {
     String[] months = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September",
             "October", "November", "December"};
-    String eventId;
+    String eventId,hostemail;
     private StorageReference mStorageStickerReference1;
     private TextView editTextEventName, editTextAddress, editTextDes, editTextMax, editTextMin, editTextStart, editTextEnd, editTextCap, editTextCost;
     private ImageView imageView;
@@ -52,6 +52,7 @@ public class EventFullViewActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             eventId = extras.getString("eventId");
+            hostemail = extras.getString("hostemail");
         }
 
         editTextEventName = findViewById(R.id.event_name1);
@@ -146,7 +147,9 @@ public class EventFullViewActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        startActivity(new Intent(EventFullViewActivity.this, HostMainActivity.class));
+        Intent intent = new Intent(EventFullViewActivity.this, HostMainActivity.class);
+        intent.putExtra("hostemail", hostemail);
+        startActivity(intent);
         EventFullViewActivity.this.finish();
     }
 }

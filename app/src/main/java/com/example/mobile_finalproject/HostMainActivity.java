@@ -139,6 +139,7 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
     public void onSelectEventToFullView(ExampleItem currentItem) {
         Intent intent  = new Intent(HostMainActivity.this, EventFullViewActivity.class);
         intent.putExtra("eventId", currentItem.getEventId());
+        intent.putExtra("hostemail", hostemail);
         startActivity(intent);
         finish();
     }
