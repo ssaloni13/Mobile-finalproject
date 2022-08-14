@@ -148,7 +148,7 @@ public class GenericProfileActivity extends AppCompatActivity {
                 //redirect to host activitys list
                 if (listOfHostsEmail.contains(user.getEmail())) {
                     Intent intent = new Intent(GenericProfileActivity.this, HostMainActivity.class);
-                    intent.putExtra("useremail", user.getEmail());
+                    intent.putExtra("hostemail", user.getEmail());
                     startActivity(intent);
                     finish();
                 }
