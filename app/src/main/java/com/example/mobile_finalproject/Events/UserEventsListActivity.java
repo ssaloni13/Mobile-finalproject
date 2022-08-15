@@ -188,7 +188,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         intent.putExtra("eventId", currentItem.getEventId());
         intent.putExtra("userage", Integer.toString(userage));
         startActivity(intent);
-        finish();
-
+        UserEventsListActivity.this.finish();
     }
 }
