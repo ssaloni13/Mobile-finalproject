@@ -94,8 +94,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
     private void fillExampleList() {
         exampleList = new ArrayList<>();
 
-        Runnable fillExampleListRunnable = () -> {
-
             // Iterate the child - users
             FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -168,11 +166,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
                 }
             });
-
-        };
-
-        Thread fillExampleListThread = new Thread(fillExampleListRunnable);
-        fillExampleListThread.start();
     }
 
     private void setUpRecyclerView() {

@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(LoginActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Please Open the App Again!", Toast.LENGTH_SHORT).show();
                     }
                 }
 

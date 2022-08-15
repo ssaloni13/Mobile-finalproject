@@ -15,10 +15,13 @@ import android.os.Bundle;
 
 import com.example.mobile_finalproject.Events.EventsListSelectItem;
 import com.example.mobile_finalproject.Events.UserEventFullViewActivity;
+import com.example.mobile_finalproject.Events.UserEventsListActivity;
 import com.example.mobile_finalproject.ExampleAdapter;
 import com.example.mobile_finalproject.Profile.GenericProfileActivity;
 import com.example.mobile_finalproject.R;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,6 +64,8 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
     private ArrayList<String> registeredevents;
     private int next = 0;
 
+    private FirebaseUser user;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +78,8 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
         currentMonth = cal.get(Calendar.MONTH) + 1;
         currentYear = cal.get(Calendar.YEAR);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
-        System.out.println("cameback");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             System.out.println(extras);
@@ -115,6 +120,18 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // TODO on back pressed - redirect to GenericProfile Activity
+        Intent intent = new Intent(ManageEventsUserActivity.this, GenericProfileActivity.class);
+        String userEmail = user.getEmail();
+        intent.putExtra("useremail", userEmail);
+        intent.putExtra("userage", userage);
+        startActivity(intent);
+        ManageEventsUserActivity.this.finish();
+    }
 
     private void fillExampleList() {
         exampleList = new ArrayList<>();
