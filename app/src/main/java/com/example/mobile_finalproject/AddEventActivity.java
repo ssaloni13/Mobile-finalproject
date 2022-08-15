@@ -368,11 +368,7 @@ public class AddEventActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void chooseImage(Context context){
-
-        Runnable chooseImageRunnable = () -> {
             final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
             // create a dialog for showing the optionsMenu
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -402,10 +398,6 @@ public class AddEventActivity extends AppCompatActivity {
                 }
             });
             builder.show();
-        };
-
-        Thread chooseImageThread = new Thread(chooseImageRunnable);
-        chooseImageThread.start();
     }
 
 

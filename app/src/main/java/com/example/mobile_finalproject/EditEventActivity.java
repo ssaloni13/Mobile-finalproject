@@ -324,6 +324,7 @@ public class EditEventActivity extends AppCompatActivity {
 
                         Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
                         intent.putExtra("hostemail", hostEmailId);
+                        finishAffinity();
                         startActivity(intent);
                         EditEventActivity.this.finish();
                     }
