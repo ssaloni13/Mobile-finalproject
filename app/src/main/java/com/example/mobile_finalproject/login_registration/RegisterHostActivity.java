@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class RegisterHostActivity extends AppCompatActivity {
 
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
+    private ImageView logoImage;
     private Button registerHost;
     private ProgressBar progressBar;
 
@@ -34,6 +36,8 @@ public class RegisterHostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_host);
 
         mAuth = FirebaseAuth.getInstance();
+
+        logoImage = findViewById(R.id.logo_nuvent);
 
         editTextFullName = findViewById(R.id.full_name);
         editTextAge = findViewById(R.id.age);

@@ -58,12 +58,10 @@ public class UserEventFullViewActivity extends AppCompatActivity {
             eventId = extras.getString("eventId");
             usermail = extras.getString("usermail");
             userage = extras.getString("userage");
-            System.out.println(eventId + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         }
 
         Button button1 = findViewById(R.id.registered_users);
         String buttonText = button1.getText().toString();
-
 
         editTextEventName = findViewById(R.id.event_name1);
         editTextAddress = findViewById(R.id.event_address1);
@@ -87,12 +85,9 @@ public class UserEventFullViewActivity extends AppCompatActivity {
                     if(userValue.getValue() != null &&
                             userValue.child("eventId").getValue().toString().equals(eventId)) {
 
-                        System.out.println("rao1" + userValue);
                         String name = userValue.child("eventName").getValue().toString();
                         String description = userValue.child("eventDescription").getValue().toString();
                         String eventId = userValue.child("eventId").getValue().toString();
-
-                        System.out.println(name + " " + description + " " + eventId);
 
                         editTextEventName.setText(userValue.child("eventName").getValue().toString());
                         editTextAddress.setText(userValue.child("eventAddress").getValue().toString());
@@ -114,7 +109,6 @@ public class UserEventFullViewActivity extends AppCompatActivity {
                         ArrayList<String> events = (ArrayList<String>) userValue.child("registeredusers").getValue();
 
                         if(events != null) {
-                            System.out.println(events);
                             if (events.contains(usermail)) {
                                 button1.setText("UNREGISTER");
                             } else {
@@ -136,7 +130,6 @@ public class UserEventFullViewActivity extends AppCompatActivity {
                                     Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
                                     imageView.setImageBitmap(bitmap1);
                                 });
-
                     }
                 }
             }
@@ -147,134 +140,119 @@ public class UserEventFullViewActivity extends AppCompatActivity {
             }
         });
 
-
         //For share
         Button button = findViewById(R.id.buttonUserShare);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(Intent.ACTION_SEND);
-                myIntent.setType("text/plain");
-                String body = "Download NUVent to see more events like this!";
-                String sub = "Check this event out!";
-                myIntent.putExtra(Intent.EXTRA_SUBJECT,sub);
-                myIntent.putExtra(Intent.EXTRA_TEXT,body);
-                startActivity(Intent.createChooser(myIntent, "Share Using"));
-            }
+        button.setOnClickListener(view -> {
+            Intent myIntent = new Intent(Intent.ACTION_SEND);
+            myIntent.setType("text/plain");
+            String body = "Download NUVent to see more events like this!";
+            String sub = "Check this event out!";
+            myIntent.putExtra(Intent.EXTRA_SUBJECT,sub);
+            myIntent.putExtra(Intent.EXTRA_TEXT,body);
+            startActivity(Intent.createChooser(myIntent, "Share Using"));
         });
 
 
         //For register
-        button1.setOnClickListener(new View.OnClickListener() {
+        button1.setOnClickListener(view -> {
+            //Intent intent  = new Intent(UserEventFullViewActivity.this, RegisteredUserOfEventActivity.class);
+            //intent.putExtra("eventId", eventId);
+            //startActivity(intent);
 
-            @Override
-            public void onClick(View view) {
-                //Intent intent  = new Intent(UserEventFullViewActivity.this, RegisteredUserOfEventActivity.class);
-                //intent.putExtra("eventId", eventId);
-                //startActivity(intent);
-
-                // Connect to the firebase.
-                FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
-                DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
+            // Connect to the firebase.
+            FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
 
-                 myRefFireBase.child("Events").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+             myRefFireBase.child("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        // Iterate over all the users(key) in the child users in the db
-                        for (DataSnapshot userValue : snapshot.getChildren()) {
+                    // Iterate over all the users(key) in the child users in the db
+                    for (DataSnapshot userValue : snapshot.getChildren()) {
 
-                            if(userValue.getValue() != null && userValue.child("eventId").getValue().toString().equals(eventId)) {
-                                System.out.println("rao1" + userValue);
-                                String name = userValue.child("eventName").getValue().toString();
-                                String description = userValue.child("eventDescription").getValue().toString();
-                                String eventId = userValue.child("eventId").getValue().toString();
+                        if(userValue.getValue() != null && userValue.child("eventId").getValue().toString().equals(eventId)) {
+                            String name = userValue.child("eventName").getValue().toString();
+                            String description = userValue.child("eventDescription").getValue().toString();
+                            String eventId = userValue.child("eventId").getValue().toString();
 
-                                ArrayList<String> ar1 = (ArrayList<String>) userValue.child("registeredusers").getValue();
+                            ArrayList<String> ar1 = (ArrayList<String>) userValue.child("registeredusers").getValue();
 
+                            maxcap = Integer.parseInt(userValue.child("eventUsersMaxCapacity").getValue().toString());
+                            if(ar1!=null && ar1.size() == maxcap && buttonText.equals("REGISTER")){
+                                k=1;
+                                Toast.makeText(UserEventFullViewActivity.this, "Sorry the Max Seat Capacity is reached",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            else {
 
-                                //System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww" + ar1.size());
-
-                                maxcap = Integer.parseInt(userValue.child("eventUsersMaxCapacity").getValue().toString());
-                                if(ar1!=null && ar1.size() == maxcap && buttonText.equals("REGISTER")){
-                                    k=1;
-                                    Toast.makeText(UserEventFullViewActivity.this, "Sorry the Max Seat Capacity is reached",
+                                if (ar1 != null && ar1.contains(usermail)) {
+                                    ar1.remove(usermail);
+                                    button1.setText("REGISTER");
+                                    Toast.makeText(UserEventFullViewActivity.this, "Unregistered successfully.",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (ar1 == null) {
+                                        ar1 = new ArrayList<>();
+                                    }
+                                    ar1.add(usermail);
+                                    button1.setText("UNREGISTER");
+                                    Toast.makeText(UserEventFullViewActivity.this, "Registered successfully.",
                                             Toast.LENGTH_SHORT).show();
                                 }
-                                else {
-
-                                    if (ar1 != null && ar1.contains(usermail)) {
-                                        ar1.remove(usermail);
-                                        button1.setText("REGISTER");
-                                        Toast.makeText(UserEventFullViewActivity.this, "Unregistered successfully.",
-                                                Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        if (ar1 == null) {
-                                            ar1 = new ArrayList<>();
-                                        }
-                                        ar1.add(usermail);
-                                        button1.setText("UNREGISTER");
-                                        Toast.makeText(UserEventFullViewActivity.this, "Registered successfully.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
 
 
-                                    myRefFireBase.child("Events").child(userValue.getKey()).child("registeredusers").setValue(ar1);
-
-                                    System.out.println(name + " " + description + " " + eventId);
-
-                                }
-                                // Avoid adding the logged in user to the friends list
-                                //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
-                                //System.out.println("rao1" + name[0] + " ---- " + uid);
+                                myRefFireBase.child("Events").child(userValue.getKey()).child("registeredusers").setValue(ar1);
                             }
+                            // Avoid adding the logged in user to the friends list
+                            //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+                            //System.out.println("rao1" + name[0] + " ---- " + uid);
                         }
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                }
+            });
 
 
-                myRefFireBase.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+            myRefFireBase.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        // Iterate over all the users(key) in the child users in the db
-                        for (DataSnapshot userValue : snapshot.getChildren()) {
+                    // Iterate over all the users(key) in the child users in the db
+                    for (DataSnapshot userValue : snapshot.getChildren()) {
 
-                            if(userValue.getValue() != null && userValue.child("email").getValue().toString().equals(usermail)) {
+                        if(userValue.getValue() != null && userValue.child("email").getValue().toString().equals(usermail)) {
 
-                                ArrayList<String> a1 = (ArrayList<String>) userValue.child("registeredevents").getValue();
+                            ArrayList<String> a1 = (ArrayList<String>) userValue.child("registeredevents").getValue();
 
-                                if(k==0) {
-                                    if (a1 != null && a1.contains(eventId)) {
-                                        a1.remove(eventId);
-                                    } else {
-                                        if (a1 == null) {
-                                            a1 = new ArrayList<>();
-                                        }
-                                        a1.add(eventId);
+                            if(k==0) {
+                                if (a1 != null && a1.contains(eventId)) {
+                                    a1.remove(eventId);
+                                } else {
+                                    if (a1 == null) {
+                                        a1 = new ArrayList<>();
                                     }
-
-                                    myRefFireBase.child("Users").child(userValue.getKey()).child("registeredevents").setValue(a1);
+                                    a1.add(eventId);
                                 }
-                                // Avoid adding the logged in user to the friends list
-                                //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
-                                //System.out.println("rao1" + name[0] + " ---- " + uid);
+
+                                myRefFireBase.child("Users").child(userValue.getKey()).child("registeredevents").setValue(a1);
                             }
+                            // Avoid adding the logged in user to the friends list
+                            //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+                            //System.out.println("rao1" + name[0] + " ---- " + uid);
                         }
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-            }
+                }
+            });
         });
 
     }

@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText editTextEmail, editTextPassword;
     private Button login;
+    private ImageView logoImage;
     private TextView forgot_password, signup;
 
     private FirebaseAuth mAuth;
@@ -58,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
 
+        logoImage = findViewById(R.id.logo_nuvent);
         login = findViewById(R.id.login_button);
         login.setOnClickListener(this);
 
@@ -158,8 +161,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     System.out.println("Can't verify email id due to: " + e);
                 }
 
-                // Redirecting user / hosts to their corresponding activities
-                redirectUserHostToActivities();
+                // Redirecting user / hosts to their corresponding activities using thread
+                Runnable redirectUserHostRunnable = this::redirectUserHostToActivities;
+
+                Thread backgroundRedirectingUserHostThread = new Thread(redirectUserHostRunnable);
+                backgroundRedirectingUserHostThread.start();
 
                 progressBar.setVisibility(View.GONE);
                 this.finish();
@@ -181,7 +187,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Checking the user type of the current user,
         // and redirects him accordingly to the events main page
 
-        dRefUsers.addValueEventListener(new ValueEventListener() {
+        Runnable fetchUserDataRunnable = () -> dRefUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
@@ -195,15 +201,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     age.add(age1);
                 }
 
-                // If the current User is a Normal user, redirect to UserEventsMainActivity
-                if (listOfUsersEmail.contains(user.getEmail())) {
-                    sessionManagement.saveSession(user);
-                    sessionManagement.setUserLoggedIn(1);
-                    Intent intent = new Intent(LoginActivity.this, UserEventsListActivity.class);
-                    intent.putExtra("useremail", user.getEmail());
-                    intent.putExtra("userage", age.get(listOfUsersEmail.indexOf(user.getEmail())));
-                    startActivity(intent);
-                    finish();
+                try {
+                    // If the current User is a Normal user, redirect to UserEventsMainActivity
+                    if (listOfUsersEmail.contains(user.getEmail())) {
+                        sessionManagement.saveSession(user);
+                        sessionManagement.setUserLoggedIn(1);
+                        Intent intent = new Intent(LoginActivity.this, UserEventsListActivity.class);
+                        intent.putExtra("useremail", user.getEmail());
+                        intent.putExtra("userage", age.get(listOfUsersEmail.indexOf(user.getEmail())));
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(LoginActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -213,7 +223,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        dRefHosts.addValueEventListener(new ValueEventListener() {
+        Thread fetchUserDataThread = new Thread(fetchUserDataRunnable);
+        fetchUserDataThread.start();
+
+
+        Runnable fetchHostDataRunnable = () -> dRefHosts.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
@@ -224,14 +238,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     listOfHostsEmail.add(tempEmail);
                 }
 
-                // If the current User is a Host user, redirect to HostEventsMainActivity
-                if (listOfHostsEmail.contains(user.getEmail())) {
-                    sessionManagement.saveSession(user);
-                    sessionManagement.setUserLoggedIn(1);
-                    Intent intent = new Intent(LoginActivity.this, HostMainActivity.class);
-                    intent.putExtra("hostemail", user.getEmail());
-                    startActivity(intent);
-                    finish();
+                try {
+                    // If the current User is a Host user, redirect to HostEventsMainActivity
+                    if (listOfHostsEmail.contains(user.getEmail())) {
+                        sessionManagement.saveSession(user);
+                        sessionManagement.setUserLoggedIn(1);
+                        Intent intent = new Intent(LoginActivity.this, HostMainActivity.class);
+                        intent.putExtra("hostemail", user.getEmail());
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(LoginActivity.this, "Please Try Again!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -240,5 +258,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.w("Error: ", "loadPost:onCancelled", error.toException());
             }
         });
+
+        Thread fetchHostDataThread = new Thread(fetchHostDataRunnable);
+        fetchHostDataThread.start();
     }
 }

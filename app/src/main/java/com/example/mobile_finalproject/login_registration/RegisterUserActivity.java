@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import java.util.Objects;
 public class RegisterUserActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword;
+    private ImageView logoImage;
     private Button registerUser;
     private ProgressBar progressBar;
 
@@ -40,6 +42,8 @@ public class RegisterUserActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_register_user);
 
         mAuth = FirebaseAuth.getInstance();
+
+        logoImage = findViewById(R.id.logo_nuvent);
 
         registerUser = findViewById(R.id.register_user_button);
         registerUser.setOnClickListener(this);
