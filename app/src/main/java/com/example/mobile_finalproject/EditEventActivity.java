@@ -138,8 +138,9 @@ public class EditEventActivity extends AppCompatActivity {
             editsubmit();
             Intent intent  = new Intent(EditEventActivity.this, HostMainActivity.class);
             intent.putExtra("hostemail", hostEmailId);
+            finishAffinity();
             startActivity(intent);
-            EditEventActivity.this.finish();
+            finish();
         });
 
         //for delete
@@ -526,8 +527,6 @@ public class EditEventActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
 
 
 }

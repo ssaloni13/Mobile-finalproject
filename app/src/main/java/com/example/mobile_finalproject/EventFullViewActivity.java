@@ -131,7 +131,7 @@ public class EventFullViewActivity extends AppCompatActivity {
             Intent intent  = new Intent(EventFullViewActivity.this, EditEventActivity.class);
             intent.putExtra("eventId", eventId);
             startActivity(intent);
-            EventFullViewActivity.this.finish();
+            //EventFullViewActivity.this.finish();
         });
 
 
