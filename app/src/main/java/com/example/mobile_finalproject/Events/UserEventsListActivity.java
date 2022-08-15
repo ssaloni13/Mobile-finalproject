@@ -72,7 +72,11 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
             System.out.println(extras);
 
             useremail = extras.getString("useremail");
-            userage = Integer.parseInt(extras.getString("userage"));
+            try {
+                userage = Integer.parseInt(extras.getString("userage"));
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             exampleList = new ArrayList<>();
             this.fillExampleList();
         }

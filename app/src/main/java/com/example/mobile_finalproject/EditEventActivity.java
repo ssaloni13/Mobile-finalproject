@@ -268,7 +268,6 @@ public class EditEventActivity extends AppCompatActivity {
 
                     if(userValue.getValue() != null &&
                             userValue.child("eventId").getValue().toString().equals(eventId)) {
-                        System.out.println("rao1" + userValue);
                         String hostemail = userValue.child("hostEmailId").getValue().toString();
 
                         Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, registeredusers);
@@ -404,9 +403,6 @@ public class EditEventActivity extends AppCompatActivity {
 
 
     public void chooseImage(Context context){
-
-        Runnable chooseImageRunnable = () -> {
-
             final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
             // create a dialog for showing the optionsMenu
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -436,11 +432,6 @@ public class EditEventActivity extends AppCompatActivity {
                 }
             });
             builder.show();
-
-        };
-
-        Thread chooseImageThread = new Thread(chooseImageRunnable);
-        chooseImageThread.start();
     }
 
 
@@ -449,11 +440,6 @@ public class EditEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-        }catch (Exception e) {
-            System.out.println("Exception for OnActivity: " + e);
-        }
-        Runnable onActivityResultRunnable = () -> {
-            try {
                 filePath = data.getData();
                 if (resultCode != RESULT_CANCELED) {
                     switch (requestCode) {
@@ -481,13 +467,9 @@ public class EditEventActivity extends AppCompatActivity {
                             break;
                     }
                 }
-            } catch (Exception e) {
-                System.out.println("Can't upload empty Posters!");
-            }
-        };
-
-        Thread onActivityResultThread = new Thread(onActivityResultRunnable);
-        onActivityResultThread.start();
+        } catch (Exception e) {
+            System.out.println("Can't upload empty Posters!");
+        }
     }
 
 

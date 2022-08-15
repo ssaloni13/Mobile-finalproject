@@ -131,7 +131,6 @@ public class AddEventActivity extends AppCompatActivity {
     private void registerNewEvent(String hostemail) throws ParseException {
 
 
-
         editTextEventName = findViewById(R.id.event_name1);
         editTextAddress = findViewById(R.id.event_address1);
         editTextDes = findViewById(R.id.event_description1);
@@ -255,15 +254,15 @@ public class AddEventActivity extends AppCompatActivity {
         String start = formatter.format(date1);*/
 
 
-        Runnable registerNewEventRunnable = () -> {
-            FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
-            DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
-            Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, new ArrayList<String>());
-            myRefFireBase.child("Events").push().setValue(event);
+        FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
-            uploadImage(event.getEventId());
-        };
+        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, new ArrayList<String>());
+        myRefFireBase.child("Events").push().setValue(event);
+
+        uploadImage(event.getEventId());
+
 
         Toast.makeText(AddEventActivity.this,
                     "Event has been Registered Successfully!",
@@ -278,9 +277,6 @@ public class AddEventActivity extends AppCompatActivity {
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(AddEventActivity.this);
         managerCompat.notify(1, builder.build());
-
-        Thread registerNewEventThread = new Thread(registerNewEventRunnable);
-        registerNewEventThread.start();
 
 
         // Redirects the Host to the main events page for hosts
@@ -406,12 +402,6 @@ public class AddEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
-
-        Runnable activityResultRunnable = () -> {
-            try {
                 filePath = data.getData();
                 if (resultCode != RESULT_CANCELED) {
                     switch (requestCode) {
@@ -439,12 +429,9 @@ public class AddEventActivity extends AppCompatActivity {
                             break;
                     }
                 }
-            } catch (Exception e) {
-                System.out.println("Exception: " + e);
-            }
-        };
-        Thread activityResultThread = new Thread(activityResultRunnable);
-        activityResultThread.start();
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
     }
 
 
