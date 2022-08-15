@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -26,7 +28,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +44,8 @@ public class GenericProfileActivity extends AppCompatActivity {
     private Button buttonAccountSettings, buttonManageEvents, buttonLogout;
     private FirebaseUser user;
     public String useremail;
+    private StorageReference mStorageStickerReference1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,27 @@ public class GenericProfileActivity extends AppCompatActivity {
         }
 
         user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        userProfileImage = findViewById(R.id.user_profile_image);
+        System.out.println(useremail + "------------------------------");
+        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Profiles/" + useremail);
+        if(mStorageStickerReference1!=null) {
+            File localFileSticker1 = null;
+            try {
+                localFileSticker1 = File.createTempFile("sticker1", "jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            File finalLocalFileSticker = localFileSticker1;
+            mStorageStickerReference1.getFile(localFileSticker1)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                        userProfileImage.setImageBitmap(bitmap1);
+                    });
+        }
+
+
 
         textViewUserName = findViewById(R.id.textView_User_Name);
         textViewUserName.setText(user.getDisplayName());
@@ -72,6 +101,21 @@ public class GenericProfileActivity extends AppCompatActivity {
         super.onResume();
 
         textViewUserName.setText(user.getDisplayName());
+        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Profiles/" + useremail);
+        if(mStorageStickerReference1!=null) {
+            File localFileSticker1 = null;
+            try {
+                localFileSticker1 = File.createTempFile("sticker1", "jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            File finalLocalFileSticker = localFileSticker1;
+            mStorageStickerReference1.getFile(localFileSticker1)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                        userProfileImage.setImageBitmap(bitmap1);
+                    });
+        }
     }
 
     // Helper method to open account setting activity

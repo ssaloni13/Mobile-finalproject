@@ -54,7 +54,7 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
         com.getbase.floatingactionbutton.FloatingActionButton fab = findViewById(R.id.profile);
         fab.setOnClickListener(v -> {
             Intent intent  = new Intent(HostMainActivity.this, GenericProfileActivity.class);
-            intent.putExtra("hostemail", hostemail);
+            intent.putExtra("useremail", hostemail);
             startActivity(intent);
         });
 
