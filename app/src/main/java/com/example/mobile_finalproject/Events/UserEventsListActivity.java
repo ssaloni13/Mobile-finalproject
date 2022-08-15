@@ -85,7 +85,9 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         FloatingActionButton fab2 = findViewById(R.id.profile);
         fab2.setOnClickListener(v -> {
             Intent intent  = new Intent(UserEventsListActivity.this, GenericProfileActivity.class);
+            System.out.println("shivam" + useremail + userage);
             intent.putExtra("useremail", useremail);
+            intent.putExtra("userage", Integer.toString(userage));
             startActivity(intent);
         });
     }
@@ -184,6 +186,7 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
         intent.putExtra("usermail", useremail);
         intent.putExtra("eventId", currentItem.getEventId());
         intent.putExtra("userage", Integer.toString(userage));
+        intent.putExtra("class", true);
         startActivity(intent);
         UserEventsListActivity.this.finish();
     }

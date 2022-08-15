@@ -80,15 +80,6 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // FAB 1 - Settings
-        FloatingActionButton fab = findViewById(R.id.profile);
-        fab.setOnClickListener(v -> {
-            Intent intent  = new Intent(ManageEventsUserActivity.this, GenericProfileActivity.class);
-            intent.putExtra("useremail", useremail);
-            intent.putExtra("userage", userage);
-            startActivity(intent);
-            //this.finish();
-        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -128,6 +119,16 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
             exampleList = new ArrayList<>();
             this.fillExampleList();
         }
+
+        // FAB 1 - Settings
+        FloatingActionButton fab = findViewById(R.id.profile);
+        fab.setOnClickListener(v -> {
+            Intent intent  = new Intent(ManageEventsUserActivity.this, GenericProfileActivity.class);
+            intent.putExtra("useremail", useremail);
+            intent.putExtra("userage", userage);
+            startActivity(intent);
+            //this.finish();
+        });
     }
 
     @Override
@@ -265,6 +266,8 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
         finish();
 
     }
+
+
 
 
 
