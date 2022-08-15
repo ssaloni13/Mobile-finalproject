@@ -80,8 +80,7 @@ public class EditEventActivity extends AppCompatActivity {
         editTextCost = findViewById(R.id.event_cost1);
         imageview = findViewById(R.id.imageView_event_poster);
 
-
-        FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+        Runnable iterateRunnable = () -> FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -122,7 +121,6 @@ public class EditEventActivity extends AppCompatActivity {
                                     Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
                                     imageview.setImageBitmap(bitmap1);
                                 });
-
                     }
                 }
             }
@@ -132,6 +130,9 @@ public class EditEventActivity extends AppCompatActivity {
 
             }
         });
+
+        Thread iterateThread = new Thread(iterateRunnable);
+        iterateThread.start();
 
         Button button = findViewById(R.id.submiteditbutton);
         button.setOnClickListener(view -> {
@@ -257,7 +258,7 @@ public class EditEventActivity extends AppCompatActivity {
         FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
-        FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+        Runnable iterateRunnable2 = () -> FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -273,7 +274,11 @@ public class EditEventActivity extends AppCompatActivity {
                         event.setEventId(eventId);
 
                         myRefFireBase.child("Events").child(userValue.getKey()).setValue(event);
-                        uploadImage(eventId);
+
+                        Runnable uploadImageRunnable = () -> uploadImage(eventId);
+
+                        Thread uploadImageThread = new Thread(uploadImageRunnable);
+                        uploadImageThread.start();
 
                         Toast.makeText(EditEventActivity.this,
                                 "Event has been Edited Successfully!",
@@ -288,16 +293,18 @@ public class EditEventActivity extends AppCompatActivity {
             }
 
         });
+
+        Thread iterateThread2 = new Thread(iterateRunnable2);
+        iterateThread2.start();
     }
 
-    //todo we need to delete this event for users who registered and notify
+    // Need to delete this event for users who registered and notify
     public void deletesubmit(){
 
         FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
-
-        FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+        Runnable iterateRunnable3 = () -> FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -328,11 +335,14 @@ public class EditEventActivity extends AppCompatActivity {
             }
 
         });
+
+        Thread iterateThread3 = new Thread(iterateRunnable3);
+        iterateThread3.start();
     }
 
     // UploadImage method
-    private void uploadImage(String eventid)
-    {
+    private void uploadImage(String eventid) {
+
         if (filePath != null) {
 
             // Code for showing progressDialog while uploading
@@ -350,57 +360,41 @@ public class EditEventActivity extends AppCompatActivity {
 
             // adding listeners on upload
             // or failure of image
+            // Progress Listener for loading
+// percentage on the dialog box
             ref.putFile(filePath)
                     .addOnSuccessListener(
-                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            taskSnapshot -> {
 
-                                @Override
-                                public void onSuccess(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
-
-                                    // Image uploaded successfully
-                                    // Dismiss dialog
-                                    progressDialog.dismiss();
-                                    Toast
-                                            .makeText(EditEventActivity.this,
-                                                    "Image Uploaded!!",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
-                                }
+                                // Image uploaded successfully
+                                // Dismiss dialog
+                                progressDialog.dismiss();
+                                Toast
+                                        .makeText(EditEventActivity.this,
+                                                "Image Uploaded!!",
+                                                Toast.LENGTH_SHORT)
+                                        .show();
                             })
 
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
+                    .addOnFailureListener(e -> {
 
-                            // Error, Image not uploaded
-                            progressDialog.dismiss();
-                            Toast
-                                    .makeText(EditEventActivity.this,
-                                            "Failed " + e.getMessage(),
-                                            Toast.LENGTH_SHORT)
-                                    .show();
-                        }
+                        // Error, Image not uploaded
+                        progressDialog.dismiss();
+                        Toast
+                                .makeText(EditEventActivity.this,
+                                        "Failed " + e.getMessage(),
+                                        Toast.LENGTH_SHORT)
+                                .show();
                     })
                     .addOnProgressListener(
-                            new OnProgressListener<UploadTask.TaskSnapshot>() {
-
-                                // Progress Listener for loading
-                                // percentage on the dialog box
-                                @Override
-                                public void onProgress(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
-                                    double progress
-                                            = (100.0
-                                            * taskSnapshot.getBytesTransferred()
-                                            / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage(
-                                            "Uploaded "
-                                                    + (int)progress + "%");
-                                }
+                            taskSnapshot -> {
+                                double progress
+                                        = (100.0
+                                        * taskSnapshot.getBytesTransferred()
+                                        / taskSnapshot.getTotalByteCount());
+                                progressDialog.setMessage(
+                                        "Uploaded "
+                                                + (int)progress + "%");
                             });
         }
     }
@@ -409,36 +403,42 @@ public class EditEventActivity extends AppCompatActivity {
 
     public void chooseImage(Context context){
 
+        Runnable chooseImageRunnable = () -> {
 
-        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
-        // create a dialog for showing the optionsMenu
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        // set the items in builder
-        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(optionsMenu[i].equals("Take Photo")){
-                    // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    System.out.println("received");
-                    startActivityForResult(takePicture, 0);
-                    dialogInterface.dismiss();
-                    //someActivityResultLauncher.launch(takePicture);
+            final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
+            // create a dialog for showing the optionsMenu
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            // set the items in builder
+            builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(optionsMenu[i].equals("Take Photo")){
+                        // Open the camera and get the photo
+                        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        System.out.println("received");
+                        startActivityForResult(takePicture, 0);
+                        dialogInterface.dismiss();
+                        //someActivityResultLauncher.launch(takePicture);
+                    }
+                    else if(optionsMenu[i].equals("Choose from Gallery")){
+                        // choose from  external storage
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        System.out.println("received");
+                        startActivityForResult(pickPhoto , 1);
+                        dialogInterface.dismiss();
+                        //someActivityResultLauncher.launch(pickPhoto);
+                    }
+                    else if (optionsMenu[i].equals("Exit")) {
+                        dialogInterface.dismiss();
+                    }
                 }
-                else if(optionsMenu[i].equals("Choose from Gallery")){
-                    // choose from  external storage
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    System.out.println("received");
-                    startActivityForResult(pickPhoto , 1);
-                    dialogInterface.dismiss();
-                    //someActivityResultLauncher.launch(pickPhoto);
-                }
-                else if (optionsMenu[i].equals("Exit")) {
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-        builder.show();
+            });
+            builder.show();
+
+        };
+
+        Thread chooseImageThread = new Thread(chooseImageRunnable);
+        chooseImageThread.start();
     }
 
 
@@ -447,36 +447,45 @@ public class EditEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            filePath = data.getData();
-            if (resultCode != RESULT_CANCELED) {
-                switch (requestCode) {
-                    case 0:
-                        if (resultCode == RESULT_OK && data != null) {
-                            Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                            imageview.setImageBitmap(selectedImage);
-                        }
-                        break;
-                    case 1:
-                        if (resultCode == RESULT_OK && data != null) {
-                            Uri selectedImage = data.getData();
-                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                            if (selectedImage != null) {
-                                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                                if (cursor != null) {
-                                    cursor.moveToFirst();
-                                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                    String picturePath = cursor.getString(columnIndex);
-                                    imageview.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                    cursor.close();
+        }catch (Exception e) {
+            System.out.println("Exception for OnActivity: " + e);
+        }
+        Runnable onActivityResultRunnable = () -> {
+            try {
+                filePath = data.getData();
+                if (resultCode != RESULT_CANCELED) {
+                    switch (requestCode) {
+                        case 0:
+                            if (resultCode == RESULT_OK && data != null) {
+                                Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                                imageview.setImageBitmap(selectedImage);
+                            }
+                            break;
+                        case 1:
+                            if (resultCode == RESULT_OK && data != null) {
+                                Uri selectedImage = data.getData();
+                                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                                if (selectedImage != null) {
+                                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                                    if (cursor != null) {
+                                        cursor.moveToFirst();
+                                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                        String picturePath = cursor.getString(columnIndex);
+                                        imageview.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                        cursor.close();
+                                    }
                                 }
                             }
-                        }
-                        break;
+                            break;
+                    }
                 }
+            } catch (Exception e) {
+                System.out.println("Can't upload empty Posters!");
             }
-        } catch (Exception e) {
-            System.out.println("Can't upload empty Posters!");
-        }
+        };
+
+        Thread onActivityResultThread = new Thread(onActivityResultRunnable);
+        onActivityResultThread.start();
     }
 
 
@@ -526,8 +535,4 @@ public class EditEventActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-
-
 }

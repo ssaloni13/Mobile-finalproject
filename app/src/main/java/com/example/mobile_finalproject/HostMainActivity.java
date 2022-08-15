@@ -74,43 +74,52 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                // Iterate over all the users(key) in the child users in the db
-                for (DataSnapshot userValue : snapshot.getChildren()) {
+                Runnable iterateRunnable = new Runnable() {
+                    @Override
+                    public void run() {
 
-                    if(userValue.getValue() != null &&
-                            userValue.child("hostEmailId").getValue().toString().equals(hostemail)) {
-                        String name = userValue.child("eventName").getValue().toString();
-                        String description = userValue.child("eventDescription").getValue().toString();
-                        String eventId = userValue.child("eventId").getValue().toString();
+                        // Iterate over all the users(key) in the child users in the db
+                        for (DataSnapshot userValue : snapshot.getChildren()) {
 
-                        // Avoid adding the logged in user to the friends list
-                        //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
-                        //System.out.println("rao1" + name[0] + " ---- " + uid);
+                            if(userValue.getValue() != null &&
+                                    userValue.child("hostEmailId").getValue().toString().equals(hostemail)) {
+                                String name = userValue.child("eventName").getValue().toString();
+                                String description = userValue.child("eventDescription").getValue().toString();
+                                String eventId = userValue.child("eventId").getValue().toString();
 
-                        ImageView v = null;
-                        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
-                        if(mStorageStickerReference1==null){ continue;}
-                        File localFileSticker1 = null;
-                        try {
-                            localFileSticker1 = File.createTempFile("sticker1", "jpg");
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                                // Avoid adding the logged in user to the friends list
+                                //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+                                //System.out.println("rao1" + name[0] + " ---- " + uid);
+
+                                ImageView v = null;
+                                mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
+                                if(mStorageStickerReference1==null){ continue;}
+                                File localFileSticker1 = null;
+                                try {
+                                    localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                File finalLocalFileSticker = localFileSticker1;
+                                mStorageStickerReference1.getFile(localFileSticker1)
+                                        .addOnSuccessListener(taskSnapshot -> {
+                                            Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                                            System.out.println("000000000" + bitmap1);
+                                        });
+
+                                Bitmap bitmap1 = null;
+
+                                exampleList.add(new ExampleItem(
+                                        bitmap1,
+                                        R.drawable.ic_launcher_background,
+                                        name, description, eventId));
+                            }
                         }
-                        File finalLocalFileSticker = localFileSticker1;
-                        mStorageStickerReference1.getFile(localFileSticker1)
-                                .addOnSuccessListener(taskSnapshot -> {
-                                    Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
-                                    System.out.println("000000000" + bitmap1);
-                                });
-
-                        Bitmap bitmap1 = null;
-
-                        exampleList.add(new ExampleItem(
-                                bitmap1,
-                                R.drawable.ic_launcher_background,
-                                name, description, eventId));
                     }
-                }
+                };
+
+                Thread iterateThread = new Thread(iterateRunnable);
+                iterateThread.start();
 
                 // Set the adapter to the list created
                 RecyclerView recyclerView = findViewById(R.id.recycler_view);

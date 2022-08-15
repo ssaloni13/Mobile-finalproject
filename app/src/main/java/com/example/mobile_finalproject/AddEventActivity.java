@@ -106,18 +106,25 @@ public class AddEventActivity extends AppCompatActivity {
 
         Button b = findViewById(R.id.add_event_button);
         b.setOnClickListener(v -> {
-            try {
-                registerNewEvent(hostemail);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            Runnable registerNewEventRunnable = () -> {
+                try {
+                    registerNewEvent(hostemail);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            };
+            Thread registerNewEventThread = new Thread(registerNewEventRunnable);
+            registerNewEventThread.start();
         });
 
 
         v = findViewById(R.id.imageView_event_poster);
         Button b1 = findViewById(R.id.textView_upload_image_text);
         b1.setOnClickListener(v -> {
-            checkAndRequestPermissions(AddEventActivity.this);
+            Runnable checkAndRequestPermissionsRunnable = () -> checkAndRequestPermissions(AddEventActivity.this);
+            Thread checkAndRequestPermissionsThread = new Thread(checkAndRequestPermissionsRunnable);
+            checkAndRequestPermissionsThread.start();
+
             chooseImage(AddEventActivity.this);
             context = AddEventActivity.this;
         });
@@ -126,6 +133,8 @@ public class AddEventActivity extends AppCompatActivity {
     // Helper method to register new hosts in database
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void registerNewEvent(String hostemail) throws ParseException {
+
+
 
         editTextEventName = findViewById(R.id.event_name1);
         editTextAddress = findViewById(R.id.event_address1);
@@ -145,9 +154,7 @@ public class AddEventActivity extends AppCompatActivity {
         String event_start = editTextStart.getText().toString().trim();
         String event_end = editTextEnd.getText().toString().trim();
 
-
         String typeOfUser = "Host User";
-
 
         if (event_Name.isEmpty()) {
             editTextEventName.setError("Event Name is Required");
@@ -235,7 +242,6 @@ public class AddEventActivity extends AppCompatActivity {
         String[] e = event_end.split("/");
 
         if(
-
                 !( Integer.parseInt(e[2]) >= Integer.parseInt(s[2]) &&
                         ((Integer.parseInt(e[1]) > Integer.parseInt(s[1]) ) ||
                                 (Integer.parseInt(e[1]) == Integer.parseInt(s[1]) && Integer.parseInt(e[0]) >= Integer.parseInt(s[0])) ))
@@ -257,7 +263,6 @@ public class AddEventActivity extends AppCompatActivity {
         FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
-        System.out.println("event_start" + event_min + "event_end" + event_max);
         Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, new ArrayList<String>());
         myRefFireBase.child("Events").push().setValue(event);
 
@@ -367,70 +372,87 @@ public class AddEventActivity extends AppCompatActivity {
 
     public void chooseImage(Context context){
 
+        Runnable chooseImageRunnable = () -> {
+            final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
+            // create a dialog for showing the optionsMenu
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            // set the items in builder
+            builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(optionsMenu[i].equals("Take Photo")){
+                        // Open the camera and get the photo
+                        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        System.out.println("received");
+                        startActivityForResult(takePicture, 0);
+                        //someActivityResultLauncher.launch(takePicture);
+                        dialogInterface.dismiss();
+                    }
+                    else if(optionsMenu[i].equals("Choose from Gallery")){
+                        // choose from  external storage
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        System.out.println("received");
+                        startActivityForResult(pickPhoto , 1);
+                        dialogInterface.dismiss();
+                        //someActivityResultLauncher.launch(pickPhoto);
+                    }
+                    else if (optionsMenu[i].equals("Exit")) {
+                        dialogInterface.dismiss();
+                    }
+                }
+            });
+            builder.show();
+        };
 
-        final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit" }; // create a menuOption Array
-        // create a dialog for showing the optionsMenu
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        // set the items in builder
-        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(optionsMenu[i].equals("Take Photo")){
-                    // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    System.out.println("received");
-                    startActivityForResult(takePicture, 0);
-                    //someActivityResultLauncher.launch(takePicture);
-                    dialogInterface.dismiss();
-                }
-                else if(optionsMenu[i].equals("Choose from Gallery")){
-                    // choose from  external storage
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    System.out.println("received");
-                    startActivityForResult(pickPhoto , 1);
-                    dialogInterface.dismiss();
-                    //someActivityResultLauncher.launch(pickPhoto);
-                }
-                else if (optionsMenu[i].equals("Exit")) {
-                    dialogInterface.dismiss();
-                }
-            }
-        });
-        builder.show();
+        Thread chooseImageThread = new Thread(chooseImageRunnable);
+        chooseImageThread.start();
     }
 
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        filePath = data.getData();
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-                case 0:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        v.setImageBitmap(selectedImage);
-                    }
-                    break;
-                case 1:
-                    if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage = data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                v.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
-                            }
-                        }
-                    }
-                    break;
-            }
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
         }
+
+        Runnable activityResultRunnable = () -> {
+            try {
+                filePath = data.getData();
+                if (resultCode != RESULT_CANCELED) {
+                    switch (requestCode) {
+                        case 0:
+                            if (resultCode == RESULT_OK && data != null) {
+                                Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                                v.setImageBitmap(selectedImage);
+                            }
+                            break;
+                        case 1:
+                            if (resultCode == RESULT_OK && data != null) {
+                                Uri selectedImage = data.getData();
+                                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                                if (selectedImage != null) {
+                                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                                    if (cursor != null) {
+                                        cursor.moveToFirst();
+                                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                        String picturePath = cursor.getString(columnIndex);
+                                        v.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                        cursor.close();
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Exception: " + e);
+            }
+        };
+        Thread activityResultThread = new Thread(activityResultRunnable);
+        activityResultThread.start();
     }
 
 

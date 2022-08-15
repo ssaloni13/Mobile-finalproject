@@ -71,53 +71,57 @@ public class EventFullViewActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                // Iterate over all the users(key) in the child users in the db
-                for (DataSnapshot userValue : snapshot.getChildren()) {
+                Runnable iterateRunnable = () -> {
 
-                    if(userValue.getValue() != null &&
-                            userValue.child("eventId").getValue().toString().equals(eventId)) {
-                        System.out.println("rao1" + userValue);
-                        String name = userValue.child("eventName").getValue().toString();
-                        String description = userValue.child("eventDescription").getValue().toString();
-                        String eventId = userValue.child("eventId").getValue().toString();
+                    // Iterate over all the users(key) in the child users in the db
+                    for (DataSnapshot userValue : snapshot.getChildren()) {
 
-                        System.out.println(name + " " + description + " " + eventId);
+                        if(userValue.getValue() != null &&
+                                userValue.child("eventId").getValue().toString().equals(eventId)) {
+                            String name = userValue.child("eventName").getValue().toString();
+                            String description = userValue.child("eventDescription").getValue().toString();
+                            String eventId = userValue.child("eventId").getValue().toString();
 
-                        editTextEventName.setText(userValue.child("eventName").getValue().toString());
-                        editTextAddress.setText(userValue.child("eventAddress").getValue().toString());
-                        editTextDes.setText(userValue.child("eventDescription").getValue().toString());
-                        editTextMax.setText(userValue.child("maxAgelimit").getValue().toString());
-                        editTextMin.setText(userValue.child("minAgelimit").getValue().toString());
+                            System.out.println(name + " " + description + " " + eventId);
+
+                            editTextEventName.setText(userValue.child("eventName").getValue().toString());
+                            editTextAddress.setText(userValue.child("eventAddress").getValue().toString());
+                            editTextDes.setText(userValue.child("eventDescription").getValue().toString());
+                            editTextMax.setText(userValue.child("maxAgelimit").getValue().toString());
+                            editTextMin.setText(userValue.child("minAgelimit").getValue().toString());
 
 
-                        String[] start = userValue.child("eventStartDate").getValue().toString().split("/");
-                        String start1 = start[0] + "-" + months[Integer.parseInt(start[1])-1] + "-" + start[2];
-                        editTextStart.setText(start1);
+                            String[] start = userValue.child("eventStartDate").getValue().toString().split("/");
+                            String start1 = start[0] + "-" + months[Integer.parseInt(start[1])-1] + "-" + start[2];
+                            editTextStart.setText(start1);
 
-                        String[] end = userValue.child("eventEndDate").getValue().toString().split("/");
-                        String end1 = end[0] + "-" + months[Integer.parseInt(end[1])-1] + "-" + end[2];
-                        editTextEnd.setText(end1);
+                            String[] end = userValue.child("eventEndDate").getValue().toString().split("/");
+                            String end1 = end[0] + "-" + months[Integer.parseInt(end[1])-1] + "-" + end[2];
+                            editTextEnd.setText(end1);
 
-                        editTextCap.setText(userValue.child("eventUsersMaxCapacity").getValue().toString());
-                        editTextCost.setText(userValue.child("eventTicketCost").getValue().toString());
+                            editTextCap.setText(userValue.child("eventUsersMaxCapacity").getValue().toString());
+                            editTextCost.setText(userValue.child("eventTicketCost").getValue().toString());
 
-                        mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
-                        if(mStorageStickerReference1==null){ continue;}
-                        File localFileSticker1 = null;
-                        try {
-                            localFileSticker1 = File.createTempFile("sticker1", "jpg");
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
+                            if(mStorageStickerReference1==null){ continue;}
+                            File localFileSticker1 = null;
+                            try {
+                                localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            File finalLocalFileSticker = localFileSticker1;
+                            mStorageStickerReference1.getFile(localFileSticker1)
+                                    .addOnSuccessListener(taskSnapshot -> {
+                                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                                        imageView.setImageBitmap(bitmap1);
+                                    });
                         }
-                        File finalLocalFileSticker = localFileSticker1;
-                        mStorageStickerReference1.getFile(localFileSticker1)
-                                .addOnSuccessListener(taskSnapshot -> {
-                                    Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
-                                    imageView.setImageBitmap(bitmap1);
-                                });
-
                     }
-                }
+                };
+
+                Thread iterateThread = new Thread(iterateRunnable);
+                iterateThread.start();
             }
 
             @Override
