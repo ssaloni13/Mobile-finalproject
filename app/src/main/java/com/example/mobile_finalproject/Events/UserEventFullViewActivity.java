@@ -48,6 +48,7 @@ public class UserEventFullViewActivity extends AppCompatActivity {
     private int maxcap, k=0;
     private Button button1 ;
     private String buttonText ;
+    private boolean c=false;
 
 
     @Override
@@ -61,6 +62,7 @@ public class UserEventFullViewActivity extends AppCompatActivity {
             eventId = extras.getString("eventId");
             usermail = extras.getString("usermail");
             userage = extras.getString("userage");
+            c = extras.getBoolean("class");
             System.out.println(eventId + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         }
 
@@ -298,6 +300,16 @@ public class UserEventFullViewActivity extends AppCompatActivity {
         //intent.putExtra("userage", userage);
         //finishAffinity();
         //startActivity(intent);
-        UserEventFullViewActivity.this.finish();
+        System.out.println("cccccccccccccccccccccc" + c);
+        if(c){
+             Intent intent = new Intent(UserEventFullViewActivity.this, UserEventsListActivity.class);
+            intent.putExtra("useremail", usermail);
+            intent.putExtra("userage", userage);
+            finishAffinity();
+            startActivity(intent);
+        }
+        else {
+            UserEventFullViewActivity.this.finish();
+        }
     }
 }
