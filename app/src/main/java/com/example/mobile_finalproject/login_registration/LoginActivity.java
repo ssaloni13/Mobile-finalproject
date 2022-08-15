@@ -162,10 +162,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 // Redirecting user / hosts to their corresponding activities using thread
-                Runnable redirectUserHostRunnable = this::redirectUserHostToActivities;
-
-                Thread backgroundRedirectingUserHostThread = new Thread(redirectUserHostRunnable);
-                backgroundRedirectingUserHostThread.start();
+                redirectUserHostToActivities();
 
                 progressBar.setVisibility(View.GONE);
                 this.finish();
@@ -187,79 +184,80 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Checking the user type of the current user,
         // and redirects him accordingly to the events main page
 
-        Runnable fetchUserDataRunnable = () -> dRefUsers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+        Runnable fetchUserDataRunnable = () -> {
 
-                List<String> listOfUsersEmail = new ArrayList<>();
-                List<String> age = new ArrayList<>();
+            dRefUsers.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
-                for (DataSnapshot snapshot: datasnapshot.getChildren()) {
-                    String tempEmail = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
-                    String age1 = Objects.requireNonNull(snapshot.child("age").getValue()).toString();
-                    listOfUsersEmail.add(tempEmail);
-                    age.add(age1);
-                }
+                    List<String> listOfUsersEmail = new ArrayList<>();
+                    List<String> age = new ArrayList<>();
 
-                try {
-                    // If the current User is a Normal user, redirect to UserEventsMainActivity
-                    if (listOfUsersEmail.contains(user.getEmail())) {
-                        sessionManagement.saveSession(user);
-                        sessionManagement.setUserLoggedIn(1);
-                        Intent intent = new Intent(LoginActivity.this, UserEventsListActivity.class);
-                        intent.putExtra("useremail", user.getEmail());
-                        intent.putExtra("userage", age.get(listOfUsersEmail.indexOf(user.getEmail())));
-                        startActivity(intent);
-                        finish();
+                    for (DataSnapshot snapshot: datasnapshot.getChildren()) {
+                        String tempEmail = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
+                        String age1 = Objects.requireNonNull(snapshot.child("age").getValue()).toString();
+                        listOfUsersEmail.add(tempEmail);
+                        age.add(age1);
                     }
-                } catch (Exception e) {
-                    Toast.makeText(LoginActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Error: ", "loadPost:onCancelled", error.toException());
-            }
-        });
+                    try {
+                        // If the current User is a Normal user, redirect to UserEventsMainActivity
+                        if (listOfUsersEmail.contains(user.getEmail())) {
+                            sessionManagement.saveSession(user);
+                            sessionManagement.setUserLoggedIn(1);
+                            Intent intent = new Intent(LoginActivity.this, UserEventsListActivity.class);
+                            intent.putExtra("useremail", user.getEmail());
+                            intent.putExtra("userage", age.get(listOfUsersEmail.indexOf(user.getEmail())));
+                            startActivity(intent);
+                            finish();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.w("Error: ", "loadPost:onCancelled", error.toException());
+                }
+            });
+
+
+            dRefHosts.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+
+                    List<String> listOfHostsEmail = new ArrayList<>();
+
+                    for (DataSnapshot snapshot: datasnapshot.getChildren()) {
+                        String tempEmail = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
+                        listOfHostsEmail.add(tempEmail);
+                    }
+
+                    try {
+                        // If the current User is a Host user, redirect to HostEventsMainActivity
+                        if (listOfHostsEmail.contains(user.getEmail())) {
+                            sessionManagement.saveSession(user);
+                            sessionManagement.setUserLoggedIn(1);
+                            Intent intent = new Intent(LoginActivity.this, HostMainActivity.class);
+                            intent.putExtra("hostemail", user.getEmail());
+                            startActivity(intent);
+                            finish();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, "Please Try Again!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.w("Error: ", "loadPost:onCancelled", error.toException());
+                }
+            });
+
+        };
 
         Thread fetchUserDataThread = new Thread(fetchUserDataRunnable);
         fetchUserDataThread.start();
-
-
-        Runnable fetchHostDataRunnable = () -> dRefHosts.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-
-                List<String> listOfHostsEmail = new ArrayList<>();
-
-                for (DataSnapshot snapshot: datasnapshot.getChildren()) {
-                    String tempEmail = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
-                    listOfHostsEmail.add(tempEmail);
-                }
-
-                try {
-                    // If the current User is a Host user, redirect to HostEventsMainActivity
-                    if (listOfHostsEmail.contains(user.getEmail())) {
-                        sessionManagement.saveSession(user);
-                        sessionManagement.setUserLoggedIn(1);
-                        Intent intent = new Intent(LoginActivity.this, HostMainActivity.class);
-                        intent.putExtra("hostemail", user.getEmail());
-                        startActivity(intent);
-                        finish();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(LoginActivity.this, "Please Try Again!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("Error: ", "loadPost:onCancelled", error.toException());
-            }
-        });
-
-        Thread fetchHostDataThread = new Thread(fetchHostDataRunnable);
-        fetchHostDataThread.start();
     }
 }

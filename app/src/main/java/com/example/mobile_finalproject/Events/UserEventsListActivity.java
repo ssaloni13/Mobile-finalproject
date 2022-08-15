@@ -38,7 +38,7 @@ import java.util.List;
 
 public class UserEventsListActivity extends AppCompatActivity implements EventsListSelectItem {
 
-    String months[] = {"January", "February", "March", "April",
+    String[] months = {"January", "February", "March", "April",
             "May", "June", "July", "August", "September",
             "October", "November", "December"};
 
@@ -73,7 +73,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
             useremail = extras.getString("useremail");
             userage = Integer.parseInt(extras.getString("userage"));
-            System.out.println(useremail + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             exampleList = new ArrayList<>();
             this.fillExampleList();
         }
@@ -90,82 +89,86 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
     private void fillExampleList() {
         exampleList = new ArrayList<>();
-        System.out.println("rao" + registeredevents);
 
-        // Iterate the child - users
-        FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        Runnable fillExampleListRunnable = () -> {
 
-                // Iterate over all the users(key) in the child users in the db
-                for (DataSnapshot userValue : snapshot.getChildren()) {
+            // Iterate the child - users
+            FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    if(userValue.getValue() != null) {
+                    // Iterate over all the users(key) in the child users in the db
+                    for (DataSnapshot userValue : snapshot.getChildren()) {
 
-                        String s[] = userValue.child("eventEndDate").getValue().toString().split("/");
+                        if(userValue.getValue() != null) {
 
-                        if (
-                                userage >= Integer.parseInt(userValue.child("minAgelimit").getValue().toString()) &&
-                                        userage <= Integer.parseInt(userValue.child("maxAgelimit").getValue().toString()) &&
-                                        currentYear <= Integer.parseInt(s[2]) &&
-                                        currentMonth <= Integer.parseInt(s[1]) &&
-                                        currentDay <= Integer.parseInt(s[0])
+                            String[] s = userValue.child("eventEndDate").getValue().toString().split("/");
 
-                        ){
-                            System.out.println("rao1" + userValue);
-                            String name = userValue.child("eventName").getValue().toString();
-                            String description = userValue.child("eventDescription").getValue().toString();
-                            String eventId = userValue.child("eventId").getValue().toString();
+                            if (
+                                    userage >= Integer.parseInt(userValue.child("minAgelimit").getValue().toString()) &&
+                                            userage <= Integer.parseInt(userValue.child("maxAgelimit").getValue().toString()) &&
+                                            currentYear <= Integer.parseInt(s[2]) &&
+                                            currentMonth <= Integer.parseInt(s[1]) &&
+                                            currentDay <= Integer.parseInt(s[0])
 
-                            System.out.println(name + " " + description + " " + eventId);
+                            ){
+                                String name = userValue.child("eventName").getValue().toString();
+                                String description = userValue.child("eventDescription").getValue().toString();
+                                String eventId = userValue.child("eventId").getValue().toString();
 
-                            // Avoid adding the logged in user to the friends list
-                            //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+                                System.out.println(name + " " + description + " " + eventId);
 
-                            ImageView v = null;
-                            mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
-                            if (mStorageStickerReference1 == null) {
-                                continue;
+                                // Avoid adding the logged in user to the friends list
+                                //ArrayList<Integer> a = (ArrayList<Integer>) userValue.child("listOfStickerCounts").getValue();
+
+                                ImageView v = null;
+                                mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Images/" + eventId);
+                                if (mStorageStickerReference1 == null) {
+                                    continue;
+                                }
+                                File localFileSticker1 = null;
+                                try {
+                                    localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                File finalLocalFileSticker = localFileSticker1;
+                                mStorageStickerReference1.getFile(localFileSticker1)
+                                        .addOnSuccessListener(taskSnapshot -> {
+                                            Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
+                                            //v.setImageBitmap(bitmap1);
+                                            System.out.println("000000000" + bitmap1);
+                                        });
+
+
+                                Bitmap bitmap1 = null;
+
+                                exampleList.add(new ExampleItem(
+                                        bitmap1,
+                                        R.drawable.ic_launcher_background,
+                                        name, description, eventId));
+
                             }
-                            File localFileSticker1 = null;
-                            try {
-                                localFileSticker1 = File.createTempFile("sticker1", "jpg");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            File finalLocalFileSticker = localFileSticker1;
-                            mStorageStickerReference1.getFile(localFileSticker1)
-                                    .addOnSuccessListener(taskSnapshot -> {
-                                        Bitmap bitmap1 = BitmapFactory.decodeFile(finalLocalFileSticker.getAbsolutePath());
-                                        //v.setImageBitmap(bitmap1);
-                                        System.out.println("000000000" + bitmap1);
-                                    });
-
-
-                            Bitmap bitmap1 = null;
-                            System.out.println("000000000" + next);
-
-                            exampleList.add(new ExampleItem(
-                                    bitmap1,
-                                    R.drawable.ic_launcher_background,
-                                    name, description, eventId));
-
                         }
                     }
+
+                    // Set the adapter to the list created
+                    RecyclerView recyclerView = findViewById(R.id.recycler_view);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(UserEventsListActivity.this));
+                    recyclerView.setAdapter(new ExampleAdapter(exampleList, UserEventsListActivity.this));
                 }
 
-                // Set the adapter to the list created
-                RecyclerView recyclerView = findViewById(R.id.recycler_view);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(UserEventsListActivity.this));
-                recyclerView.setAdapter(new ExampleAdapter(exampleList, UserEventsListActivity.this));
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
 
-            }
-        });
+        };
+
+        Thread fillExampleListThread = new Thread(fillExampleListRunnable);
+        fillExampleListThread.start();
     }
 
     private void setUpRecyclerView() {
@@ -180,9 +183,6 @@ public class UserEventsListActivity extends AppCompatActivity implements EventsL
 
     @Override
     public void onSelectEventToFullView(ExampleItem currentItem) {
-
-
-        System.out.println("--------------------" + currentItem.getEventId());
         Intent intent  = new Intent(UserEventsListActivity.this, UserEventFullViewActivity.class);
         intent.putExtra("usermail", useremail);
         intent.putExtra("eventId", currentItem.getEventId());
