@@ -69,14 +69,14 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
     private void fillExampleList() {
         exampleList = new ArrayList<>();
 
-        // Iterate the child - users
-        FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
+        Runnable iterateRunnable = new Runnable() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void run() {
 
-                Runnable iterateRunnable = new Runnable() {
+        // Iterate the child - users
+                FirebaseDatabase.getInstance().getReference("Events").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void run() {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         // Iterate over all the users(key) in the child users in the db
                         for (DataSnapshot userValue : snapshot.getChildren()) {
@@ -115,24 +115,26 @@ public class HostMainActivity extends AppCompatActivity implements EventsListSel
                                         name, description, eventId));
                             }
                         }
+
+                        // Set the adapter to the list created
+                        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(HostMainActivity.this));
+                        recyclerView.setAdapter(new ExampleAdapter(exampleList, HostMainActivity.this));
+
                     }
-                };
 
-                Thread iterateThread = new Thread(iterateRunnable);
-                iterateThread.start();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                // Set the adapter to the list created
-                RecyclerView recyclerView = findViewById(R.id.recycler_view);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(HostMainActivity.this));
-                recyclerView.setAdapter(new ExampleAdapter(exampleList, HostMainActivity.this));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
 
             }
-        });
+        };
+
+        Thread iterateThread = new Thread(iterateRunnable);
+        iterateThread.start();
     }
 
     private void setUpRecyclerView() {

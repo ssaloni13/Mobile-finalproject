@@ -106,15 +106,11 @@ public class AddEventActivity extends AppCompatActivity {
 
         Button b = findViewById(R.id.add_event_button);
         b.setOnClickListener(v -> {
-            Runnable registerNewEventRunnable = () -> {
-                try {
-                    registerNewEvent(hostemail);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            };
-            Thread registerNewEventThread = new Thread(registerNewEventRunnable);
-            registerNewEventThread.start();
+            try {
+                registerNewEvent(hostemail);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         });
 
 
@@ -257,20 +253,21 @@ public class AddEventActivity extends AppCompatActivity {
         /*
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH);
         String start = formatter.format(date1);*/
-        System.out.println(date1);
 
 
-        FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
+        Runnable registerNewEventRunnable = () -> {
+            FirebaseDatabase fireBasedatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRefFireBase = fireBasedatabase.getReferenceFromUrl("https://mobile-finalproject-17b4f-default-rtdb.firebaseio.com/");
 
-        Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, new ArrayList<String>());
-        myRefFireBase.child("Events").push().setValue(event);
+            Event event = new Event(hostemail, event_Name, event_Address, event_description, event_start, event_end, event_cost, event_cap, event_min, event_max, new ArrayList<String>());
+            myRefFireBase.child("Events").push().setValue(event);
 
-        uploadImage(event.getEventId());
+            uploadImage(event.getEventId());
+        };
 
         Toast.makeText(AddEventActivity.this,
-                "Event has been Registered Successfully!",
-                Toast.LENGTH_LONG).show();
+                    "Event has been Registered Successfully!",
+                    Toast.LENGTH_LONG).show();
 
         //Sends notification whenever new event is added
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"My notification");
@@ -281,6 +278,9 @@ public class AddEventActivity extends AppCompatActivity {
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(AddEventActivity.this);
         managerCompat.notify(1, builder.build());
+
+        Thread registerNewEventThread = new Thread(registerNewEventRunnable);
+        registerNewEventThread.start();
 
 
         // Redirects the Host to the main events page for hosts
