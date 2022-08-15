@@ -320,6 +320,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
         emailValue.setText(email);
 
 
+        System.out.println(email + "------------------------------");
         mStorageStickerReference1 = FirebaseStorage.getInstance().getReference().child("Profiles/" + email);
         if(mStorageStickerReference1!=null) {
             File localFileSticker1 = null;
