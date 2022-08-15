@@ -283,10 +283,10 @@ public class UserEventFullViewActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(UserEventFullViewActivity.this, UserEventsListActivity.class);
-        intent.putExtra("useremail", usermail);
-        intent.putExtra("userage", userage);
-        startActivity(intent);
+        //Intent intent = new Intent(UserEventFullViewActivity.this, UserEventsListActivity.class);
+        //intent.putExtra("useremail", usermail);
+        //intent.putExtra("userage", userage);
+        //startActivity(intent);
         UserEventFullViewActivity.this.finish();
     }
 }
