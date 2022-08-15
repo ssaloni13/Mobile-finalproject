@@ -80,6 +80,16 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        // FAB 1 - Settings
+        FloatingActionButton fab = findViewById(R.id.profile);
+        fab.setOnClickListener(v -> {
+            Intent intent  = new Intent(ManageEventsUserActivity.this, GenericProfileActivity.class);
+            intent.putExtra("useremail", useremail);
+            intent.putExtra("userage", userage);
+            startActivity(intent);
+            //this.finish();
+        });
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             System.out.println(extras);
@@ -125,12 +135,14 @@ public class ManageEventsUserActivity extends AppCompatActivity implements Event
         super.onBackPressed();
 
         // TODO on back pressed - redirect to GenericProfile Activity
-        Intent intent = new Intent(ManageEventsUserActivity.this, GenericProfileActivity.class);
-        String userEmail = user.getEmail();
-        intent.putExtra("useremail", userEmail);
-        intent.putExtra("userage", userage);
-        startActivity(intent);
+
+        //Intent intent = new Intent(ManageEventsUserActivity.this, GenericProfileActivity.class);
+        //String userEmail = user.getEmail();
+        //intent.putExtra("useremail", userEmail);
+        //intent.putExtra("userage", userage);
+        //startActivity(intent);
         ManageEventsUserActivity.this.finish();
+        finishAffinity();
     }
 
     private void fillExampleList() {

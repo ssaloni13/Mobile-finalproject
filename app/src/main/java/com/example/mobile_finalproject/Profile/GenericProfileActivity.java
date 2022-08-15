@@ -21,6 +21,7 @@ import com.example.mobile_finalproject.Models.ExampleItem;
 import com.example.mobile_finalproject.Models.SessionManagement;
 import com.example.mobile_finalproject.R;
 import com.example.mobile_finalproject.login_registration.LoginActivity;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +45,7 @@ public class GenericProfileActivity extends AppCompatActivity {
     private Button buttonAccountSettings, buttonManageEvents, buttonLogout;
     private FirebaseUser user;
     public String useremail;
+    public String userage;
     private StorageReference mStorageStickerReference1;
 
 
@@ -56,9 +58,21 @@ public class GenericProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             useremail = extras.getString("useremail");
+            userage = extras.getString("userage");
         }
 
         user = FirebaseAuth.getInstance().getCurrentUser();
+
+        // FAB 1 - Home
+        FloatingActionButton fab = findViewById(R.id.profile);
+        fab.setOnClickListener(v -> {
+            Intent intent  = new Intent(GenericProfileActivity.this, UserEventsListActivity.class);
+            intent.putExtra("useremail", useremail);
+            intent.putExtra("userage", userage);
+            startActivity(intent);
+            this.finish();
+            finishAffinity();
+        });
 
 
         userProfileImage = findViewById(R.id.user_profile_image);

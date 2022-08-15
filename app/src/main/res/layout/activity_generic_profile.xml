@@ -122,5 +122,28 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/floating_action_button_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="#ffffff"
+        app:fab_addButtonColorNormal="#d41b2b"
+        app:fab_addButtonColorPressed="#d24c4a">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile"
+            app:fab_icon="@drawable/ic_baseline_home_24"
+            app:fab_addButtonColorNormal="#d41b2b"
+            app:fab_colorNormal="#d41b2b"
+            app:fab_colorPressed="#d24c4a"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
