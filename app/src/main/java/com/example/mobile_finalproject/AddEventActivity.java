@@ -141,12 +141,9 @@ public class AddEventActivity extends AppCompatActivity {
         String event_Name = editTextEventName.getText().toString().trim();
         String event_Address = editTextAddress.getText().toString().trim();
         String event_description = editTextDes.getText().toString().trim();
-        int event_max = Integer.parseInt(String.valueOf(editTextMax.getText()));
-        int event_min = Integer.parseInt(String.valueOf(editTextMin.getText()));
+
         String event_start = editTextStart.getText().toString().trim();
         String event_end = editTextEnd.getText().toString().trim();
-        int event_cap = Integer.parseInt(String.valueOf(editTextCap.getText()));
-        int event_cost = Integer.parseInt(String.valueOf(editTextCost.getText()));
 
 
         String typeOfUser = "Host User";
@@ -167,6 +164,10 @@ public class AddEventActivity extends AppCompatActivity {
             editTextDes.requestFocus();
             return;
         }
+
+        int event_max = Integer.parseInt(String.valueOf(editTextMax.getText()));
+        int event_min = Integer.parseInt(String.valueOf(editTextMin.getText()));
+
         if (Integer.toString(event_min).isEmpty() || event_min < 18) {
             editTextMin.setError("Event Min age is Required and should be greater than 18");
             editTextMin.requestFocus();
@@ -177,6 +178,8 @@ public class AddEventActivity extends AppCompatActivity {
             editTextMax.requestFocus();
             return;
         }
+        int event_cap = Integer.parseInt(String.valueOf(editTextCap.getText()));
+        int event_cost = Integer.parseInt(String.valueOf(editTextCost.getText()));
         if (Integer.toString(event_cap).isEmpty() || event_cap <= 0) {
             editTextCap.setError("Event Capacity is Required and should be positive");
             editTextCap.requestFocus();

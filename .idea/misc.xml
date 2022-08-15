@@ -41,6 +41,7 @@
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14" />
         <entry key="..\:/Users/ssalo/Downloads/Mobile-finalproject-s/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2335" />
         <entry key="app/src/main/res/drawable/ic_settings_white.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/nuvent_logo.xml" value="0.2165" />
         <entry key="app/src/main/res/layout/activity_account_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_asking_host_or_user.xml" value="0.25" />
@@ -49,6 +50,7 @@
         <entry key="app/src/main/res/layout/activity_edit_event.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_event_full_view.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_generic_profile.xml" value="0.2874873353596758" />
         <entry key="app/src/main/res/layout/activity_generic_user_host_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_host_events_main.xml" value="0.1671195652173913" />
         <entry key="app/src/main/res/layout/activity_host_profile.xml" value="0.2554347826086957" />
@@ -56,6 +58,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2554347826086957" />
         <entry key="app/src/main/res/layout/activity_manage_events_host.xml" value="0.2821557971014493" />
+        <entry key="app/src/main/res/layout/activity_manage_events_user.xml" value="0.5911458333333334" />
         <entry key="app/src/main/res/layout/activity_register_host.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_registered_user_of_event.xml" value="0.266304347826087" />
