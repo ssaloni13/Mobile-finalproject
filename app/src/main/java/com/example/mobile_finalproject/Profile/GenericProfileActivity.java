@@ -66,6 +66,9 @@ public class GenericProfileActivity extends AppCompatActivity {
         // FAB 1 - Home
         FloatingActionButton fab = findViewById(R.id.profile);
         fab.setOnClickListener(v -> {
+
+            System.out.println(useremail + "gggggggggggggggggggggggggggggggggggggggggggggggggggg" + userage);
+
             Intent intent  = new Intent(GenericProfileActivity.this, UserEventsListActivity.class);
             intent.putExtra("useremail", useremail);
             intent.putExtra("userage", userage);
