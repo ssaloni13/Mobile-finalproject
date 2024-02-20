@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void checkSession() {
         String userID = sessionManagement.getSession();
 
-        if (!userID.equals("null")) {
+        if (!"null".equals(userID)) {
             // User is logged in and Move to the corresponding activity
             //userHostLogin();
             try {
