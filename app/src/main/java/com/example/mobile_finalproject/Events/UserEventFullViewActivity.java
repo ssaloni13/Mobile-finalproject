@@ -32,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -131,7 +132,7 @@ public class UserEventFullViewActivity extends AppCompatActivity {
                         if(mStorageStickerReference1==null){ continue;}
                         File localFileSticker1 = null;
                         try {
-                            localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                            localFileSticker1 = Files.createTempFile("sticker1", "jpg").toFile();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
