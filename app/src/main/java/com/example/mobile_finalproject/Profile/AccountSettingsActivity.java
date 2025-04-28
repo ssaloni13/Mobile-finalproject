@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -325,7 +326,7 @@ public class AccountSettingsActivity extends AppCompatActivity implements View.O
         if(mStorageStickerReference1!=null) {
             File localFileSticker1 = null;
             try {
-                localFileSticker1 = File.createTempFile("sticker1", "jpg");
+                localFileSticker1 = Files.createTempFile("sticker1", "jpg").toFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
